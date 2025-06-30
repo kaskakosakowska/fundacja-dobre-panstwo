@@ -14,11 +14,13 @@ const Index = () => {
       <header className="py-4 px-6 flex-shrink-0">
         <div className="container mx-auto max-w-6xl">
           <div className="flex justify-center">
-            <div className="p-8 md:p-12 rounded-lg backdrop-blur-sm" style={{
-              backgroundColor: 'rgba(255, 255, 255, 0.7)',
-              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.05)'
-            }}>
-              <img src="/lovable-uploads/33c754c7-fd44-4b02-83a8-2126e21b4c8a.png" alt="Fundacja Dobre Państwo Logo" className="w-80 h-80 object-contain drop-shadow-lg" />
+            <div className="max-w-4xl w-full">
+              <div className="p-6 rounded-lg backdrop-blur-sm mx-auto" style={{
+                backgroundColor: 'rgba(255, 255, 255, 0.5)',
+                boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)'
+              }}>
+                <img src="/lovable-uploads/33c754c7-fd44-4b02-83a8-2126e21b4c8a.png" alt="Fundacja Dobre Państwo Logo" className="w-80 h-80 object-contain drop-shadow-lg mx-auto" />
+              </div>
             </div>
           </div>
         </div>
