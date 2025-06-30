@@ -4,6 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Mail, Phone, MapPin } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Index = () => {
   return (
@@ -23,15 +24,10 @@ const Index = () => {
           
           {/* Section 1: Welcome with Logo */}
           <section className="py-16 text-center">
-            <div className="flex justify-center space-x-8 mb-12">
+            <div className="flex justify-center mb-12">
               <img 
                 src="/lovable-uploads/3cf638fc-3b37-42bd-b80b-627a93770225.png" 
-                alt="Logo Green" 
-                className="w-24 h-24 object-contain"
-              />
-              <img 
-                src="/lovable-uploads/4cf592fd-84c5-4d45-a220-e3947332288c.png" 
-                alt="Logo Silver" 
+                alt="Logo" 
                 className="w-24 h-24 object-contain"
               />
             </div>
@@ -45,51 +41,48 @@ const Index = () => {
             </p>
           </section>
 
-          {/* Section 2: About */}
+          {/* Navigation to sections */}
           <section className="py-16">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-light mb-6" style={{ color: '#333333' }}>
-                O projekcie
+                Sekcje
               </h2>
               <div className="w-16 h-px mx-auto mb-8" style={{ backgroundColor: '#E5E5E5' }}></div>
             </div>
             
-            <div className="grid md:grid-cols-2 gap-12 items-center">
-              <div>
-                <p className="text-base leading-relaxed mb-6" style={{ color: '#666666' }}>
-                  Skupiam się na tworzeniu rozwiązań, które są intuicyjne i przyjazne użytkownikowi. 
-                  Prostota w designie to klucz do skutecznej komunikacji.
-                </p>
-                <div className="space-y-4">
-                  <div className="flex items-center">
-                    <div className="w-2 h-2 rounded-full mr-4" style={{ backgroundColor: '#E5E5E5' }}></div>
-                    <span style={{ color: '#666666' }}>Czytelny design</span>
-                  </div>
-                  <div className="flex items-center">
-                    <div className="w-2 h-2 rounded-full mr-4" style={{ backgroundColor: '#E5E5E5' }}></div>
-                    <span style={{ color: '#666666' }}>Funkcjonalność</span>
-                  </div>
-                  <div className="flex items-center">
-                    <div className="w-2 h-2 rounded-full mr-4" style={{ backgroundColor: '#E5E5E5' }}></div>
-                    <span style={{ color: '#666666' }}>Prostota</span>
-                  </div>
-                </div>
-              </div>
-              <div className="text-center">
-                <Card className="border-0 shadow-none" style={{ backgroundColor: 'transparent' }}>
-                  <CardContent className="p-8">
-                    <div className="w-24 h-24 rounded-full mx-auto mb-4 flex items-center justify-center" style={{ backgroundColor: '#E5E5E5' }}>
-                      <div className="w-12 h-12 rounded-full" style={{ backgroundColor: '#666666' }}></div>
-                    </div>
-                    <h3 className="text-lg font-light mb-2" style={{ color: '#333333' }}>
-                      Minimalizm
+            <div className="grid md:grid-cols-3 gap-8">
+              <Link to="/szkatulka-kosztownosci">
+                <Card className="border-0 shadow-none cursor-pointer hover:opacity-80 transition-opacity" style={{ backgroundColor: 'transparent' }}>
+                  <CardContent className="p-8 text-center">
+                    <h3 className="text-lg font-light mb-4" style={{ color: '#333333' }}>
+                      Szkatułka Kosztowności
                     </h3>
-                    <p className="text-sm" style={{ color: '#666666' }}>
-                      Każdy element ma swoje miejsce i znaczenie
-                    </p>
+                    <div className="w-12 h-px mx-auto" style={{ backgroundColor: '#E5E5E5' }}></div>
                   </CardContent>
                 </Card>
-              </div>
+              </Link>
+              
+              <Link to="/szczypta-soli">
+                <Card className="border-0 shadow-none cursor-pointer hover:opacity-80 transition-opacity" style={{ backgroundColor: 'transparent' }}>
+                  <CardContent className="p-8 text-center">
+                    <h3 className="text-lg font-light mb-4" style={{ color: '#333333' }}>
+                      Szczypta Soli
+                    </h3>
+                    <div className="w-12 h-px mx-auto" style={{ backgroundColor: '#E5E5E5' }}></div>
+                  </CardContent>
+                </Card>
+              </Link>
+              
+              <Link to="/glosy-ktore-slychac">
+                <Card className="border-0 shadow-none cursor-pointer hover:opacity-80 transition-opacity" style={{ backgroundColor: 'transparent' }}>
+                  <CardContent className="p-8 text-center">
+                    <h3 className="text-lg font-light mb-4" style={{ color: '#333333' }}>
+                      Głosy, które słychać
+                    </h3>
+                    <div className="w-12 h-px mx-auto" style={{ backgroundColor: '#E5E5E5' }}></div>
+                  </CardContent>
+                </Card>
+              </Link>
             </div>
           </section>
 
