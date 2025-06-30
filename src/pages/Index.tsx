@@ -16,7 +16,7 @@ const Index = () => {
             <img 
               src="/lovable-uploads/009a872d-aa2c-4401-bef2-f1cf0207ea3e.png" 
               alt="Logo" 
-              className="w-32 h-32 object-contain"
+              className="w-64 h-64 object-contain"
             />
           </div>
           <h1 className="text-3xl font-serif font-medium text-center" style={{ color: '#333333' }}>
