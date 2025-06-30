@@ -12,8 +12,15 @@ const Index = () => {
       {/* Header */}
       <header className="py-8 px-6">
         <div className="container mx-auto max-w-4xl">
+          <div className="flex justify-center mb-8">
+            <img 
+              src="/lovable-uploads/009a872d-aa2c-4401-bef2-f1cf0207ea3e.png" 
+              alt="Logo" 
+              className="w-24 h-24 object-contain"
+            />
+          </div>
           <h1 className="text-3xl font-light text-center" style={{ color: '#333333' }}>
-            Portfolio
+            Blog
           </h1>
         </div>
       </header>
@@ -22,34 +29,8 @@ const Index = () => {
       <main className="px-6">
         <div className="container mx-auto max-w-4xl">
           
-          {/* Section 1: Welcome with Logo */}
-          <section className="py-16 text-center">
-            <div className="flex justify-center mb-12">
-              <img 
-                src="/lovable-uploads/3cf638fc-3b37-42bd-b80b-627a93770225.png" 
-                alt="Logo" 
-                className="w-24 h-24 object-contain"
-              />
-            </div>
-            <h2 className="text-4xl font-light mb-6" style={{ color: '#333333' }}>
-              Witaj
-            </h2>
-            <div className="w-16 h-px mx-auto mb-8" style={{ backgroundColor: '#E5E5E5' }}></div>
-            <p className="text-lg leading-relaxed max-w-2xl mx-auto" style={{ color: '#666666' }}>
-              Tworzymy proste, jasne i czytelne rozwiązania. 
-              Każdy projekt to połączenie funkcjonalności z minimalistycznym designem.
-            </p>
-          </section>
-
           {/* Navigation to sections */}
           <section className="py-16">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-light mb-6" style={{ color: '#333333' }}>
-                Sekcje
-              </h2>
-              <div className="w-16 h-px mx-auto mb-8" style={{ backgroundColor: '#E5E5E5' }}></div>
-            </div>
-            
             <div className="grid md:grid-cols-3 gap-8">
               <Link to="/szkatulka-kosztownosci">
                 <Card className="border-0 shadow-none cursor-pointer hover:opacity-80 transition-opacity" style={{ backgroundColor: 'transparent' }}>
@@ -86,7 +67,7 @@ const Index = () => {
             </div>
           </section>
 
-          {/* Section 3: Contact */}
+          {/* Contact Section */}
           <section className="py-16">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-light mb-6" style={{ color: '#333333' }}>
@@ -181,9 +162,16 @@ const Index = () => {
       <footer className="py-8 px-6 mt-16">
         <div className="container mx-auto max-w-4xl">
           <div className="w-full h-px mb-6" style={{ backgroundColor: '#E5E5E5' }}></div>
-          <p className="text-center text-sm font-light" style={{ color: '#666666' }}>
-            © 2024 Portfolio. Stworzone z myślą o prostocie.
-          </p>
+          <div className="flex justify-between items-center">
+            <p className="text-sm font-light" style={{ color: '#666666' }}>
+              © 2024 Blog. Wszystkie prawa zastrzeżone.
+            </p>
+            <div className="flex space-x-6">
+              <Link to="/api-knowledge" className="text-sm font-light hover:opacity-70 transition-opacity" style={{ color: '#666666' }}>
+                API Knowledge
+              </Link>
+            </div>
+          </div>
         </div>
       </footer>
     </div>
