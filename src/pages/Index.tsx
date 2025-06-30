@@ -1,4 +1,5 @@
 
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -12,7 +13,7 @@ const Index = () => {
       {/* Header */}
       <header className="py-6 px-6">
         <div className="container mx-auto max-w-4xl">
-          <div className="flex justify-center mb-2">
+          <div className="flex justify-center mb-0.5">
             <img 
               src="/lovable-uploads/33c754c7-fd44-4b02-83a8-2126e21b4c8a.png" 
               alt="Fundacja Dobre Państwo Logo" 
@@ -156,3 +157,4 @@ const Index = () => {
 };
 
 export default Index;
+
