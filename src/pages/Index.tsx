@@ -1,4 +1,5 @@
 
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -16,7 +17,7 @@ const Index = () => {
             <img 
               src="/lovable-uploads/33c754c7-fd44-4b02-83a8-2126e21b4c8a.png" 
               alt="Fundacja Dobre Państwo Logo" 
-              className="w-80 h-80 object-contain"
+              className="w-96 h-96 object-contain drop-shadow-lg"
             />
           </div>
         </div>
@@ -156,3 +157,4 @@ const Index = () => {
 };
 
 export default Index;
+
