@@ -18,7 +18,7 @@ const Index = () => {
               <div className="p-6 rounded-lg backdrop-blur-sm mx-auto relative" style={{
                 backgroundColor: 'rgba(255, 255, 255, 0.5)',
                 boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
-                backgroundImage: `url('/lovable-uploads/db89f3ba-0b0b-4a46-a0bd-a3de4ad912c0.png')`,
+                backgroundImage: `url('/lovable-uploads/5e769d0c-582f-42f5-967c-e935d8314d32.png')`,
                 backgroundSize: 'contain',
                 backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat'
