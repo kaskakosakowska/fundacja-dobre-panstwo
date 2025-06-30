@@ -15,11 +15,11 @@ const Index = () => {
         <div className="container mx-auto max-w-6xl">
           <div className="flex justify-center">
             <div className="max-w-4xl w-full">
-              <div className="p-6 rounded-lg backdrop-blur-sm mx-auto" style={{
+              <div className="p-4 rounded-lg backdrop-blur-sm mx-auto" style={{
                 backgroundColor: 'rgba(255, 255, 255, 0.5)',
                 boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)'
               }}>
-                <img src="/lovable-uploads/33c754c7-fd44-4b02-83a8-2126e21b4c8a.png" alt="Fundacja Dobre Państwo Logo" className="w-80 h-80 object-contain drop-shadow-lg mx-auto" />
+                <img src="/lovable-uploads/33c754c7-fd44-4b02-83a8-2126e21b4c8a.png" alt="Fundacja Dobre Państwo Logo" className="w-120 h-120 object-contain drop-shadow-lg mx-auto" />
               </div>
             </div>
           </div>
