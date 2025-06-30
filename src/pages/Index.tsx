@@ -47,9 +47,9 @@ const Index = () => {
                   backgroundColor: 'transparent'
                 }}>
                     <CardContent className="p-6 text-center flex flex-col justify-center h-full">
-                      <h3 className="text-xs md:text-sm font-sans font-medium mb-4 min-h-[2.5rem] flex items-center justify-center leading-tight px-2" style={{
+                      <h3 style={{
                       color: '#333333'
-                    }}>
+                    }} className="text-xs font-sans mb-4 min-h-[2.5rem] flex items-center justify-center leading-tight px-2 md:text-base font-semibold">
                         Szczypta Soli
                       </h3>
                       <div className="w-12 h-px mx-auto" style={{
