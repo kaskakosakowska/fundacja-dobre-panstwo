@@ -16,7 +16,7 @@ const Index = () => {
             <img 
               src="/lovable-uploads/009a872d-aa2c-4401-bef2-f1cf0207ea3e.png" 
               alt="Logo" 
-              className="w-24 h-24 object-contain"
+              className="w-32 h-32 object-contain"
             />
           </div>
           <h1 className="text-3xl font-serif font-medium text-center" style={{ color: '#333333' }}>
@@ -35,7 +35,7 @@ const Index = () => {
               <Link to="/szkatulka-kosztownosci">
                 <Card className="border-0 shadow-none cursor-pointer hover:opacity-80 transition-opacity" style={{ backgroundColor: 'transparent' }}>
                   <CardContent className="p-8 text-center">
-                    <h3 className="text-lg font-serif font-medium mb-4" style={{ color: '#333333' }}>
+                    <h3 className="text-base font-sans font-medium mb-4" style={{ color: '#333333' }}>
                       Szkatułka Kosztowności
                     </h3>
                     <div className="w-12 h-px mx-auto" style={{ backgroundColor: '#E5E5E5' }}></div>
@@ -46,7 +46,7 @@ const Index = () => {
               <Link to="/szczypta-soli">
                 <Card className="border-0 shadow-none cursor-pointer hover:opacity-80 transition-opacity" style={{ backgroundColor: 'transparent' }}>
                   <CardContent className="p-8 text-center">
-                    <h3 className="text-lg font-serif font-medium mb-4" style={{ color: '#333333' }}>
+                    <h3 className="text-base font-sans font-medium mb-4" style={{ color: '#333333' }}>
                       Szczypta Soli
                     </h3>
                     <div className="w-12 h-px mx-auto" style={{ backgroundColor: '#E5E5E5' }}></div>
@@ -57,7 +57,7 @@ const Index = () => {
               <Link to="/glosy-ktore-slychac">
                 <Card className="border-0 shadow-none cursor-pointer hover:opacity-80 transition-opacity" style={{ backgroundColor: 'transparent' }}>
                   <CardContent className="p-8 text-center">
-                    <h3 className="text-lg font-serif font-medium mb-4" style={{ color: '#333333' }}>
+                    <h3 className="text-base font-sans font-medium mb-4" style={{ color: '#333333' }}>
                       Głosy, które słychać
                     </h3>
                     <div className="w-12 h-px mx-auto" style={{ backgroundColor: '#E5E5E5' }}></div>
@@ -70,7 +70,7 @@ const Index = () => {
           {/* Contact Section */}
           <section className="py-16">
             <div className="text-center mb-12">
-              <h2 className="text-3xl font-serif font-medium mb-6" style={{ color: '#333333' }}>
+              <h2 className="text-3xl font-sans font-medium mb-6" style={{ color: '#333333' }}>
                 Kontakt
               </h2>
               <div className="w-16 h-px mx-auto mb-8" style={{ backgroundColor: '#E5E5E5' }}></div>
