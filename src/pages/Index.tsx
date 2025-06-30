@@ -5,8 +5,30 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
+import EditableImageContainer from "@/components/EditableImageContainer";
 
 const Index = () => {
+  const initialImages = [
+    {
+      id: "image1",
+      src: "/lovable-uploads/cfdc3b63-2732-48d1-b15f-20f0517a88e1.png",
+      alt: "Edytowalny obrazek 1",
+      x: 50,
+      y: 50,
+      rotation: 0,
+      scale: 1,
+    },
+    {
+      id: "image2",
+      src: "/lovable-uploads/052fc308-c0f8-4182-aade-752a47613418.png",
+      alt: "Edytowalny obrazek 2",
+      x: 150,
+      y: 80,
+      rotation: 0,
+      scale: 1,
+    }
+  ];
+
   return <div className="min-h-screen font-sans flex flex-col" style={{
     backgroundColor: '#F6F4EF'
   }}>
@@ -19,7 +41,12 @@ const Index = () => {
                 backgroundColor: 'rgba(255, 255, 255, 0.5)',
                 boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)'
               }}>
-                <img src="/lovable-uploads/33c754c7-fd44-4b02-83a8-2126e21b4c8a.png" alt="Fundacja Dobre Państwo Logo" className="w-60 h-60 object-contain drop-shadow-lg mx-auto" />
+                <img src="/lovable-uploads/33c754c7-fd44-4b02-83a8-2126e21b4c8a.png" alt="Fundacja Dobre Państwo Logo" className="w-60 h-60 object-contain drop-shadow-lg mx-auto mb-4" />
+                
+                {/* Editable Images Container */}
+                <div className="mt-4">
+                  <EditableImageContainer initialImages={initialImages} />
+                </div>
               </div>
             </div>
           </div>
