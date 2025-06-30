@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
+
 const Index = () => {
   return <div className="min-h-screen font-sans flex flex-col" style={{
     backgroundColor: '#F6F4EF'
@@ -22,9 +23,9 @@ const Index = () => {
         <div className="container mx-auto max-w-6xl">
           
           {/* Navigation to sections */}
-          <section className="py-8">
+          <section className="py-1">
             <div className="flex justify-center items-center w-full">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-4xl">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-5xl">
                 <Link to="/szkatulka-kosztownosci">
                   <Card className="border-0 shadow-none cursor-pointer hover:opacity-80 transition-opacity h-full" style={{
                   backgroundColor: 'transparent'
@@ -32,7 +33,7 @@ const Index = () => {
                     <CardContent className="p-6 text-center flex flex-col justify-center h-full">
                       <h3 style={{
                       color: '#333333'
-                    }} className="text-xs font-sans mb-4 min-h-[2.5rem] flex items-center justify-center leading-tight px-2 font-semibold md:text-base">
+                    }} className="text-xs font-sans mb-2 min-h-[2.5rem] flex items-center justify-center leading-tight px-2 font-semibold md:text-sm">
                         Szkatułka kosztowności
                       </h3>
                       <div className="w-12 h-px mx-auto" style={{
