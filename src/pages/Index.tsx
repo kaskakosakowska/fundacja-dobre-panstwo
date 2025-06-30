@@ -32,7 +32,7 @@ const Index = () => {
                     <CardContent className="p-6 text-center flex flex-col justify-center h-full">
                       <h3 style={{
                       color: '#333333'
-                    }} className="text-xs font-sans mb-4 min-h-[2.5rem] flex items-center justify-center leading-tight px-2 md:text-base font-semibold">
+                    }} className="text-xs font-sans mb-4 min-h-[2.5rem] flex items-center justify-center leading-tight px-2 font-semibold md:text-base">
                         Szkatułka kosztowności
                       </h3>
                       <div className="w-12 h-px mx-auto" style={{
