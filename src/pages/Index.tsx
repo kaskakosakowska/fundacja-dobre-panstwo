@@ -29,10 +29,10 @@ const Index = () => {
                   <Card className="border-0 shadow-none cursor-pointer hover:opacity-80 transition-opacity h-full" style={{
                   backgroundColor: 'transparent'
                 }}>
-                    <CardContent className="p-6 text-center flex flex-col justify-center h-full">
+                    <CardContent className="p-6 text-center flex flex-col justify-center h-full ml-3">
                       <h3 style={{
                       color: '#333333'
-                    }} className="text-xs font-sans mb-2 min-h-[2.5rem] flex items-center justify-center leading-tight px-2 font-semibold md:text-base">
+                    }} className="text-xs font-sans mb-2 min-h-[2.5rem] flex items-center justify-center leading-tight px-2 font-semibold md:text-sm">
                         Szkatułka kosztowności
                       </h3>
                       <div className="w-12 h-px mx-auto" style={{
@@ -66,7 +66,7 @@ const Index = () => {
                     <CardContent className="p-6 text-center flex flex-col justify-center h-full">
                       <h3 style={{
                       color: '#333333'
-                    }} className="text-xs font-sans mb-4 min-h-[2.5rem] flex items-center justify-center leading-tight px-2 md:text-base font-semibold">
+                    }} className="text-xs font-sans mb-2 min-h-[2.5rem] flex items-center justify-center leading-tight px-2 md:text-sm font-semibold">
                         Głosy które słychać
                       </h3>
                       <div className="w-12 h-px mx-auto" style={{
