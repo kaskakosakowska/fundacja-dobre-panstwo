@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 
 const Index = () => {
   return (
-    <div className="min-h-screen" style={{ backgroundColor: '#F6F4EF' }}>
+    <div className="min-h-screen font-sans" style={{ backgroundColor: '#F6F4EF' }}>
       {/* Header */}
       <header className="py-8 px-6">
         <div className="container mx-auto max-w-4xl">
@@ -19,7 +19,7 @@ const Index = () => {
               className="w-24 h-24 object-contain"
             />
           </div>
-          <h1 className="text-3xl font-medium text-center" style={{ color: '#333333' }}>
+          <h1 className="text-3xl font-serif font-medium text-center" style={{ color: '#333333' }}>
             Fundacja Dobre Państwo
           </h1>
         </div>
@@ -35,7 +35,7 @@ const Index = () => {
               <Link to="/szkatulka-kosztownosci">
                 <Card className="border-0 shadow-none cursor-pointer hover:opacity-80 transition-opacity" style={{ backgroundColor: 'transparent' }}>
                   <CardContent className="p-8 text-center">
-                    <h3 className="text-lg font-medium mb-4" style={{ color: '#333333' }}>
+                    <h3 className="text-lg font-serif font-medium mb-4" style={{ color: '#333333' }}>
                       Szkatułka Kosztowności
                     </h3>
                     <div className="w-12 h-px mx-auto" style={{ backgroundColor: '#E5E5E5' }}></div>
@@ -46,7 +46,7 @@ const Index = () => {
               <Link to="/szczypta-soli">
                 <Card className="border-0 shadow-none cursor-pointer hover:opacity-80 transition-opacity" style={{ backgroundColor: 'transparent' }}>
                   <CardContent className="p-8 text-center">
-                    <h3 className="text-lg font-medium mb-4" style={{ color: '#333333' }}>
+                    <h3 className="text-lg font-serif font-medium mb-4" style={{ color: '#333333' }}>
                       Szczypta Soli
                     </h3>
                     <div className="w-12 h-px mx-auto" style={{ backgroundColor: '#E5E5E5' }}></div>
@@ -57,7 +57,7 @@ const Index = () => {
               <Link to="/glosy-ktore-slychac">
                 <Card className="border-0 shadow-none cursor-pointer hover:opacity-80 transition-opacity" style={{ backgroundColor: 'transparent' }}>
                   <CardContent className="p-8 text-center">
-                    <h3 className="text-lg font-medium mb-4" style={{ color: '#333333' }}>
+                    <h3 className="text-lg font-serif font-medium mb-4" style={{ color: '#333333' }}>
                       Głosy, które słychać
                     </h3>
                     <div className="w-12 h-px mx-auto" style={{ backgroundColor: '#E5E5E5' }}></div>
@@ -70,7 +70,7 @@ const Index = () => {
           {/* Contact Section */}
           <section className="py-16">
             <div className="text-center mb-12">
-              <h2 className="text-3xl font-medium mb-6" style={{ color: '#333333' }}>
+              <h2 className="text-3xl font-serif font-medium mb-6" style={{ color: '#333333' }}>
                 Kontakt
               </h2>
               <div className="w-16 h-px mx-auto mb-8" style={{ backgroundColor: '#E5E5E5' }}></div>
@@ -82,7 +82,7 @@ const Index = () => {
                   <div>
                     <Input 
                       placeholder="Imię" 
-                      className="border-0 shadow-none p-4 text-base font-medium"
+                      className="border-0 shadow-none p-4 text-base font-sans font-medium"
                       style={{ 
                         backgroundColor: 'white',
                         color: '#333333'
@@ -93,7 +93,7 @@ const Index = () => {
                     <Input 
                       placeholder="Email" 
                       type="email" 
-                      className="border-0 shadow-none p-4 text-base font-medium"
+                      className="border-0 shadow-none p-4 text-base font-sans font-medium"
                       style={{ 
                         backgroundColor: 'white',
                         color: '#333333'
@@ -103,7 +103,7 @@ const Index = () => {
                   <div>
                     <Textarea 
                       placeholder="Wiadomość" 
-                      className="border-0 shadow-none p-4 text-base font-medium min-h-[120px]"
+                      className="border-0 shadow-none p-4 text-base font-sans font-medium min-h-[120px]"
                       style={{ 
                         backgroundColor: 'white',
                         color: '#333333'
@@ -111,7 +111,7 @@ const Index = () => {
                     />
                   </div>
                   <Button 
-                    className="w-full py-3 text-base font-medium border-0 shadow-none"
+                    className="w-full py-3 text-base font-sans font-medium border-0 shadow-none"
                     style={{ 
                       backgroundColor: '#0A2140',
                       color: '#F6F4EF'
@@ -128,8 +128,8 @@ const Index = () => {
                     <Mail className="h-4 w-4" style={{ color: '#666666' }} />
                   </div>
                   <div>
-                    <h4 className="font-medium mb-1" style={{ color: '#333333' }}>Email</h4>
-                    <p className="font-medium" style={{ color: '#666666' }}>kontakt@example.com</p>
+                    <h4 className="font-serif font-medium mb-1" style={{ color: '#333333' }}>Email</h4>
+                    <p className="font-sans font-medium" style={{ color: '#666666' }}>kontakt@example.com</p>
                   </div>
                 </div>
                 
@@ -138,8 +138,8 @@ const Index = () => {
                     <Phone className="h-4 w-4" style={{ color: '#666666' }} />
                   </div>
                   <div>
-                    <h4 className="font-medium mb-1" style={{ color: '#333333' }}>Telefon</h4>
-                    <p className="font-medium" style={{ color: '#666666' }}>+48 123 456 789</p>
+                    <h4 className="font-serif font-medium mb-1" style={{ color: '#333333' }}>Telefon</h4>
+                    <p className="font-sans font-medium" style={{ color: '#666666' }}>+48 123 456 789</p>
                   </div>
                 </div>
                 
@@ -148,8 +148,8 @@ const Index = () => {
                     <MapPin className="h-4 w-4" style={{ color: '#666666' }} />
                   </div>
                   <div>
-                    <h4 className="font-medium mb-1" style={{ color: '#333333' }}>Lokalizacja</h4>
-                    <p className="font-medium" style={{ color: '#666666' }}>Warszawa, Polska</p>
+                    <h4 className="font-serif font-medium mb-1" style={{ color: '#333333' }}>Lokalizacja</h4>
+                    <p className="font-sans font-medium" style={{ color: '#666666' }}>Warszawa, Polska</p>
                   </div>
                 </div>
               </div>
@@ -163,11 +163,11 @@ const Index = () => {
         <div className="container mx-auto max-w-4xl">
           <div className="w-full h-px mb-6" style={{ backgroundColor: '#E5E5E5' }}></div>
           <div className="flex justify-between items-center">
-            <p className="text-sm font-medium" style={{ color: '#666666' }}>
+            <p className="text-sm font-sans font-medium" style={{ color: '#666666' }}>
               © 2024 Fundacja Dobre Państwo. Wszystkie prawa zastrzeżone.
             </p>
             <div className="flex space-x-6">
-              <Link to="/api-knowledge" className="text-sm font-medium hover:opacity-70 transition-opacity" style={{ color: '#666666' }}>
+              <Link to="/api-knowledge" className="text-sm font-sans font-medium hover:opacity-70 transition-opacity" style={{ color: '#666666' }}>
                 API Knowledge
               </Link>
             </div>

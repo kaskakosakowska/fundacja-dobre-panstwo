@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -18,6 +19,11 @@ export default {
 			}
 		},
 		extend: {
+			fontFamily: {
+				'sans': ['IBM Plex Sans', 'system-ui', 'sans-serif'],
+				'serif': ['IBM Plex Serif', 'Georgia', 'serif'],
+				'mono': ['IBM Plex Mono', 'Courier New', 'monospace'],
+			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
