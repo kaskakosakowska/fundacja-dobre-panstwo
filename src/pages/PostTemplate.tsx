@@ -1,3 +1,4 @@
+
 import { Link, useParams, useLocation } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -82,7 +83,7 @@ const PostTemplate = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Main Post Container */}
             <div className="lg:col-span-2">
-              <Card className="shadow-lg" style={{ backgroundColor: 'rgba(255, 255, 255, 0.8)', minHeight: '600px' }}>
+              <Card className="shadow-lg" style={{ backgroundColor: 'rgba(255, 255, 255, 0.8)', height: '636px' }}>
                 <CardHeader>
                   <CardTitle className="text-2xl mb-4" style={{ color: '#333333' }}>
                     {post.title}
@@ -131,7 +132,7 @@ const PostTemplate = () => {
             {/* Right Side Containers */}
             <div className="space-y-6">
               {/* PDF Embedder Container */}
-              <Card className="shadow-lg" style={{ backgroundColor: 'rgba(255, 255, 255, 0.8)', height: '180px' }}>
+              <Card className="shadow-lg" style={{ backgroundColor: 'rgba(255, 255, 255, 0.8)', height: '200px' }}>
                 <CardHeader>
                   <CardTitle className="text-lg" style={{ color: '#333333' }}>
                     Pełna treść PDF
@@ -146,7 +147,7 @@ const PostTemplate = () => {
               </Card>
 
               {/* Audio Version Container */}
-              <Card className="shadow-lg" style={{ backgroundColor: 'rgba(255, 255, 255, 0.8)', height: '180px' }}>
+              <Card className="shadow-lg" style={{ backgroundColor: 'rgba(255, 255, 255, 0.8)', height: '200px' }}>
                 <CardHeader>
                   <CardTitle className="text-lg" style={{ color: '#333333' }}>
                     Wersja audio
@@ -161,7 +162,7 @@ const PostTemplate = () => {
               </Card>
 
               {/* Mind Map Container */}
-              <Card className="shadow-lg" style={{ backgroundColor: 'rgba(255, 255, 255, 0.8)', height: '240px' }}>
+              <Card className="shadow-lg" style={{ backgroundColor: 'rgba(255, 255, 255, 0.8)', height: '212px' }}>
                 <CardHeader>
                   <CardTitle className="text-lg" style={{ color: '#333333' }}>
                     Mapa pojęć
