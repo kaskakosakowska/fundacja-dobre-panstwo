@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -17,14 +16,8 @@ const Index = () => {
             <div className="max-w-4xl w-full">
               <div className="p-6 rounded-lg backdrop-blur-sm mx-auto relative" style={{
                 backgroundColor: 'rgba(255, 255, 255, 0.5)',
-                boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
-                backgroundImage: `url('/lovable-uploads/5e769d0c-582f-42f5-967c-e935d8314d32.png')`,
-                backgroundSize: 'contain',
-                backgroundPosition: 'center',
-                backgroundRepeat: 'no-repeat'
+                boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)'
               }}>
-                {/* Overlay to ensure logo visibility */}
-                <div className="absolute inset-0 bg-white bg-opacity-30 rounded-lg"></div>
                 <img src="/lovable-uploads/33c754c7-fd44-4b02-83a8-2126e21b4c8a.png" alt="Fundacja Dobre Państwo Logo" className="w-72 h-72 object-contain drop-shadow-lg mx-auto relative z-10" />
               </div>
             </div>
