@@ -19,7 +19,7 @@ const Index = () => {
               className="w-64 h-64 object-contain"
             />
           </div>
-          <h1 className="text-3xl font-serif font-medium text-center" style={{ color: '#333333' }}>
+          <h1 className="text-5xl font-serif font-medium text-center" style={{ color: '#333333' }}>
             Fundacja Dobre Państwo
           </h1>
         </div>
