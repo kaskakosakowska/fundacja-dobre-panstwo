@@ -183,4 +183,4 @@ const SzkatulaKosztownosci = () => {
   );
 };
 
-export default SzkatukaKosztownosci;
+export default SzkatulaKosztownosci;
