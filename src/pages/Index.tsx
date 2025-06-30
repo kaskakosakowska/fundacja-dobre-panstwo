@@ -19,7 +19,7 @@ const Index = () => {
                 backgroundColor: 'rgba(255, 255, 255, 0.5)',
                 boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)'
               }}>
-                <img src="/lovable-uploads/33c754c7-fd44-4b02-83a8-2126e21b4c8a.png" alt="Fundacja Dobre Państwo Logo" className="w-80 h-80 object-contain drop-shadow-lg mx-auto" />
+                <img src="/lovable-uploads/33c754c7-fd44-4b02-83a8-2126e21b4c8a.png" alt="Fundacja Dobre Państwo Logo" className="w-72 h-72 object-contain drop-shadow-lg mx-auto" />
               </div>
             </div>
           </div>
@@ -41,7 +41,7 @@ const Index = () => {
                     <CardContent className="p-6 text-center flex flex-col justify-center h-full ml-10">
                       <h3 style={{
                       color: '#333333'
-                    }} className="text-xs font-sans mb-2 min-h-[2.5rem] flex items-center justify-center leading-tight font-semibold text-zinc-700 md:text-lg px-[2px]">
+                    }} className="text-sm font-sans mb-2 min-h-[2.5rem] flex items-center justify-center leading-tight font-semibold text-zinc-700 md:text-xl px-[2px]">
                         Szkatułka kosztowności
                       </h3>
                       <div className="w-12 h-px mx-auto" style={{
@@ -58,7 +58,7 @@ const Index = () => {
                     <CardContent className="p-6 text-center flex flex-col justify-center h-full">
                       <h3 style={{
                       color: '#333333'
-                    }} className="text-xs font-sans mb-4 min-h-[2.5rem] flex items-center justify-center leading-tight px-2 font-semibold text-zinc-700 md:text-lg">
+                    }} className="text-sm font-sans mb-4 min-h-[2.5rem] flex items-center justify-center leading-tight px-2 font-semibold text-zinc-700 md:text-xl">
                         Szczypta Soli
                       </h3>
                       <div className="w-12 h-px mx-auto" style={{
@@ -75,7 +75,7 @@ const Index = () => {
                     <CardContent className="p-6 text-center flex flex-col justify-center h-full">
                       <h3 style={{
                       color: '#333333'
-                    }} className="text-xs font-sans mb-2 min-h-[2.5rem] flex items-center justify-center leading-tight px-2 font-semibold text-zinc-700 md:text-lg">
+                    }} className="text-sm font-sans mb-2 min-h-[2.5rem] flex items-center justify-center leading-tight px-2 font-semibold text-zinc-700 md:text-xl">
                         Głosy które słychać
                       </h3>
                       <div className="w-12 h-px mx-auto" style={{
@@ -95,7 +95,7 @@ const Index = () => {
               backgroundColor: 'rgba(255, 255, 255, 0.7)',
               boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.05)'
             }}>
-                <p className="text-base md:text-lg font-sans leading-relaxed text-justify" style={{
+                <p className="text-lg md:text-xl font-sans leading-relaxed text-justify" style={{
                 color: '#333333'
               }}>
                   Fundacja Dobre Państwo działa od 2018 roku jako organizacja non-profit, której misją jest budowanie mostów między obywatelami a instytucjami publicznymi. Wierzymy, że każdy głos ma znaczenie i że prawdziwa demokracja kwitnie wtedy, gdy ludzie aktywnie uczestniczą w życiu społecznym. Nasze działania skupiają się na trzech głównych obszarach: edukacji obywatelskiej, transparentności władzy oraz wspieraniu lokalnych inicjatyw społecznych.
