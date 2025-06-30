@@ -35,7 +35,7 @@ const Index = () => {
               <Link to="/szkatulka-kosztownosci">
                 <Card className="border-0 shadow-none cursor-pointer hover:opacity-80 transition-opacity" style={{ backgroundColor: 'transparent' }}>
                   <CardContent className="p-8 text-center">
-                    <h3 className="text-base font-sans font-medium mb-4" style={{ color: '#333333' }}>
+                    <h3 className="text-lg md:text-xl font-sans font-medium mb-4" style={{ color: '#333333' }}>
                       Szkatułka Kosztowności
                     </h3>
                     <div className="w-12 h-px mx-auto" style={{ backgroundColor: '#E5E5E5' }}></div>
@@ -46,7 +46,7 @@ const Index = () => {
               <Link to="/szczypta-soli">
                 <Card className="border-0 shadow-none cursor-pointer hover:opacity-80 transition-opacity" style={{ backgroundColor: 'transparent' }}>
                   <CardContent className="p-8 text-center">
-                    <h3 className="text-base font-sans font-medium mb-4" style={{ color: '#333333' }}>
+                    <h3 className="text-lg md:text-xl font-sans font-medium mb-4" style={{ color: '#333333' }}>
                       Szczypta Soli
                     </h3>
                     <div className="w-12 h-px mx-auto" style={{ backgroundColor: '#E5E5E5' }}></div>
@@ -57,7 +57,7 @@ const Index = () => {
               <Link to="/glosy-ktore-slychac">
                 <Card className="border-0 shadow-none cursor-pointer hover:opacity-80 transition-opacity" style={{ backgroundColor: 'transparent' }}>
                   <CardContent className="p-8 text-center">
-                    <h3 className="text-base font-sans font-medium mb-4" style={{ color: '#333333' }}>
+                    <h3 className="text-lg md:text-xl font-sans font-medium mb-4" style={{ color: '#333333' }}>
                       Głosy, które słychać
                     </h3>
                     <div className="w-12 h-px mx-auto" style={{ backgroundColor: '#E5E5E5' }}></div>
