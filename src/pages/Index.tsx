@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -14,14 +13,11 @@ const Index = () => {
         <div className="container mx-auto max-w-4xl">
           <div className="flex justify-center mb-8">
             <img 
-              src="/lovable-uploads/009a872d-aa2c-4401-bef2-f1cf0207ea3e.png" 
-              alt="Logo" 
+              src="/lovable-uploads/33c754c7-fd44-4b02-83a8-2126e21b4c8a.png" 
+              alt="Fundacja Dobre Państwo Logo" 
               className="w-64 h-64 object-contain"
             />
           </div>
-          <h1 className="text-5xl font-serif font-medium text-center" style={{ color: '#333333' }}>
-            Fundacja Dobre Państwo
-          </h1>
         </div>
       </header>
 
