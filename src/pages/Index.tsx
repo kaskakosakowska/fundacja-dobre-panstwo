@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -27,39 +28,41 @@ const Index = () => {
           
           {/* Navigation to sections */}
           <section className="py-1">
-            <div className="grid md:grid-cols-3 gap-8">
-              <Link to="/szkatulka-kosztownosci">
-                <Card className="border-0 shadow-none cursor-pointer hover:opacity-80 transition-opacity" style={{ backgroundColor: 'transparent' }}>
-                  <CardContent className="p-8 text-center">
-                    <h3 className="text-sm md:text-base font-sans font-medium mb-4 min-h-[2rem] flex items-center justify-center" style={{ color: '#333333' }}>
-                      Szkatułka kosztowności
-                    </h3>
-                    <div className="w-12 h-px mx-auto" style={{ backgroundColor: '#E5E5E5' }}></div>
-                  </CardContent>
-                </Card>
-              </Link>
-              
-              <Link to="/szczypta-soli">
-                <Card className="border-0 shadow-none cursor-pointer hover:opacity-80 transition-opacity" style={{ backgroundColor: 'transparent' }}>
-                  <CardContent className="p-8 text-center">
-                    <h3 className="text-sm md:text-base font-sans font-medium mb-4 min-h-[2rem] flex items-center justify-center" style={{ color: '#333333' }}>
-                      Szczypta Soli
-                    </h3>
-                    <div className="w-12 h-px mx-auto" style={{ backgroundColor: '#E5E5E5' }}></div>
-                  </CardContent>
-                </Card>
-              </Link>
-              
-              <Link to="/glosy-ktore-slychac">
-                <Card className="border-0 shadow-none cursor-pointer hover:opacity-80 transition-opacity" style={{ backgroundColor: 'transparent' }}>
-                  <CardContent className="p-8 text-center">
-                    <h3 className="text-sm md:text-base font-sans font-medium mb-4 min-h-[2rem] flex items-center justify-center" style={{ color: '#333333' }}>
-                      Głosy które słychać
-                    </h3>
-                    <div className="w-12 h-px mx-auto" style={{ backgroundColor: '#E5E5E5' }}></div>
-                  </CardContent>
-                </Card>
-              </Link>
+            <div className="flex justify-center items-center w-full">
+              <div className="grid grid-cols-3 gap-8 w-full max-w-3xl">
+                <Link to="/szkatulka-kosztownosci">
+                  <Card className="border-0 shadow-none cursor-pointer hover:opacity-80 transition-opacity" style={{ backgroundColor: 'transparent' }}>
+                    <CardContent className="p-8 text-center">
+                      <h3 className="text-sm md:text-base font-sans font-medium mb-4 min-h-[2rem] flex items-center justify-center" style={{ color: '#333333' }}>
+                        Szkatułka kosztowności
+                      </h3>
+                      <div className="w-12 h-px mx-auto" style={{ backgroundColor: '#E5E5E5' }}></div>
+                    </CardContent>
+                  </Card>
+                </Link>
+                
+                <Link to="/szczypta-soli">
+                  <Card className="border-0 shadow-none cursor-pointer hover:opacity-80 transition-opacity" style={{ backgroundColor: 'transparent' }}>
+                    <CardContent className="p-8 text-center">
+                      <h3 className="text-sm md:text-base font-sans font-medium mb-4 min-h-[2rem] flex items-center justify-center" style={{ color: '#333333' }}>
+                        Szczypta Soli
+                      </h3>
+                      <div className="w-12 h-px mx-auto" style={{ backgroundColor: '#E5E5E5' }}></div>
+                    </CardContent>
+                  </Card>
+                </Link>
+                
+                <Link to="/glosy-ktore-slychac">
+                  <Card className="border-0 shadow-none cursor-pointer hover:opacity-80 transition-opacity" style={{ backgroundColor: 'transparent' }}>
+                    <CardContent className="p-8 text-center">
+                      <h3 className="text-sm md:text-base font-sans font-medium mb-4 min-h-[2rem] flex items-center justify-center" style={{ color: '#333333' }}>
+                        Głosy które słychać
+                      </h3>
+                      <div className="w-12 h-px mx-auto" style={{ backgroundColor: '#E5E5E5' }}></div>
+                    </CardContent>
+                  </Card>
+                </Link>
+              </div>
             </div>
           </section>
 
