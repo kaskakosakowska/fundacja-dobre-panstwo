@@ -1,5 +1,3 @@
-
-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -33,7 +31,7 @@ const Index = () => {
               <Link to="/szkatulka-kosztownosci">
                 <Card className="border-0 shadow-none cursor-pointer hover:opacity-80 transition-opacity" style={{ backgroundColor: 'transparent' }}>
                   <CardContent className="p-8 text-center">
-                    <h3 className="text-base md:text-lg font-sans font-medium mb-4 min-h-[3rem] flex items-center justify-center" style={{ color: '#333333' }}>
+                    <h3 className="text-sm md:text-base font-sans font-medium mb-4 min-h-[2rem] flex items-center justify-center" style={{ color: '#333333' }}>
                       Szkatułka kosztowności
                     </h3>
                     <div className="w-12 h-px mx-auto" style={{ backgroundColor: '#E5E5E5' }}></div>
@@ -44,7 +42,7 @@ const Index = () => {
               <Link to="/szczypta-soli">
                 <Card className="border-0 shadow-none cursor-pointer hover:opacity-80 transition-opacity" style={{ backgroundColor: 'transparent' }}>
                   <CardContent className="p-8 text-center">
-                    <h3 className="text-base md:text-lg font-sans font-medium mb-4 min-h-[3rem] flex items-center justify-center" style={{ color: '#333333' }}>
+                    <h3 className="text-sm md:text-base font-sans font-medium mb-4 min-h-[2rem] flex items-center justify-center" style={{ color: '#333333' }}>
                       Szczypta Soli
                     </h3>
                     <div className="w-12 h-px mx-auto" style={{ backgroundColor: '#E5E5E5' }}></div>
@@ -55,7 +53,7 @@ const Index = () => {
               <Link to="/glosy-ktore-slychac">
                 <Card className="border-0 shadow-none cursor-pointer hover:opacity-80 transition-opacity" style={{ backgroundColor: 'transparent' }}>
                   <CardContent className="p-8 text-center">
-                    <h3 className="text-base md:text-lg font-sans font-medium mb-4 min-h-[3rem] flex items-center justify-center" style={{ color: '#333333' }}>
+                    <h3 className="text-sm md:text-base font-sans font-medium mb-4 min-h-[2rem] flex items-center justify-center" style={{ color: '#333333' }}>
                       Głosy które słychać
                     </h3>
                     <div className="w-12 h-px mx-auto" style={{ backgroundColor: '#E5E5E5' }}></div>
@@ -157,4 +155,3 @@ const Index = () => {
 };
 
 export default Index;
-
