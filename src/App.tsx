@@ -10,6 +10,7 @@ import SzczyptaSoli from "./pages/SzczyptaSoli";
 import GlosyKtoreSlychac from "./pages/GlosyKtoreSlychac";
 import ApiKnowledge from "./pages/ApiKnowledge";
 import ONas from "./pages/ONas";
+import PostTemplate from "./pages/PostTemplate";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -27,6 +28,7 @@ const App = () => (
           <Route path="/glosy-ktore-slychac" element={<GlosyKtoreSlychac />} />
           <Route path="/api-knowledge" element={<ApiKnowledge />} />
           <Route path="/o-nas" element={<ONas />} />
+          <Route path="/post-template" element={<PostTemplate />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
