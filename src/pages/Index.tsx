@@ -87,107 +87,66 @@ const Index = () => {
               </div>
             </div>
           </section>
-
-          {/* Contact Section */}
-          <section className="py-16">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-sans font-medium mb-6" style={{ color: '#333333' }}>
-                Kontakt
-              </h2>
-              <div className="w-16 h-px mx-auto mb-8" style={{ backgroundColor: '#E5E5E5' }}></div>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-12 max-w-3xl mx-auto">
-              <div>
-                <form className="space-y-6">
-                  <div>
-                    <Input 
-                      placeholder="Imię" 
-                      className="border-0 shadow-none p-4 text-base font-sans font-medium"
-                      style={{ 
-                        backgroundColor: 'white',
-                        color: '#333333'
-                      }}
-                    />
-                  </div>
-                  <div>
-                    <Input 
-                      placeholder="Email" 
-                      type="email" 
-                      className="border-0 shadow-none p-4 text-base font-sans font-medium"
-                      style={{ 
-                        backgroundColor: 'white',
-                        color: '#333333'
-                      }}
-                    />
-                  </div>
-                  <div>
-                    <Textarea 
-                      placeholder="Wiadomość" 
-                      className="border-0 shadow-none p-4 text-base font-sans font-medium min-h-[120px]"
-                      style={{ 
-                        backgroundColor: 'white',
-                        color: '#333333'
-                      }}
-                    />
-                  </div>
-                  <Button 
-                    className="w-full py-3 text-base font-sans font-medium border-0 shadow-none"
-                    style={{ 
-                      backgroundColor: '#0A2140',
-                      color: '#F6F4EF'
-                    }}
-                  >
-                    Wyślij
-                  </Button>
-                </form>
-              </div>
-
-              <div className="space-y-8">
-                <div className="flex items-start">
-                  <div className="w-10 h-10 rounded-full flex items-center justify-center mr-4 mt-1" style={{ backgroundColor: '#E5E5E5' }}>
-                    <Mail className="h-4 w-4" style={{ color: '#666666' }} />
-                  </div>
-                  <div>
-                    <h4 className="font-serif font-medium mb-1" style={{ color: '#333333' }}>Email</h4>
-                    <p className="font-sans font-medium" style={{ color: '#666666' }}>kontakt@example.com</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start">
-                  <div className="w-10 h-10 rounded-full flex items-center justify-center mr-4 mt-1" style={{ backgroundColor: '#E5E5E5' }}>
-                    <Phone className="h-4 w-4" style={{ color: '#666666' }} />
-                  </div>
-                  <div>
-                    <h4 className="font-serif font-medium mb-1" style={{ color: '#333333' }}>Telefon</h4>
-                    <p className="font-sans font-medium" style={{ color: '#666666' }}>+48 123 456 789</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start">
-                  <div className="w-10 h-10 rounded-full flex items-center justify-center mr-4 mt-1" style={{ backgroundColor: '#E5E5E5' }}>
-                    <MapPin className="h-4 w-4" style={{ color: '#666666' }} />
-                  </div>
-                  <div>
-                    <h4 className="font-serif font-medium mb-1" style={{ color: '#333333' }}>Lokalizacja</h4>
-                    <p className="font-sans font-medium" style={{ color: '#666666' }}>Warszawa, Polska</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
         </div>
       </main>
 
       {/* Footer */}
-      <footer className="py-8 px-6 mt-16">
+      <footer className="py-12 px-6 mt-16">
         <div className="container mx-auto max-w-4xl">
-          <div className="w-full h-px mb-6" style={{ backgroundColor: '#E5E5E5' }}></div>
-          <div className="flex justify-between items-center">
+          <div className="w-full h-px mb-8" style={{ backgroundColor: '#E5E5E5' }}></div>
+          
+          {/* Contact Information Container */}
+          <div className="mb-8">
+            <div 
+              className="p-6 rounded-lg backdrop-blur-sm max-w-2xl mx-auto"
+              style={{ 
+                backgroundColor: 'rgba(255, 255, 255, 0.5)',
+                boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)'
+              }}
+            >
+              <div className="grid md:grid-cols-3 gap-6">
+                <div className="flex items-center">
+                  <div className="w-8 h-8 rounded-full flex items-center justify-center mr-3" style={{ backgroundColor: '#E5E5E5' }}>
+                    <Mail className="h-4 w-4" style={{ color: '#666666' }} />
+                  </div>
+                  <div>
+                    <h4 className="font-serif font-medium text-sm" style={{ color: '#333333' }}>Email</h4>
+                    <p className="font-sans text-sm" style={{ color: '#666666' }}>kontakt@example.com</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-center">
+                  <div className="w-8 h-8 rounded-full flex items-center justify-center mr-3" style={{ backgroundColor: '#E5E5E5' }}>
+                    <Phone className="h-4 w-4" style={{ color: '#666666' }} />
+                  </div>
+                  <div>
+                    <h4 className="font-serif font-medium text-sm" style={{ color: '#333333' }}>Telefon</h4>
+                    <p className="font-sans text-sm" style={{ color: '#666666' }}>+48 123 456 789</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-center">
+                  <div className="w-8 h-8 rounded-full flex items-center justify-center mr-3" style={{ backgroundColor: '#E5E5E5' }}>
+                    <MapPin className="h-4 w-4" style={{ color: '#666666' }} />
+                  </div>
+                  <div>
+                    <h4 className="font-serif font-medium text-sm" style={{ color: '#333333' }}>Lokalizacja</h4>
+                    <p className="font-sans text-sm" style={{ color: '#666666' }}>Warszawa, Polska</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Footer Links and Copyright */}
+          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <p className="text-sm font-sans font-medium" style={{ color: '#666666' }}>
               © 2024 Fundacja Dobre Państwo. Wszystkie prawa zastrzeżone.
             </p>
             <div className="flex space-x-6">
+              <Link to="/o-nas" className="text-sm font-sans font-medium hover:opacity-70 transition-opacity" style={{ color: '#666666' }}>
+                O nas
+              </Link>
               <Link to="/api-knowledge" className="text-sm font-sans font-medium hover:opacity-70 transition-opacity" style={{ color: '#666666' }}>
                 API Knowledge
               </Link>
