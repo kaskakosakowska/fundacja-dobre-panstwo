@@ -140,7 +140,12 @@ const PostTemplate = () => {
               {/* PDF Embedder Container */}
               <Card className="shadow-lg" style={{ backgroundColor: 'rgba(255, 255, 255, 0.8)', height: '210px' }}>
                 <CardHeader>
-                  <CardTitle className="text-lg" style={{ color: '#333333' }}>
+                  <CardTitle className="text-lg flex items-center" style={{ color: '#333333' }}>
+                    <img 
+                      src="/lovable-uploads/ae91d7af-623f-450d-a983-ade57324b3db.png" 
+                      alt="bullet point" 
+                      className="w-4 h-4 mr-2"
+                    />
                     Pełna treść PDF
                   </CardTitle>
                 </CardHeader>
@@ -155,7 +160,12 @@ const PostTemplate = () => {
               {/* Audio Version Container */}
               <Card className="shadow-lg" style={{ backgroundColor: 'rgba(255, 255, 255, 0.8)', height: '210px' }}>
                 <CardHeader>
-                  <CardTitle className="text-lg" style={{ color: '#333333' }}>
+                  <CardTitle className="text-lg flex items-center" style={{ color: '#333333' }}>
+                    <img 
+                      src="/lovable-uploads/ae91d7af-623f-450d-a983-ade57324b3db.png" 
+                      alt="bullet point" 
+                      className="w-4 h-4 mr-2"
+                    />
                     Wersja audio
                   </CardTitle>
                 </CardHeader>
@@ -170,7 +180,12 @@ const PostTemplate = () => {
               {/* Mind Map Container */}
               <Card className="shadow-lg" style={{ backgroundColor: 'rgba(255, 255, 255, 0.8)', height: '210px' }}>
                 <CardHeader>
-                  <CardTitle className="text-lg" style={{ color: '#333333' }}>
+                  <CardTitle className="text-lg flex items-center" style={{ color: '#333333' }}>
+                    <img 
+                      src="/lovable-uploads/ae91d7af-623f-450d-a983-ade57324b3db.png" 
+                      alt="bullet point" 
+                      className="w-4 h-4 mr-2"
+                    />
                     Mapa pojęć
                   </CardTitle>
                 </CardHeader>
