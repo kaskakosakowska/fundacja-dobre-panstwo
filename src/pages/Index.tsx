@@ -20,7 +20,7 @@ const Index = () => {
             />
           </div>
           <h1 className="text-3xl font-light text-center" style={{ color: '#333333' }}>
-            Blog
+            Fundacja Dobre Państwo
           </h1>
         </div>
       </header>
@@ -164,7 +164,7 @@ const Index = () => {
           <div className="w-full h-px mb-6" style={{ backgroundColor: '#E5E5E5' }}></div>
           <div className="flex justify-between items-center">
             <p className="text-sm font-light" style={{ color: '#666666' }}>
-              © 2024 Blog. Wszystkie prawa zastrzeżone.
+              © 2024 Fundacja Dobre Państwo. Wszystkie prawa zastrzeżone.
             </p>
             <div className="flex space-x-6">
               <Link to="/api-knowledge" className="text-sm font-light hover:opacity-70 transition-opacity" style={{ color: '#666666' }}>
