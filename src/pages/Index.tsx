@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -68,11 +67,11 @@ const Index = () => {
           </section>
 
           {/* About Foundation Section */}
-          <section className="py-16">
+          <section className="py-8">
             <div className="max-w-3xl mx-auto">
               <div 
                 className="p-8 md:p-12 rounded-lg backdrop-blur-sm"
-                style={{ backgroundColor: 'rgba(255, 255, 255, 0.7)' }}
+                style={{ backgroundColor: 'rgba(255, 255, 255, 0.2)' }}
               >
                 <p className="text-base md:text-lg font-sans leading-relaxed text-justify" style={{ color: '#333333' }}>
                   Fundacja Dobre Państwo działa od 2018 roku jako organizacja non-profit, której misją jest budowanie mostów między obywatelami a instytucjami publicznymi. Wierzymy, że każdy głos ma znaczenie i że prawdziwa demokracja kwitnie wtedy, gdy ludzie aktywnie uczestniczą w życiu społecznym. Nasze działania skupiają się na trzech głównych obszarach: edukacji obywatelskiej, transparentności władzy oraz wspieraniu lokalnych inicjatyw społecznych.
