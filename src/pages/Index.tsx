@@ -26,7 +26,7 @@ const Index = () => {
         <div className="container mx-auto max-w-4xl">
           
           {/* Navigation to sections */}
-          <section className="py-6">
+          <section className="py-1">
             <div className="grid md:grid-cols-3 gap-8">
               <Link to="/szkatulka-kosztownosci">
                 <Card className="border-0 shadow-none cursor-pointer hover:opacity-80 transition-opacity" style={{ backgroundColor: 'transparent' }}>
