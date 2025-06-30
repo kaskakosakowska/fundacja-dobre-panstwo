@@ -1,7 +1,7 @@
-
 import { Link, useParams, useLocation } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const PostTemplate = () => {
   const { postId } = useParams();
@@ -49,6 +49,7 @@ const PostTemplate = () => {
     return posts[section]?.[postId] || { title: "Wpis nie znaleziony", content: "Nie udało się odnaleźć tego wpisu." };
   };
 
+  // Determine section from current path
   const getBackPath = () => {
     switch(section) {
       case 'szkatulka': return '/szkatulka-kosztownosci';
@@ -81,37 +82,48 @@ const PostTemplate = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Main Post Container */}
             <div className="lg:col-span-2">
-              <Card className="shadow-lg h-fit" style={{ backgroundColor: 'rgba(255, 255, 255, 0.8)' }}>
+              <Card className="shadow-lg" style={{ backgroundColor: 'rgba(255, 255, 255, 0.8)', minHeight: '600px' }}>
                 <CardHeader>
                   <CardTitle className="text-2xl mb-4" style={{ color: '#333333' }}>
                     {post.title}
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <div className="relative">
-                    {/* Image in top right corner */}
-                    <img 
-                      src="/lovable-uploads/a247c62f-0c85-460a-8ed0-b9c0be25623f.png" 
-                      alt="Post image" 
-                      className="float-right ml-6 mb-4 w-48 h-32 object-cover rounded-lg shadow-md"
-                    />
-                    
-                    {/* Post content */}
-                    <div className="text-base leading-relaxed" style={{ color: '#333333' }}>
-                      <p className="mb-4">
-                        {post.content}
-                      </p>
-                      <p className="mb-4">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                      </p>
-                      <p className="mb-4">
-                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                      </p>
-                      <p>
-                        Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.
-                      </p>
+                <CardContent className="h-full">
+                  <ScrollArea className="h-full max-h-[500px] pr-4">
+                    <div className="relative">
+                      {/* Image in top right corner */}
+                      <img 
+                        src="/lovable-uploads/a247c62f-0c85-460a-8ed0-b9c0be25623f.png" 
+                        alt="Post image" 
+                        className="float-right ml-6 mb-4 w-48 h-32 object-cover rounded-lg shadow-md"
+                      />
+                      
+                      {/* Post content */}
+                      <div className="text-base leading-relaxed" style={{ color: '#333333' }}>
+                        <p className="mb-4">
+                          {post.content}
+                        </p>
+                        <p className="mb-4">
+                          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                        </p>
+                        <p className="mb-4">
+                          Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        </p>
+                        <p className="mb-4">
+                          Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.
+                        </p>
+                        <p className="mb-4">
+                          Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+                        </p>
+                        <p className="mb-4">
+                          Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
+                        </p>
+                        <p>
+                          At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.
+                        </p>
+                      </div>
                     </div>
-                  </div>
+                  </ScrollArea>
                 </CardContent>
               </Card>
             </div>
@@ -119,7 +131,7 @@ const PostTemplate = () => {
             {/* Right Side Containers */}
             <div className="space-y-6">
               {/* PDF Embedder Container */}
-              <Card className="shadow-lg" style={{ backgroundColor: 'rgba(255, 255, 255, 0.8)' }}>
+              <Card className="shadow-lg" style={{ backgroundColor: 'rgba(255, 255, 255, 0.8)', height: '180px' }}>
                 <CardHeader>
                   <CardTitle className="text-lg" style={{ color: '#333333' }}>
                     Pełna treść PDF
@@ -134,7 +146,7 @@ const PostTemplate = () => {
               </Card>
 
               {/* Audio Version Container */}
-              <Card className="shadow-lg" style={{ backgroundColor: 'rgba(255, 255, 255, 0.8)' }}>
+              <Card className="shadow-lg" style={{ backgroundColor: 'rgba(255, 255, 255, 0.8)', height: '180px' }}>
                 <CardHeader>
                   <CardTitle className="text-lg" style={{ color: '#333333' }}>
                     Wersja audio
@@ -149,7 +161,7 @@ const PostTemplate = () => {
               </Card>
 
               {/* Mind Map Container */}
-              <Card className="shadow-lg" style={{ backgroundColor: 'rgba(255, 255, 255, 0.8)' }}>
+              <Card className="shadow-lg" style={{ backgroundColor: 'rgba(255, 255, 255, 0.8)', height: '240px' }}>
                 <CardHeader>
                   <CardTitle className="text-lg" style={{ color: '#333333' }}>
                     Mapa pojęć
