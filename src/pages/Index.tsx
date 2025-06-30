@@ -9,9 +9,9 @@ const Index = () => {
   return (
     <div className="min-h-screen font-sans" style={{ backgroundColor: '#F6F4EF' }}>
       {/* Header */}
-      <header className="py-8 px-6">
+      <header className="py-6 px-6">
         <div className="container mx-auto max-w-4xl">
-          <div className="flex justify-center mb-8">
+          <div className="flex justify-center mb-4">
             <img 
               src="/lovable-uploads/33c754c7-fd44-4b02-83a8-2126e21b4c8a.png" 
               alt="Fundacja Dobre Państwo Logo" 
@@ -26,7 +26,7 @@ const Index = () => {
         <div className="container mx-auto max-w-4xl">
           
           {/* Navigation to sections */}
-          <section className="py-8">
+          <section className="py-6">
             <div className="grid md:grid-cols-3 gap-8">
               <Link to="/szkatulka-kosztownosci">
                 <Card className="border-0 shadow-none cursor-pointer hover:opacity-80 transition-opacity" style={{ backgroundColor: 'transparent' }}>
@@ -64,7 +64,7 @@ const Index = () => {
           </section>
 
           {/* About Foundation Section */}
-          <section className="py-8">
+          <section className="py-12">
             <div className="max-w-3xl mx-auto">
               <div 
                 className="p-8 md:p-12 rounded-lg backdrop-blur-sm transform transition-all duration-300 hover:scale-105 hover:shadow-2xl"
@@ -87,7 +87,7 @@ const Index = () => {
       </main>
 
       {/* Footer */}
-      <footer className="py-12 px-6 mt-16">
+      <footer className="py-12 px-6 mt-12">
         <div className="container mx-auto max-w-4xl">
           <div className="w-full h-px mb-8" style={{ backgroundColor: '#E5E5E5' }}></div>
           
