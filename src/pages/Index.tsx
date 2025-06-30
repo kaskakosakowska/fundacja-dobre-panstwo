@@ -1,11 +1,11 @@
 
-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
+
 const Index = () => {
   return <div className="min-h-screen font-sans flex flex-col" style={{
     backgroundColor: '#F6F4EF'
@@ -119,62 +119,64 @@ const Index = () => {
           
           {/* Contact Information Container */}
           <div className="mb-8 flex justify-center">
-            <div className="p-6 rounded-lg backdrop-blur-sm max-w-3xl w-full" style={{
-            backgroundColor: 'rgba(255, 255, 255, 0.5)',
-            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)'
-          }}>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="flex items-center justify-center md:justify-start">
-                  <div className="w-8 h-8 rounded-full flex items-center justify-center mr-3" style={{
-                  backgroundColor: '#E5E5E5'
-                }}>
-                    <Mail className="h-4 w-4" style={{
-                    color: '#666666'
-                  }} />
+            <div className="max-w-4xl w-full">
+              <div className="p-6 rounded-lg backdrop-blur-sm" style={{
+                backgroundColor: 'rgba(255, 255, 255, 0.5)',
+                boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)'
+              }}>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div className="flex items-center justify-center md:justify-start">
+                    <div className="w-8 h-8 rounded-full flex items-center justify-center mr-3" style={{
+                    backgroundColor: '#E5E5E5'
+                  }}>
+                      <Mail className="h-4 w-4" style={{
+                      color: '#666666'
+                    }} />
+                    </div>
+                    <div>
+                      <h4 className="font-sans font-medium text-sm" style={{
+                      color: '#333333'
+                    }}>Email</h4>
+                      <p className="font-sans text-sm" style={{
+                      color: '#666666'
+                    }}>kontakt@example.com</p>
+                    </div>
                   </div>
-                  <div>
-                    <h4 className="font-sans font-medium text-sm" style={{
-                    color: '#333333'
-                  }}>Email</h4>
-                    <p className="font-sans text-sm" style={{
-                    color: '#666666'
-                  }}>kontakt@example.com</p>
+                  
+                  <div className="flex items-center justify-center md:justify-start">
+                    <div className="w-8 h-8 rounded-full flex items-center justify-center mr-3" style={{
+                    backgroundColor: '#E5E5E5'
+                  }}>
+                      <Phone className="h-4 w-4" style={{
+                      color: '#666666'
+                    }} />
+                    </div>
+                    <div>
+                      <h4 className="font-sans font-medium text-sm" style={{
+                      color: '#333333'
+                    }}>Telefon</h4>
+                      <p className="font-sans text-sm" style={{
+                      color: '#666666'
+                    }}>+48 123 456 789</p>
+                    </div>
                   </div>
-                </div>
-                
-                <div className="flex items-center justify-center md:justify-start">
-                  <div className="w-8 h-8 rounded-full flex items-center justify-center mr-3" style={{
-                  backgroundColor: '#E5E5E5'
-                }}>
-                    <Phone className="h-4 w-4" style={{
-                    color: '#666666'
-                  }} />
-                  </div>
-                  <div>
-                    <h4 className="font-sans font-medium text-sm" style={{
-                    color: '#333333'
-                  }}>Telefon</h4>
-                    <p className="font-sans text-sm" style={{
-                    color: '#666666'
-                  }}>+48 123 456 789</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-center justify-center md:justify-start">
-                  <div className="w-8 h-8 rounded-full flex items-center justify-center mr-3" style={{
-                  backgroundColor: '#E5E5E5'
-                }}>
-                    <MapPin className="h-4 w-4" style={{
-                    color: '#666666'
-                  }} />
-                  </div>
-                  <div>
-                    <h4 className="font-sans font-medium text-sm" style={{
-                    color: '#333333'
-                  }}>Lokalizacja</h4>
-                    <p className="font-sans text-sm" style={{
-                    color: '#666666'
-                  }}>Warszawa, Polska</p>
+                  
+                  <div className="flex items-center justify-center md:justify-start">
+                    <div className="w-8 h-8 rounded-full flex items-center justify-center mr-3" style={{
+                    backgroundColor: '#E5E5E5'
+                  }}>
+                      <MapPin className="h-4 w-4" style={{
+                      color: '#666666'
+                    }} />
+                    </div>
+                    <div>
+                      <h4 className="font-sans font-medium text-sm" style={{
+                      color: '#333333'
+                    }}>Lokalizacja</h4>
+                      <p className="font-sans text-sm" style={{
+                      color: '#666666'
+                    }}>Warszawa, Polska</p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -205,5 +207,5 @@ const Index = () => {
       </footer>
     </div>;
 };
-export default Index;
 
+export default Index;
