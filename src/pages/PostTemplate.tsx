@@ -1,4 +1,3 @@
-
 import { Link, useParams, useLocation } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -83,14 +82,14 @@ const PostTemplate = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Main Post Container */}
             <div className="lg:col-span-2">
-              <Card className="shadow-lg" style={{ backgroundColor: 'rgba(255, 255, 255, 0.8)', height: '636px' }}>
+              <Card className="shadow-lg" style={{ backgroundColor: 'rgba(255, 255, 255, 0.8)', height: '648px' }}>
                 <CardHeader>
                   <CardTitle className="text-2xl mb-4" style={{ color: '#333333' }}>
                     {post.title}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="h-full">
-                  <ScrollArea className="h-full max-h-[500px] pr-4">
+                  <ScrollArea className="h-full max-h-[520px] pr-4">
                     <div className="relative">
                       {/* Image in top right corner */}
                       <img 
@@ -132,7 +131,7 @@ const PostTemplate = () => {
             {/* Right Side Containers */}
             <div className="space-y-6">
               {/* PDF Embedder Container */}
-              <Card className="shadow-lg" style={{ backgroundColor: 'rgba(255, 255, 255, 0.8)', height: '200px' }}>
+              <Card className="shadow-lg" style={{ backgroundColor: 'rgba(255, 255, 255, 0.8)', height: '210px' }}>
                 <CardHeader>
                   <CardTitle className="text-lg" style={{ color: '#333333' }}>
                     Pełna treść PDF
@@ -147,7 +146,7 @@ const PostTemplate = () => {
               </Card>
 
               {/* Audio Version Container */}
-              <Card className="shadow-lg" style={{ backgroundColor: 'rgba(255, 255, 255, 0.8)', height: '200px' }}>
+              <Card className="shadow-lg" style={{ backgroundColor: 'rgba(255, 255, 255, 0.8)', height: '210px' }}>
                 <CardHeader>
                   <CardTitle className="text-lg" style={{ color: '#333333' }}>
                     Wersja audio
@@ -162,7 +161,7 @@ const PostTemplate = () => {
               </Card>
 
               {/* Mind Map Container */}
-              <Card className="shadow-lg" style={{ backgroundColor: 'rgba(255, 255, 255, 0.8)', height: '212px' }}>
+              <Card className="shadow-lg" style={{ backgroundColor: 'rgba(255, 255, 255, 0.8)', height: '210px' }}>
                 <CardHeader>
                   <CardTitle className="text-lg" style={{ color: '#333333' }}>
                     Mapa pojęć
