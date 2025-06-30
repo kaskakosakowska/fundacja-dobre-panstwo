@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -124,7 +125,7 @@ const Index = () => {
                   }} />
                   </div>
                   <div>
-                    <h4 className="font-serif font-medium text-sm" style={{
+                    <h4 className="font-sans font-medium text-sm" style={{
                     color: '#333333'
                   }}>Email</h4>
                     <p className="font-sans text-sm" style={{
@@ -142,7 +143,7 @@ const Index = () => {
                   }} />
                   </div>
                   <div>
-                    <h4 className="font-serif font-medium text-sm" style={{
+                    <h4 className="font-sans font-medium text-sm" style={{
                     color: '#333333'
                   }}>Telefon</h4>
                     <p className="font-sans text-sm" style={{
@@ -160,7 +161,7 @@ const Index = () => {
                   }} />
                   </div>
                   <div>
-                    <h4 className="font-serif font-medium text-sm" style={{
+                    <h4 className="font-sans font-medium text-sm" style={{
                     color: '#333333'
                   }}>Lokalizacja</h4>
                     <p className="font-sans text-sm" style={{
