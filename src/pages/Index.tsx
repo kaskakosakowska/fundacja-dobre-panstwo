@@ -58,7 +58,7 @@ const Index = () => {
                 <Card className="border-0 shadow-none cursor-pointer hover:opacity-80 transition-opacity" style={{ backgroundColor: 'transparent' }}>
                   <CardContent className="p-8 text-center">
                     <h3 className="text-lg md:text-xl font-sans font-medium mb-4 min-h-[3rem] flex items-center justify-center" style={{ color: '#333333' }}>
-                      Głosy, które słychać
+                      Głosy które słychać
                     </h3>
                     <div className="w-12 h-px mx-auto" style={{ backgroundColor: '#E5E5E5' }}></div>
                   </CardContent>
