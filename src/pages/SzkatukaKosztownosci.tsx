@@ -1,9 +1,7 @@
 
 import { Link } from "react-router-dom";
-import { ArrowLeft, FileText, Volume2, Map } from "lucide-react";
-import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from "@/components/ui/resizable";
+import { ArrowLeft } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { useState } from "react";
 
 const SzkatulaKosztownosci = () => {
@@ -27,6 +25,24 @@ const SzkatulaKosztownosci = () => {
       title: "Dotacje dla organizacji pozarządowych",
       summary: "Zestawienie dotacji przyznanych organizacjom non-profit w ostatnim kwartale...",
       content: "Kompletne zestawienie wszystkich dotacji przyznanych organizacjom pozarządowym, z podziałem na kategorie działalności i analizą efektywności wykorzystania środków."
+    },
+    {
+      id: "4",
+      title: "Koszty utrzymania przestrzeni publicznych",
+      summary: "Analiza wydatków na utrzymanie parków, placów i innych przestrzeni miejskich...",
+      content: "Szczegółowe zestawienie kosztów związanych z utrzymaniem terenów zielonych, konserwacją infrastruktury oraz planami modernizacji."
+    },
+    {
+      id: "5",
+      title: "Inwestycje w infrastrukturę cyfrową",
+      summary: "Przegląd wydatków na digitalizację miasta i rozwój e-usług dla mieszkańców...",
+      content: "Kompleksowa analiza inwestycji w technologie cyfrowe, systemy informatyczne oraz rozwój platform elektronicznych dla mieszkańców."
+    },
+    {
+      id: "6",
+      title: "Wydatki na ochronę środowiska",
+      summary: "Zestawienie środków przeznaczonych na działania proekologiczne i ochronę klimatu...",
+      content: "Szczegółowa analiza wydatków na projekty ekologiczne, odnawialne źródła energii oraz inicjatywy związane z ochroną środowiska naturalnego."
     }
   ];
 
@@ -45,128 +61,39 @@ const SzkatulaKosztownosci = () => {
         </div>
       </header>
 
-      {/* Main Content with Resizable Layout */}
+      {/* Main Content */}
       <main className="px-6 pb-16">
         <div className="container mx-auto max-w-7xl">
-          <ResizablePanelGroup direction="horizontal" className="min-h-[600px] rounded-lg border">
-            
-            {/* Main Content Panel - Posts */}
-            <ResizablePanel defaultSize={60} minSize={40}>
-              <Card className="h-full border-0 shadow-none" style={{ backgroundColor: 'rgba(255, 255, 255, 0.7)' }}>
-                <CardHeader>
-                  <CardTitle className="text-xl" style={{ color: '#333333' }}>
-                    Najnowsze wpisy
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  {posts.map((post) => (
-                    <div key={post.id} className="border-b pb-4 last:border-b-0">
-                      <h3 
-                        className="text-lg font-medium mb-2 cursor-pointer hover:opacity-70 transition-opacity"
-                        style={{ color: '#333333' }}
-                        onClick={() => setSelectedPost(selectedPost === post.id ? null : post.id)}
-                      >
-                        {post.title}
-                      </h3>
-                      <p className="text-sm mb-2" style={{ color: '#666666' }}>
-                        {post.summary}
+          <Card className="shadow-lg" style={{ backgroundColor: 'rgba(255, 255, 255, 0.8)' }}>
+            <CardHeader>
+              <CardTitle className="text-2xl" style={{ color: '#333333' }}>
+                Najnowsze wpisy
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              {posts.map((post) => (
+                <div key={post.id} className="border-b pb-6 last:border-b-0">
+                  <h3 
+                    className="text-xl font-medium mb-3 cursor-pointer hover:opacity-70 transition-opacity"
+                    style={{ color: '#333333' }}
+                    onClick={() => setSelectedPost(selectedPost === post.id ? null : post.id)}
+                  >
+                    {post.title}
+                  </h3>
+                  <p className="text-base mb-3 leading-relaxed" style={{ color: '#666666' }}>
+                    {post.summary}
+                  </p>
+                  {selectedPost === post.id && (
+                    <div className="mt-4 p-6 rounded-lg" style={{ backgroundColor: 'rgba(255, 255, 255, 0.6)' }}>
+                      <p className="text-base leading-relaxed" style={{ color: '#333333' }}>
+                        {post.content}
                       </p>
-                      {selectedPost === post.id && (
-                        <div className="mt-4 p-4 rounded-lg" style={{ backgroundColor: 'rgba(255, 255, 255, 0.5)' }}>
-                          <p className="text-sm leading-relaxed" style={{ color: '#333333' }}>
-                            {post.content}
-                          </p>
-                        </div>
-                      )}
                     </div>
-                  ))}
-                </CardContent>
-              </Card>
-            </ResizablePanel>
-
-            <ResizableHandle withHandle />
-
-            {/* Right Side Panel Group */}
-            <ResizablePanel defaultSize={40} minSize={30}>
-              <ResizablePanelGroup direction="vertical">
-                
-                {/* PDF Embedder Panel */}
-                <ResizablePanel defaultSize={33} minSize={20}>
-                  <Card className="h-full border-0 shadow-none m-2" style={{ backgroundColor: 'rgba(255, 255, 255, 0.7)' }}>
-                    <CardHeader className="pb-2">
-                      <CardTitle className="text-base flex items-center" style={{ color: '#333333' }}>
-                        <FileText className="h-4 w-4 mr-2" />
-                        Dokumenty PDF
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="text-center py-8">
-                        <FileText className="h-12 w-12 mx-auto mb-4 opacity-50" style={{ color: '#666666' }} />
-                        <p className="text-sm" style={{ color: '#666666' }}>
-                          Tutaj będzie embedder PDF
-                        </p>
-                        <Button variant="outline" className="mt-2" size="sm">
-                          Wybierz dokument
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </ResizablePanel>
-
-                <ResizableHandle withHandle />
-
-                {/* Text-to-Speech Panel */}
-                <ResizablePanel defaultSize={33} minSize={20}>
-                  <Card className="h-full border-0 shadow-none m-2" style={{ backgroundColor: 'rgba(255, 255, 255, 0.7)' }}>
-                    <CardHeader className="pb-2">
-                      <CardTitle className="text-base flex items-center" style={{ color: '#333333' }}>
-                        <Volume2 className="h-4 w-4 mr-2" />
-                        Narracja (TTS)
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="text-center py-4">
-                        <Volume2 className="h-8 w-8 mx-auto mb-3 opacity-50" style={{ color: '#666666' }} />
-                        <p className="text-xs mb-3" style={{ color: '#666666' }}>
-                          Odsłuchaj wybrany wpis
-                        </p>
-                        <Button variant="outline" size="sm" className="w-full">
-                          Odtwórz narrację
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </ResizablePanel>
-
-                <ResizableHandle withHandle />
-
-                {/* Concept Map Panel */}
-                <ResizablePanel defaultSize={34} minSize={20}>
-                  <Card className="h-full border-0 shadow-none m-2" style={{ backgroundColor: 'rgba(255, 255, 255, 0.7)' }}>
-                    <CardHeader className="pb-2">
-                      <CardTitle className="text-base flex items-center" style={{ color: '#333333' }}>
-                        <Map className="h-4 w-4 mr-2" />
-                        Mapa pojęć
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="text-center py-4">
-                        <Map className="h-8 w-8 mx-auto mb-3 opacity-50" style={{ color: '#666666' }} />
-                        <p className="text-xs mb-3" style={{ color: '#666666' }}>
-                          Wizualizacja powiązań
-                        </p>
-                        <Button variant="outline" size="sm" className="w-full">
-                          Pokaż mapę
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </ResizablePanel>
-
-              </ResizablePanelGroup>
-            </ResizablePanel>
-
-          </ResizablePanelGroup>
+                  )}
+                </div>
+              ))}
+            </CardContent>
+          </Card>
         </div>
       </main>
 
