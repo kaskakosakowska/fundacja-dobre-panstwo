@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -37,16 +36,14 @@ const Index = () => {
         <div className="container mx-auto max-w-6xl">
           <div className="flex justify-center">
             <div className="max-w-4xl w-full">
-              <div className="p-4 rounded-lg backdrop-blur-sm mx-auto" style={{
+              <div className="p-4 rounded-lg backdrop-blur-sm mx-auto relative" style={{
                 backgroundColor: 'rgba(255, 255, 255, 0.5)',
                 boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)'
               }}>
                 <img src="/lovable-uploads/33c754c7-fd44-4b02-83a8-2126e21b4c8a.png" alt="Fundacja Dobre Państwo Logo" className="w-60 h-60 object-contain drop-shadow-lg mx-auto mb-4" />
                 
-                {/* Editable Images Container */}
-                <div className="mt-4">
-                  <EditableImageContainer initialImages={initialImages} />
-                </div>
+                {/* Editable Images Container - now inside the same container as logo */}
+                <EditableImageContainer initialImages={initialImages} />
               </div>
             </div>
           </div>
