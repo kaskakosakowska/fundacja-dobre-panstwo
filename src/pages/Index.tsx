@@ -29,7 +29,7 @@ const Index = () => {
                   <Card className="border-0 shadow-none cursor-pointer hover:opacity-80 transition-opacity h-full" style={{
                   backgroundColor: 'transparent'
                 }}>
-                    <CardContent className="p-6 text-center flex flex-col justify-center h-full ml-3">
+                    <CardContent className="p-6 text-center flex flex-col justify-center h-full ml-10">
                       <h3 style={{
                       color: '#333333'
                     }} className="text-xs font-sans mb-2 min-h-[2.5rem] flex items-center justify-center leading-tight font-semibold text-zinc-700 md:text-lg px-[2px]">
