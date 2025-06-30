@@ -1,4 +1,5 @@
 
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -13,7 +14,12 @@ const Index = () => {
       <header className="py-4 px-6 flex-shrink-0">
         <div className="container mx-auto max-w-6xl">
           <div className="flex justify-center">
-            <img src="/lovable-uploads/33c754c7-fd44-4b02-83a8-2126e21b4c8a.png" alt="Fundacja Dobre Państwo Logo" className="w-80 h-80 object-contain drop-shadow-lg" />
+            <div className="p-8 md:p-12 rounded-lg backdrop-blur-sm" style={{
+              backgroundColor: 'rgba(255, 255, 255, 0.7)',
+              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.05)'
+            }}>
+              <img src="/lovable-uploads/33c754c7-fd44-4b02-83a8-2126e21b4c8a.png" alt="Fundacja Dobre Państwo Logo" className="w-80 h-80 object-contain drop-shadow-lg" />
+            </div>
           </div>
         </div>
       </header>
@@ -198,3 +204,4 @@ const Index = () => {
     </div>;
 };
 export default Index;
+
