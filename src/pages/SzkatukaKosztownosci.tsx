@@ -73,23 +73,32 @@ const SzkatulaKosztownosci = () => {
             <CardContent className="space-y-6">
               {posts.map((post) => (
                 <div key={post.id} className="border-b pb-6 last:border-b-0">
-                  <h3 
-                    className="text-xl font-medium mb-3 cursor-pointer hover:opacity-70 transition-opacity"
-                    style={{ color: '#333333' }}
-                    onClick={() => setSelectedPost(selectedPost === post.id ? null : post.id)}
-                  >
-                    {post.title}
-                  </h3>
-                  <p className="text-base mb-3 leading-relaxed" style={{ color: '#666666' }}>
-                    {post.summary}
-                  </p>
-                  {selectedPost === post.id && (
-                    <div className="mt-4 p-6 rounded-lg" style={{ backgroundColor: 'rgba(255, 255, 255, 0.6)' }}>
-                      <p className="text-base leading-relaxed" style={{ color: '#333333' }}>
-                        {post.content}
+                  <div className="flex items-start gap-3">
+                    <img 
+                      src="/lovable-uploads/a247c62f-0c85-460a-8ed0-b9c0be25623f.png" 
+                      alt="Logo" 
+                      className="w-5 h-5 mt-1 flex-shrink-0"
+                    />
+                    <div className="flex-1">
+                      <h3 
+                        className="text-xl font-medium mb-3 cursor-pointer hover:opacity-70 transition-opacity"
+                        style={{ color: '#333333' }}
+                        onClick={() => setSelectedPost(selectedPost === post.id ? null : post.id)}
+                      >
+                        {post.title}
+                      </h3>
+                      <p className="text-base mb-3 leading-relaxed" style={{ color: '#666666' }}>
+                        {post.summary}
                       </p>
+                      {selectedPost === post.id && (
+                        <div className="mt-4 p-6 rounded-lg" style={{ backgroundColor: 'rgba(255, 255, 255, 0.6)' }}>
+                          <p className="text-base leading-relaxed" style={{ color: '#333333' }}>
+                            {post.content}
+                          </p>
+                        </div>
+                      )}
                     </div>
-                  )}
+                  </div>
                 </div>
               ))}
             </CardContent>
