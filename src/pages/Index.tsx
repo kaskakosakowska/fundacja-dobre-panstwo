@@ -21,8 +21,20 @@ const Index = () => {
       <main className="px-6">
         <div className="container mx-auto max-w-4xl">
           
-          {/* Section 1: Welcome */}
+          {/* Section 1: Welcome with Logo */}
           <section className="py-16 text-center">
+            <div className="flex justify-center space-x-8 mb-12">
+              <img 
+                src="/lovable-uploads/3cf638fc-3b37-42bd-b80b-627a93770225.png" 
+                alt="Logo Green" 
+                className="w-24 h-24 object-contain"
+              />
+              <img 
+                src="/lovable-uploads/4cf592fd-84c5-4d45-a220-e3947332288c.png" 
+                alt="Logo Silver" 
+                className="w-24 h-24 object-contain"
+              />
+            </div>
             <h2 className="text-4xl font-light mb-6" style={{ color: '#333333' }}>
               Witaj
             </h2>
@@ -127,7 +139,7 @@ const Index = () => {
                   <Button 
                     className="w-full py-3 text-base font-light border-0 shadow-none"
                     style={{ 
-                      backgroundColor: '#333333',
+                      backgroundColor: '#0A2140',
                       color: '#F6F4EF'
                     }}
                   >
