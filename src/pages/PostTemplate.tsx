@@ -82,14 +82,14 @@ const PostTemplate = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Main Post Container */}
             <div className="lg:col-span-2">
-              <Card className="shadow-lg" style={{ backgroundColor: 'rgba(255, 255, 255, 0.8)', height: '648px' }}>
+              <Card className="shadow-lg" style={{ backgroundColor: 'rgba(255, 255, 255, 0.8)', height: '678px' }}>
                 <CardHeader>
                   <CardTitle className="text-2xl mb-4" style={{ color: '#333333' }}>
                     {post.title}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="h-full">
-                  <ScrollArea className="h-full max-h-[520px] pr-4">
+                  <ScrollArea className="h-full max-h-[550px] pr-4">
                     <div className="relative">
                       {/* Image in top right corner */}
                       <img 
