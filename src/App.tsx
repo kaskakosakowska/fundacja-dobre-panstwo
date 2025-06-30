@@ -29,6 +29,12 @@ const App = () => (
           <Route path="/api-knowledge" element={<ApiKnowledge />} />
           <Route path="/o-nas" element={<ONas />} />
           <Route path="/post-template" element={<PostTemplate />} />
+          
+          {/* Routes for individual posts */}
+          <Route path="/szkatulka-kosztownosci/:postId" element={<PostTemplate />} />
+          <Route path="/szczypta-soli/:postId" element={<PostTemplate />} />
+          <Route path="/glosy-ktore-slychac/:postId" element={<PostTemplate />} />
+          
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

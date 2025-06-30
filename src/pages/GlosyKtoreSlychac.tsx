@@ -80,16 +80,33 @@ const GlosyKtoreSlychac = () => {
                       className="w-5 h-5 mt-1 flex-shrink-0"
                     />
                     <div className="flex-1">
-                      <h3 
-                        className="text-xl font-medium mb-3 cursor-pointer hover:opacity-70 transition-opacity"
-                        style={{ color: '#333333' }}
-                        onClick={() => setSelectedPost(selectedPost === post.id ? null : post.id)}
-                      >
-                        {post.title}
-                      </h3>
+                      <Link to={`/glosy-ktore-slychac/${post.id}`}>
+                        <h3 
+                          className="text-xl font-medium mb-3 cursor-pointer hover:opacity-70 transition-opacity"
+                          style={{ color: '#333333' }}
+                        >
+                          {post.title}
+                        </h3>
+                      </Link>
                       <p className="text-base mb-3 leading-relaxed" style={{ color: '#666666' }}>
                         {post.summary}
                       </p>
+                      <div className="flex gap-4 items-center">
+                        <Link 
+                          to={`/glosy-ktore-slychac/${post.id}`}
+                          className="text-sm hover:opacity-70 transition-opacity"
+                          style={{ color: '#666666' }}
+                        >
+                          Czytaj więcej →
+                        </Link>
+                        <button
+                          className="text-sm hover:opacity-70 transition-opacity"
+                          style={{ color: '#666666' }}
+                          onClick={() => setSelectedPost(selectedPost === post.id ? null : post.id)}
+                        >
+                          {selectedPost === post.id ? 'Zwiń podgląd' : 'Podgląd'}
+                        </button>
+                      </div>
                       {selectedPost === post.id && (
                         <div className="mt-4 p-6 rounded-lg" style={{ backgroundColor: 'rgba(255, 255, 255, 0.6)' }}>
                           <p className="text-base leading-relaxed" style={{ color: '#333333' }}>
@@ -111,7 +128,7 @@ const GlosyKtoreSlychac = () => {
         <div className="container mx-auto max-w-7xl">
           <div className="w-full h-px mb-6" style={{ backgroundColor: '#E5E5E5' }}></div>
           <p className="text-center text-sm font-light" style={{ color: '#666666' }}>
-            © 2024 Portfolio. Stworzone z myślą o prostocie.
+            © 2024 Portfolio. Strorzone z myślą o prostocie.
           </p>
         </div>
       </footer>
