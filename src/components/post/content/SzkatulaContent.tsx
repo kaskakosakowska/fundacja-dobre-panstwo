@@ -214,6 +214,132 @@ export const SzkatulaContent = ({ post, postId }: SzkatulaContentProps) => {
         </div>
       );
 
+    case 'zjawisko-alt-right':
+      return (
+        <div className="prose prose-lg max-w-none">
+          <h2 className="text-xl font-semibold mb-4" style={{ color: '#333333' }}>
+            Między memem a metapolityką
+          </h2>
+          <p className="mb-4 text-justify">
+            Alt-Right to zjawisko, które wymyka się tradycyjnym kategoriom politycznym. To ruch, który narodził się w internetowych otchłaniach, żywi się memami i ironia, ale prowadzi do realnych konsekwencji politycznych. To polityka post-ideologiczna, która paradoksalnie jest głęboko ideologiczna.
+          </p>
+          <p className="mb-6 text-justify">
+            W sercu Alt-Right leży przekonanie, że tradycyjna polityka to teatr, a prawdziwa władza realizuje się przez kulturę. Stąd fascynacja metapolityką - strategią zmiany społecznej przez przemianę kulturową, która ma poprzedzać i umożliwić przemianę polityczną.
+          </p>
+          <h3 className="text-lg font-semibold mb-3" style={{ color: '#333333' }}>
+            Mem jako broń polityczna
+          </h3>
+          <p className="mb-6 text-justify">
+            Alt-Right odkryła potencjał memów jako narzędzi politycznych. Mem to nie tylko żart - to skondensowana forma kulturowej inżynierii, która może wpływać na sposób myślenia i postrzegania rzeczywistości. Przez ironie i prowokację Alt-Right udało się przeniknąć do mainstreamu i wpłynąć na dyskurs publiczny.
+          </p>
+        </div>
+      );
+
+    case 'zbiorowe-zaprogramowanie-umyslu':
+      return (
+        <div className="prose prose-lg max-w-none">
+          <h2 className="text-xl font-semibold mb-4" style={{ color: '#333333' }}>
+            O wymiarach kultury narodowej według Hofstede
+          </h2>
+          <p className="mb-4 text-justify">
+            Geert Hofstede rewolucjonizował nasze rozumienie różnic kulturowych, wprowadzając koncepcję "zbiorowego zaprogramowania umysłu". Według niego, kultura narodowa to mentalne oprogramowanie, które różnicuje grupy i społeczeństwa.
+          </p>
+          <p className="mb-6 text-justify">
+            Hofstede wyróżnił sześć wymiarów kultury: dystans władzy, unikanie niepewności, indywidualizm vs kolektywizm, męskość vs kobiecość, orientacja długoterminowa oraz pobłażliwość. Te wymiary wyjaśniają, dlaczego różne społeczeństwa funkcjonują inaczej.
+          </p>
+          <h3 className="text-lg font-semibold mb-3" style={{ color: '#333333' }}>
+            Kulturowa mapa świata
+          </h3>
+          <p className="mb-6 text-justify">
+            Teoria Hofstede tworzy kulturową mapę świata, która pomaga zrozumieć różnice w zarządzaniu, polityce, edukacji czy relacjach międzyludzkich. To narzędzie, które umożliwia świadome nawigowanie w zglobalizowanym świecie.
+          </p>
+        </div>
+      );
+
+    case 'miedzy-echem-a-zwierciadlem':
+      return (
+        <div className="prose prose-lg max-w-none">
+          <h2 className="text-xl font-semibold mb-4" style={{ color: '#333333' }}>
+            Esej o percepcji i rzeczywistości
+          </h2>
+          <p className="mb-4 text-justify">
+            Między echem a zwierciadłem rozgrywa się dramat ludzkiej percepcji. Echo to dźwięk, który powraca do nas zniekształcony przez przestrzeń i czas. Zwierciadło to obraz, który odbija się w nas, ale odwrócony i pozbawiony głębi. Obie metafory mówią o tym samym: o niemożliwości bezpośredniego dostępu do rzeczywistości.
+          </p>
+          <p className="mb-6 text-justify">
+            Człowiek skazany jest na pośrednictwo swoich zmysłów, języka, kultury. Nie doświadczamy świata bezpośrednio - doświadczamy jego interpretacji, przekładów, reprezentacji. Pytanie brzmi: czy w tej grze odbić i ech możemy się jeszcze przybliżyć do prawdy?
+          </p>
+          <h3 className="text-lg font-semibold mb-3" style={{ color: '#333333' }}>
+            Epistemologia cienia
+          </h3>
+          <p className="mb-6 text-justify">
+            Platońska jaskinia nadal jest aktualną metaforą ludzkiej kondycji. Widzimy cienie na ścianie i bierzemy je za rzeczywistość. Ale czy wyjście z jaskini oznacza dotarcie do prawdy, czy tylko zamianę jednych cieni na inne, bardziej wyrafinowane?
+          </p>
+        </div>
+      );
+
+    case 'dlug-jako-przemoc-uswiecona':
+      return (
+        <div className="prose prose-lg max-w-none">
+          <h2 className="text-xl font-semibold mb-4" style={{ color: '#333333' }}>
+            Krytyka współczesnego systemu finansowego
+          </h2>
+          <p className="mb-4 text-justify">
+            Dług w współczesnym kapitalizmie to nie tylko relacja ekonomiczna - to forma społecznej kontroli. David Graeber pokazał, że dług zawsze był narzędziem władzy, sposobem na podporządkowanie jednych ludzi drugim. Dzisiejszy system finansowy doprowadził tę logikę do perfekcji.
+          </p>
+          <p className="mb-6 text-justify">
+            Współczesny dług to przemoc uświęcona przez ekonomię. To przyszłość sprzedana na rzecz teraźniejszości, przyszłe pokolenia obciążone decyzjami dzisiejszych. To mechanizm, który przekształca wolnych ludzi w dłużników - a więc w nowoczesnych niewolników.
+          </p>
+          <h3 className="text-lg font-semibold mb-3" style={{ color: '#333333' }}>
+            Moralna ekonomia długu
+          </h3>
+          <p className="mb-6 text-justify">
+            Dług niesie ze sobą moralny ciężar. "Oddać dług" to imperatyw etyczny, który przekształca relacje społeczne w relacje ekonomiczne. Ale czy każdy dług rzeczywiście powinien być spłacony? Historia pokazuje, że jubileuszowe umorzenie długów było stałym elementem starożytnych cywilizacji.
+          </p>
+        </div>
+      );
+
+    case 'wszystko-plynie-nieregularnie':
+      return (
+        <div className="prose prose-lg max-w-none">
+          <h2 className="text-xl font-semibold mb-4" style={{ color: '#333333' }}>
+            Esej o niestabilności współczesnego świata
+          </h2>
+          <p className="mb-4 text-justify">
+            "Panta rhei" - wszystko płynie, mawiał Heraklit. Ale współczesne "wszystko płynie" ma inny charakter niż starożytna mądrość o zmienności. Dzisiejsze płynięcie jest nieregularne, chaotyczne, nieprzewidywalne. To nie majestatyczny nurt rzeki, lecz turbulencje dzikiego strumienia.
+          </p>
+          <p className="mb-6 text-justify">
+            Nieregularność stała się normą. W ekonomii, polityce, kulturze, technologii - wszędzie dominuje logika przyspieszenia, przerwania, dyskontinuacji. Stabilność jest dziś luksusem, który mogą sobie pozwolić tylko nieliczni.
+          </p>
+          <h3 className="text-lg font-semibold mb-3" style={{ color: '#333333' }}>
+            Życie w turbulencjach
+          </h3>
+          <p className="mb-6 text-justify">
+            Jak żyć w świecie, który nieustannie się zmienia? Jak planować przyszłość, gdy jedyną stałą jest zmiana? Współczesny człowiek musi nauczyć się nawigować w turbulencjach, znajdować stabilność w niestabilności, tworzyć sens w chaosie.
+          </p>
+        </div>
+      );
+
+    case 'utopia-sznurka-pieczatki':
+      return (
+        <div className="prose prose-lg max-w-none">
+          <h2 className="text-xl font-semibold mb-4" style={{ color: '#333333' }}>
+            Krytyka biurokratyzacji
+          </h2>
+          <p className="mb-4 text-justify">
+            Utopia sznurka i pieczątki to marzenie o świecie, w którym wszystko można uporządkować, skatalogować, urzędowo załatwić. To wiara w zbawczą moc procedur, formularzy, pieczątek i sznurków biurokratycznych. To świat, w którym życie zostaje zredukowane do administracji.
+          </p>
+          <p className="mb-6 text-justify">
+            Biurokracja obiecuje racjonalność, efektywność, sprawiedliwość. W praktyce często prowadzi do absurdu, paraliżu, dehumanizacji. Sznurek, który miał porządkować, kończy się duszeniem. Pieczątka, która miała potwierdzać, kończy się negowaniem.
+          </p>
+          <h3 className="text-lg font-semibold mb-3" style={{ color: '#333333' }}>
+            Paralizator jako metafora
+          </h3>
+          <p className="mb-6 text-justify">
+            Paralizator w tytule to nie tylko broń - to metafora biurokratycznego systemu, który poraża inicjatywę, kreatywność, spontaniczność. System, który miał służyć człowiekowi, kończy go unieruchamiając.
+          </p>
+        </div>
+      );
+
     case 'ekonomiczne-niewolnictwo-xxi-wieku':
       return (
         <div className="prose prose-lg max-w-none">
