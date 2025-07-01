@@ -146,6 +146,60 @@ export const PostContent = ({ post, section, postId }: PostContentProps) => {
             <p className="mt-12 mb-6 text-justify">
               Saamowie protestują nie dlatego, że są przeciwnikami energii odnawialnej. Protestują, bo wiedzą, że nie można niszczyć jednego świata, by zbudować inny, który ma być zielony tylko z wierzchu. Widzieli już tamę w Alcie. Widzieli pałki w Oslo. Widzieli, jak pod pozorem transformacji energetycznej powraca demon kolonizacji – grabież przebrana w zielony PR i wykresy rentowności.
             </p>
+            <h3 className="text-lg font-semibold mb-3" style={{ color: '#333333' }}>
+              Ziemia należy do przyszłych pokoleń
+            </h3>
+            <p className="mb-4 text-justify">
+              Saamski światopogląd głosi, że ziemia nie należy do nas – my należymy do ziemi. To fundamentalna różnica w myśleniu o własności, rozwoju i odpowiedzialności. Gdy rząd norweski wydaje koncesje na budowę farm wiatrowych na terenach wypasu reniferów, łamie nie tylko międzynarodowe prawo, ale i rdzenną mądrość o równowadze między potrzebami człowieka a prawami natury.
+            </p>
+            <p className="mb-6 text-justify">
+              To, co dzieje się w Fosen, to mikrokosmos globalnej walki o sprawiedliwość klimatyczną. Ci, którzy najmniej przyczynili się do kryzysu klimatycznego, ponoszą jego największe koszty. Ludy rdzenne, stanowiące mniej niż 5% światowej populacji, chronią 80% bioróżnorodności planety. To nie przypadek – to efekt tysięcy lat życia w harmonii z naturą.
+            </p>
+          </div>
+        );
+
+      case 'kryzys-kompetencji':
+        return (
+          <div className="prose prose-lg max-w-none">
+            <h2 className="text-xl font-semibold mb-4" style={{ color: '#333333' }}>
+              Niekompetencja jako taktyka polityczna
+            </h2>
+            <p className="mb-4 text-justify">
+              W nowoczesnej polityce niekompetencja przestała być wadą – stała się strategią. Politycy celowo demonstrują brak wiedzy, by uniknąć odpowiedzialności za niepopularne decyzje. "Nie wiedziałem" brzmi lepiej niż "świadomie zignorowałem".
+            </p>
+            <p className="mb-6 text-justify">
+              Ten mechanizm działa dwutorowo: z jednej strony tworzy alibi dla błędów w zarządzaniu, z drugiej strony buduje pozorną bliskość z wyborcami, którzy "też nie są ekspertami". Kryzys kompetencji to nie przypadek, lecz przemyślana strategia polityczna degradacji standardów publicznego zarządzania.
+            </p>
+          </div>
+        );
+
+      case 'panstwo-jako-program':
+        return (
+          <div className="prose prose-lg max-w-none">
+            <h2 className="text-xl font-semibold mb-4" style={{ color: '#333333' }}>
+              Algorytmizacja życia publicznego
+            </h2>
+            <p className="mb-4 text-justify">
+              Współczesne państwo coraz bardziej przypomina wielki program komputerowy, w którym obywatele stają się użytkownikami, a administracja – zestawem algorytmów. E-usługi, cyfryzacja procesów i automatyzacja decyzji administracyjnych to pozornie neutralne narzędzia modernizacji.
+            </p>
+            <p className="mb-6 text-justify">
+              Jednak za fasadą efektywności kryje się fundamentalna zmiana w relacji państwo-obywatel. Zamiast dialogu mamy interfejs, zamiast dyskrecjonalności urzędniczej – sztywną logikę algorytmu. Państwo-program nie zna wyjątków, nie rozumie kontekstu, nie bierze pod uwagę ludzkich dramatów. Jest sprawne, ale nie jest mądre.
+            </p>
+          </div>
+        );
+
+      case 'kultura-jako-substancja':
+        return (
+          <div className="prose prose-lg max-w-none">
+            <h2 className="text-xl font-semibold mb-4" style={{ color: '#333333' }}>
+              Kultura nie jest ozdobą, lecz fundamentem
+            </h2>
+            <p className="mb-4 text-justify">
+              W dobie instrumentalizacji wszystkiego kultura często jest traktowana jako ozdoba, dodatek do "prawdziwych" spraw gospodarczych i politycznych. To błąd – kultura to nie ornament na torcie cywilizacji, lecz jej fundament. To ona określa, jak myślimy o sprawiedliwości, władzy, wspólnocie.
+            </p>
+            <p className="mb-6 text-justify">
+              Gdy traktujemy kulturę jak dodatek, degradujemy ją do rozrywki i konsumpcji. Tymczasem kultura to żywa tkanina sensów, która umożliwia społeczeństwu rozumienie samego siebie. Bez kultury jako substancji wspólnoty nie ma demokracji deliberacyjnej, nie ma również zrównoważonego rozwoju.
+            </p>
           </div>
         );
 
