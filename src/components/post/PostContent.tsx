@@ -22,7 +22,7 @@ export const PostContent = ({ post, section, postId }: PostContentProps) => {
             <img 
               src={zaufanieImage} 
               alt="Kapitał społeczny i zaufanie" 
-              className="float-right ml-6 mb-4 w-48 h-48 object-cover rounded-lg shadow-md"
+              className="float-right ml-6 w-48 h-48 object-cover rounded-lg shadow-md"
             />
             W społeczeństwach pozbawionych zaufania nie ma niczego stabilnego. Ani polityki, ani deliberacji, ani nawet dobrego sąsiedztwa. Kapitał społeczny, choć brzmi jak ekonomiczny żargon wciśnięty w ramy kultury, jest jednym z najważniejszych wskaźników zdrowia społecznego. To zasób niewidzialny, lecz wszechobecny – konstytuuje to, co wspólne, pozwala działać razem, uczy współodpowiedzialności.
           </p>
