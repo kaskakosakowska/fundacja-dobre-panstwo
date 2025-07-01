@@ -1,6 +1,9 @@
 import { Post } from "@/hooks/usePostData";
 import zaufanieImage from "@/assets/images/zaufanie-ktore-wiednie.webp";
 import tpmImage from "@/assets/images/total-participation-management.webp";
+import ekonomiczneImage from "@/assets/images/ekonomiczne-niewolnictwo.webp";
+import rzecznikImage from "@/assets/images/zderegulujmy-rzecznika.png";
+import ziemiaImage from "@/assets/images/gdy-ziemia-krzyczy.png";
 
 interface PostContentProps {
   post: Post;
@@ -101,12 +104,12 @@ export const PostContent = ({ post, section, postId }: PostContentProps) => {
             <img 
               src={tpmImage} 
               alt="Total Participation Management" 
-              className="float-right ml-6 mb-4 w-32 h-32 object-cover rounded-lg shadow-md"
+              className="float-right ml-6 mb-6 w-48 h-48 object-cover rounded-lg shadow-md"
             />
             Total Participation Management wyrasta z personalizmu Emmanuela Mouniera, Karola Wojtyły i Jacques'a Maritaina, dla których osoba ludzka jest celem samym w sobie. W duchu dialogicznej antropologii Martina Bubera uczestnictwo stanowi warunek realizacji ludzkiej wolności, a nie jedynie technikę zarządzania.
           </p>
           
-          <p className="mb-6">
+          <p className="mt-12 mb-6 text-justify">
             TPM czerpie również z krytyki alienacji pracy u Karola Marksa oraz z koncepcji <em>learning organization</em> Petera Senge'a, podkreślając, że wiedza rodzi się w relacji, nie w izolacji.
           </p>
           
@@ -152,7 +155,128 @@ export const PostContent = ({ post, section, postId }: PostContentProps) => {
         </div>
       );
     }
+    
+    if (postId === 'ekonomiczne-niewolnictwo-xxi-wieku' && section === 'szkatulka') {
+      return (
+        <div className="prose prose-lg max-w-none">
+          <h2 className="text-xl font-semibold mb-4" style={{ color: '#333333' }}>
+            Nie ma pracy – jest marka. Nie ma człowieka – jest podwykonawca.
+          </h2>
+          
+          <p className="mb-4 text-justify">
+            <img 
+              src={ekonomiczneImage} 
+              alt="Ekonomiczne niewolnictwo XXI wieku" 
+              className="float-right ml-6 mb-6 w-48 h-48 object-cover rounded-lg shadow-md"
+            />
+            Współczesny outsourcing pracowniczy nie przypomina przenoszenia produkcji sprzed dekady; to ucieczka od pracy, o której ostrzegała Naomi Klein w „No Logo". Korporacje, od Amazona po Zarę, porzuciły odpowiedzialność za zatrudnienie i zamieniły fabryki w globalne cienie, tworząc strefy wolnego handlu oraz cyfrowe platformy, w których pracownik staje się wyłącznie kosztem do zminimalizowania.
+          </p>
+          
+          <p className="mt-12 mb-6 text-justify">
+            Marka zastąpiła człowieka, zysk zastąpił etykę, a wielkie firmy świętują kolejne rekordy zysków dzięki redukcji etatów. Fabryki przeniesiono do Azji lub Ameryki Łacińskiej, lecz prawa pracownicze wywieziono także z Warszawy, Berlina i Paryża.
+          </p>
+          
+          <h3 className="text-lg font-semibold mb-3" style={{ color: '#333333' }}>
+            Outsourcing jako rytuał wykluczenia
+          </h3>
+          
+          <p className="mb-6 text-justify">
+            Umowy śmieciowe, samozatrudnienie i „permatemps" budują nową klasę – <strong>prekariat</strong> – której egzystencja jest z definicji tymczasowa, choć praca nigdy się nie kończy. To ekonomiczne niewolnictwo XXI wieku, gdzie wolność to tylko hasło marketingowe.
+          </p>
+          
+          <h3 className="text-lg font-semibold mb-3" style={{ color: '#333333' }}>
+            EPZ bez granic – globalizacja przemocy
+          </h3>
+          
+          <p className="mb-6 text-justify">
+            Cavite na Filipinach, Dhaka w Bangladeszu, Bhiwandi w Indiach to nie wyjątki, lecz laboratoria systemowej brutalizacji pracy. Niskie płace, wymuszone nadgodziny, zakaz związków zawodowych i toksyczne warunki produkcji to codzienność. Ten model przeniknął do gospodarki cyfrowej: aplikacje śledzą kurierów jak GPS, a algorytmy zamykają dostęp do zleceń jednym kliknięciem.
+          </p>
+          
+          <h3 className="text-lg font-semibold mb-3" style={{ color: '#333333' }}>
+            Politycy – wspólnicy wyzysku
+          </h3>
+          
+          <p className="mb-4 text-justify">
+            Elity rządowe karmią się retoryką „konkurencyjności" i „elastyczności", głosując za deregulacją, która de facto oznacza brak urlopu, brak emerytury i bezkarność pracodawcy. Gdy parlament świętuje wskaźniki wzrostu, ktoś właśnie traci prawo do przerwy.
+          </p>
+        </div>
+      );
+    }
 
+    if (postId === 'zderegulujmy-rzecznika-msp' && section === 'szkatulka') {
+      return (
+        <div className="prose prose-lg max-w-none">
+          <h2 className="text-xl font-semibold mb-4" style={{ color: '#333333' }}>
+            Gadała baba do obrazu, a dziad do niej ani razu.
+          </h2>
+          
+          <p className="mb-4 text-justify">
+            <img 
+              src={rzecznikImage} 
+              alt="Zderegulujmy Rzecznika MŚP" 
+              className="float-right ml-6 mb-6 w-48 h-48 object-cover rounded-lg shadow-md"
+            />
+            Tak można by podsumować dotychczasowe relacje Rzecznika Małych i Średnich Przedsiębiorców z rzeczywistością. Choć powołany 6 marca 2018 roku przez Prawo i Sprawiedliwość dzierżące pełnię władzy politycznej, urząd ten miał być głosem małych i średnich przedsiębiorców, to po siedmiu latach nadal nie wiemy… ilu ich tak naprawdę jest.
+          </p>
+          
+          <p className="mt-12 mb-6 text-justify">
+            Ile przedsiębiorstw z tych małych to samozatrudnieni? Z iloma z nich sektor MŚP współpracuje w modelu B2B? Jakie mają przychody, marże, rentowność? Jakie są realia ich codziennego funkcjonowania? CEDiG milczy, GUS wzrusza ramionami, a Biuro Rzecznika – cóż, zdaje się zadowolone z samego faktu swego istnienia.
+          </p>
+          
+          <h3 className="text-lg font-semibold mb-3" style={{ color: '#333333' }}>
+            Synekury i symbolika
+          </h3>
+          
+          <p className="mb-6 text-justify">
+            Rzecznik MŚP był od początku tworem politycznym. Instytucją powołaną nie z potrzeby, lecz z kalkulacji. Miała być pomostem między władzą a przedsiębiorcami – stała się atrapą pomostu. Zajmuje się pozorami dialogu, wydaje 18 milionów złotych rocznie i – jak na klasyczną synekurę przystało – trwa, niepokojona przez nikogo.
+          </p>
+          
+          <p className="mb-4 text-justify">
+            Tymczasem urząd ten powiela kompetencje, które już funkcjonują w strukturze państwa. W samym Ministerstwie Rozwoju i Technologii działa Departament MŚP. Jest Rada Małych i Średnich Przedsiębiorców przy Rzeczniku MŚP, jest i Rada Naukowa przy Rzeczniku MŚP. Jest kilka ciał kolegialnych i społecznych współtworzonych przez przedsiębiorców.
+          </p>
+        </div>
+      );
+    }
+
+    if (postId === 'gdy-ziemia-krzyczy-glosem-ludu' && section === 'szkatulka') {
+      return (
+        <div className="prose prose-lg max-w-none">
+          <h2 className="text-xl font-semibold mb-4" style={{ color: '#333333' }}>
+            Prawa ludów rdzennych jako ostatni mur przeciw końcowi świata
+          </h2>
+          
+          <p className="mb-4 text-justify">
+            <img 
+              src={ziemiaImage} 
+              alt="Gdy Ziemia krzyczy głosem ludu" 
+              className="float-right ml-6 mb-6 w-48 h-48 object-cover rounded-lg shadow-md"
+            />
+            W krainie Fosen, gdzie wiatr niegdyś śpiewał tylko w koronach świerków, a renifery przemykały pośród gór w rytmie nieznanym zegarkom inwestorów, dziś toczą się protesty. Nie o wiatraki – lecz o coś znacznie większego: o przyszłość, o sprawiedliwość, o przetrwanie kultury, która nigdy nie zbudowała imperium, ale dała światu lekcję: jak być człowiekiem wobec ziemi, a nie jej panem?
+          </p>
+          
+          <p className="mt-12 mb-6 text-justify">
+            Saamowie protestują nie dlatego, że są przeciwnikami energii odnawialnej. Protestują, bo wiedzą, że nie można niszczyć jednego świata, by zbudować inny, który ma być zielony tylko z wierzchu. Widzieli już tamę w Alcie. Widzieli pałki w Oslo. Widzieli, jak pod pozorem transformacji energetycznej powraca demon kolonizacji – grabież przebrana w zielony PR i wykresy rentowności.
+          </p>
+          
+          <h3 className="text-lg font-semibold mb-3" style={{ color: '#333333' }}>
+            Zapomnienie przebrane za postęp
+          </h3>
+          
+          <p className="mb-6 text-justify">
+            <strong>Ella Marie Hætta Isaksen</strong>, ikona nowego pokolenia saamskich aktywistek, mówi jasno: „Nie jesteśmy przeciwko energii odnawialnej. Jesteśmy przeciwko zapomnieniu. Nasza ziemia ma pamięć. A my jesteśmy jej głosem."
+          </p>
+          
+          <h3 className="text-lg font-semibold mb-3" style={{ color: '#333333' }}>
+            Prawa ludów rdzennych – nie przywilej, lecz ratunek
+          </h3>
+          
+          <p className="mb-4 text-justify">
+            To nie jest sprawa etnograficzna. To nie jest folklor. <strong>Prawa ludów rdzennych to dziś ostatnia linia obrony przed samobójczą logiką cywilizacji ekstrakcji</strong>. Ludy rdzenne – Saamowie, U'wa, Ogoni, Heiltsukowie – nie zniszczyli żadnego kontynentu. Nie zostawili za sobą martwych oceanów. Ich styl życia to antyteza wzrostu opartego na eksploatacji.
+          </p>
+        </div>
+      );
+    }
+    
     // Domyślny fallback dla artykułów bez pełnej treści
     return (
       <div className="prose prose-lg max-w-none">
