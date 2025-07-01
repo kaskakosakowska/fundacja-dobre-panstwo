@@ -412,6 +412,150 @@ export const SzkatulaContent = ({ post, postId }: SzkatulaContentProps) => {
         </div>
       );
 
+    case 'analiza-inwestycji-publicznych':
+      return (
+        <div className="prose prose-lg max-w-none">
+          <h2 className="text-xl font-semibold mb-4" style={{ color: '#333333' }}>
+            Badanie efektywności wydatków publicznych
+          </h2>
+          <p className="mb-4 text-justify">
+            Analiza inwestycji publicznych podnoszących jakość życia obywateli to kluczowe narzędzie oceny efektywności państwa. Nie wystarczy wydawać pieniądze podatników - trzeba wydawać je mądrze, z korzyścią dla społeczeństwa i gospodarki.
+          </p>
+          <p className="mb-6 text-justify">
+            Każda inwestycja publiczna powinna być poddana rygorystycznej analizie kosztów i korzyści. Nie tylko finansowych, ale też społecznych, środowiskowych, długoterminowych. To podstawa odpowiedzialnego zarządzania zasobami publicznymi.
+          </p>
+          <h3 className="text-lg font-semibold mb-3" style={{ color: '#333333' }}>
+            Kryteria oceny inwestycji
+          </h3>
+          <p className="mb-4 text-justify">
+            Dobra inwestycja publiczna to taka, która: zwiększa produktywność gospodarki, poprawia jakość życia obywateli, jest zrównoważona środowiskowo, ma pozytywny bilans kosztów i korzyści oraz jest realizowana transparentnie i zgodnie z prawem.
+          </p>
+          <p className="mb-6 text-justify">
+            Niestety, w Polsce wiele inwestycji publicznych nie spełnia tych kryteriów. Są to często projekty prestiżowe, polityczne, bez rzetelnej analizy ekonomicznej i społecznej. To marnotrawstwo środków publicznych.
+          </p>
+        </div>
+      );
+
+    case 'koniec-praw-poczatek-praw':
+      return (
+        <div className="prose prose-lg max-w-none">
+          <h2 className="text-xl font-semibold mb-4" style={{ color: '#333333' }}>
+            O przemianach w systemie prawnym
+          </h2>
+          <p className="mb-4 text-justify">
+            "Koniec praw, początek praw" - ten paradoks oddaje stan współczesnego systemu prawnego. Z jednej strony mamy inflację prawa, nieustanne tworzenie nowych regulacji, z drugiej - erozję tradycyjnych zasad prawnych i zaufania do systemu sprawiedliwości.
+          </p>
+          <p className="mb-6 text-justify">
+            Prawo przestaje być stabilnym punktem odniesienia, a staje się instrumentem doraźnej polityki. To niebezpieczna tendencja, która podważa podstawy państwa prawa i demokratycznego ładu konstytucyjnego.
+          </p>
+          <h3 className="text-lg font-semibold mb-3" style={{ color: '#333333' }}>
+            Inflacja prawa vs stabilność systemu
+          </h3>
+          <p className="mb-4 text-justify">
+            Współczesne państwo produkuje prawo w tempie przemysłowym. Setki ustaw, tysięce rozporządzeń, niekończące się nowelizacje. Obywatel nie jest w stanie nadążyć za zmianami, prawnik gubią się w gąszczu przepisów.
+          </p>
+          <p className="mb-6 text-justify">
+            To prowadzi do paradoksu: im więcej prawa, tym mniej pewności prawnej. Im więcej regulacji, tym większy chaos. Potrzebujemy nie więcej prawa, lecz lepszego prawa - prostego, zrozumiałego, stabilnego.
+          </p>
+        </div>
+      );
+
+    case 'paradygmat-ku-samozatrudnieniu':
+      return (
+        <div className="prose prose-lg max-w-none">
+          <h2 className="text-xl font-semibold mb-4" style={{ color: '#333333' }}>
+            Trendy w zatrudnieniu i samozatrudnieniu
+          </h2>
+          <p className="mb-4 text-justify">
+            Czy obserwujemy paradygmat ku samozatrudnieniu? Statystyki wskazują na rosnący udział samozatrudnionych w strukturze rynku pracy. To jednak nie zawsze oznacza wzrost przedsiębiorczości - często to efekt ucieczki pracodawców od kosztów pracy.
+          </p>
+          <p className="mb-6 text-justify">
+            Samozatrudnienie może być drogą do wolności ekonomicznej, ale może też być formą ukrytego zatrudnienia - gdy pracodawca zmusza pracownika do założenia działalności gospodarczej, by uniknąć obciążeń socjalnych.
+          </p>
+          <h3 className="text-lg font-semibold mb-3" style={{ color: '#333333' }}>
+            Prawdziwa przedsiębiorczość vs pozorne samozatrudnienie
+          </h3>
+          <p className="mb-4 text-justify">
+            Prawdziwy przedsiębiorca podejmuje ryzyko gospodarcze, ma swobodę organizacji pracy, decyduje o strategii biznesu. Pozorny samozatrudniony pracuje na zasadach podobnych do umowy o pracę, ale bez gwarancji socjalnych.
+          </p>
+          <p className="mb-6 text-justify">
+            Państwo powinno wspierać prawdziwą przedsiębiorczość, ale jednocześnie chronić pracowników przed nadużyciami. To wymaga przemyślanej polityki prawnej i podatkowej.
+          </p>
+        </div>
+      );
+
+    case 'na-smyczy-zysku-tancu-wartosci':
+      return (
+        <div className="prose prose-lg max-w-none">
+          <h2 className="text-xl font-semibold mb-4" style={{ color: '#333333' }}>
+            O konflikcie między zyskiem a wartościami
+          </h2>
+          <p className="mb-4 text-justify">
+            "Na smyczy zysku, czy w tańcu wartości?" - to fundamentalne pytanie o naturę współczesnego biznesu. Czy przedsiębiorstwa są skazane na bezwzględną pogoni za zyskiem, czy mogą łączyć sukces ekonomiczny z odpowiedzialnością społeczną?
+          </p>
+          <p className="mb-6 text-justify">
+            Tradycyjny model kapitalizmu kładł nacisk na maksymalizację zysku dla akcjonariuszy. Nowy model - capitalism stakeholderowy - uwzględnia interesy wszystkich zainteresowanych: pracowników, klientów, społeczności, środowiska.
+          </p>
+          <h3 className="text-lg font-semibold mb-3" style={{ color: '#333333' }}>
+            Biznes odpowiedzialny społecznie
+          </h3>
+          <p className="mb-4 text-justify">
+            Biznes odpowiedzialny społecznie to nie filantropia ani marketing. To fundamentalna zmiana sposobu myślenia o roli przedsiębiorstwa w społeczeństwie. Firmy, które ignorują tę zmianę, mogą stracić zaufanie klientów i pracowników.
+          </p>
+          <p className="mb-6 text-justify">
+            Pytanie brzmi: czy można być profitable i purpose-driven jednocześnie? Coraz więcej przykładów wskazuje, że tak - ale wymaga to zmiany kultury organizacyjnej i długoterminowego myślenia.
+          </p>
+        </div>
+      );
+
+    case 'niewidzialni-przy-stole':
+      return (
+        <div className="prose prose-lg max-w-none">
+          <h2 className="text-xl font-semibold mb-4" style={{ color: '#333333' }}>
+            Kogo nie ma w dialogu społecznym i dlaczego
+          </h2>
+          <p className="mb-4 text-justify">
+            Dialog społeczny w Polsce to często monolog establishmentu. Przy stole zasiadają ci sami przedstawiciele tych samych organizacji, podczas gdy miliony ludzi pozostają bez głosu. Niewidzialni przy stole to prekariat, pracownicy platform, samozatrudnieni, bezrobotni długoterminowi.
+          </p>
+          <p className="mb-6 text-justify">
+            To ludzie, których praca jest niestabilna, których reprezentacja jest słaba lub nie istnieje, których głos nie dociera do decydentów. To oni ponoszą największe koszty zmian gospodarczych, ale nie mają wpływu na ich kształt.
+          </p>
+          <h3 className="text-lg font-semibold mb-3" style={{ color: '#333333' }}>
+            Kryzys reprezentacji
+          </h3>
+          <p className="mb-4 text-justify">
+            Tradycyjne związki zawodowe reprezentują coraz mniejszą część pracowników. Organizacje pracodawców skupiają się na interesach największych firm. Politycy myślą kategoriami cykli wyborczych. Kto reprezentuje tych, którzy nie mieszczą się w tych schematach?
+          </p>
+          <p className="mb-6 text-justify">
+            Potrzebujemy nowych form reprezentacji, nowych mechanizmów włączania wykluczonych głosów w proces decyzyjny. Bez tego dialog społeczny pozostanie pustą formalnością.
+          </p>
+        </div>
+      );
+
+    case 'elastycznosc-bez-zobowiazan':
+      return (
+        <div className="prose prose-lg max-w-none">
+          <h2 className="text-xl font-semibold mb-4" style={{ color: '#333333' }}>
+            O pozornych wolnościach deregulowanego rynku
+          </h2>
+          <p className="mb-4 text-justify">
+            "Elastyczność bez zobowiązań" - to hasło nowej ekonomii, która obiecuje wolność, ale dostarcza niepewność. Elastyczny rynek pracy miał uwolnić potencjał gospodarczy. W praktyce często oznacza transfer ryzyka z pracodawców na pracowników.
+          </p>
+          <p className="mb-6 text-justify">
+            Elastyczność dla kapitału oznacza możliwość szybkiego dostosowania kosztów pracy do koniunktury. Dla pracowników oznacza niepewność zatrudnienia, dochodów, przyszłości. To asymetria, która narusza społeczną legitymizację gospodarki rynkowej.
+          </p>
+          <h3 className="text-lg font-semibold mb-3" style={{ color: '#333333' }}>
+            Flexicurity - model skandynawski
+          </h3>
+          <p className="mb-4 text-justify">
+            Kraje skandynawskie pokazują, że można połączyć elastyczność rynku pracy z bezpieczeństwem socjalnym pracowników. Model flexicurity zakłada: elastyczne zatrudnienie, hojne zasiłki dla bezrobotnych, intensywne szkolenia zawodowe.
+          </p>
+          <p className="mb-6 text-justify">
+            To wymaga jednak silnego państwa socjalnego i wysokich podatków. Czy Polska jest gotowa na taką transformację? To pytanie o model społeczno-gospodarczy, jaki chcemy budować.
+          </p>
+        </div>
+      );
+
     default:
       return (
         <div className="prose prose-lg max-w-none">
