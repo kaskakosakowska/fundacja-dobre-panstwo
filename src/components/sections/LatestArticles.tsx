@@ -66,7 +66,7 @@ export const LatestArticles = () => {
         
         <div className="text-center mt-8">
           <p className="text-sm" style={{ color: '#666666' }}>
-            Wszystkich publikacji: <strong>300+</strong> | Zobacz więcej w sekcjach tematycznych powyżej
+            Wszystkich publikacji: <strong>400+</strong> | Zobacz więcej w sekcjach tematycznych powyżej
           </p>
           <div className="mt-4 space-x-4">
             <a href="https://dobrepanstwo.org" target="_blank" rel="noopener noreferrer" 

@@ -37,8 +37,19 @@ export const AboutFoundation = () => {
             <p className="text-base md:text-lg font-sans leading-relaxed text-justify mt-6" style={{
               color: '#333333'
             }}>
-              Od listopada 2023 do września 2024 zainicjowaliśmy aż <strong>66 oddolnych inicjatyw społecznych</strong>, które zostały przedłożone władzy w formie petycji i lobbingu. Zabiegamy o skrócenie X kadencji Sejmu i przedterminowe wybory parlamentarne.
+              <strong>Historia działalności:</strong> Fundacja powstała w czerwcu 2021 roku, wraz z założeniem OZZS "wBREw" - związku zawodowego samozatrudnionych. Od listopada 2023 do września 2024 zainicjowaliśmy aż <strong>66 oddolnych inicjatyw społecznych</strong> w formie petycji i lobbingu. Zabiegamy o skrócenie X kadencji Sejmu i przedterminowe wybory parlamentarne.
             </p>
+            
+            <div className="mt-6 p-4 rounded-lg" style={{ backgroundColor: 'rgba(255, 255, 255, 0.3)' }}>
+              <h4 className="font-semibold text-base mb-3" style={{ color: '#333333' }}>Nasze najważniejsze osiągnięcia:</h4>
+              <ul className="space-y-2 text-sm" style={{ color: '#666666' }}>
+                <li>• <strong>400+ publikacji</strong> na tematykę społeczno-polityczną (2021-2025)</li>
+                <li>• <strong>Wystąpienie na Forum ONZ</strong> o Prawach Człowieka (2021)</li>
+                <li>• <strong>Współpraca z instytucjami akademickimi</strong> i organizacjami branżowymi</li>
+                <li>• <strong>Rozwój tematyki ESG</strong> i zrównoważonego rozwoju</li>
+                <li>• <strong>Obrona praw samozatrudnionych</strong> przez OZZS "wBREw"</li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
