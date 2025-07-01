@@ -98,12 +98,37 @@ const Index = () => {
                 <p className="text-lg md:text-xl font-sans leading-relaxed text-justify" style={{
                 color: '#333333'
               }}>
-                  Fundacja Dobre Państwo działa od 2018 roku jako organizacja non-profit, której misją jest budowanie mostów między obywatelami a instytucjami publicznymi. Wierzymy, że każdy głos ma znaczenie i że prawdziwa demokracja kwitnie wtedy, gdy ludzie aktywnie uczestniczą w życiu społecznym. Nasze działania skupiają się na trzech głównych obszarach: edukacji obywatelskiej, transparentności władzy oraz wspieraniu lokalnych inicjatyw społecznych.
-                  
-                  W ramach programu "Szkatułka kosztowności" dokumentujemy i analizujemy wydatki publiczne, pomagając obywatelom zrozumieć, jak wykorzystywane są ich podatki. "Szczypta Soli" to nasza inicjatywa fact-checkingowa, która weryfikuje informacje pojawiające się w przestrzeni publicznej. Natomiast "Głosy które słychać" to platforma, gdzie każdy może podzielić się swoimi doświadczeniami z administracją publiczną.
-                  
-                  Działamy w oparciu o zasady transparentności, bezstronności i konstruktywnego dialogu. Naszym celem nie jest krytyka dla samej krytyki, ale budowanie lepszego, bardziej otwartego i responsywnego państwa dla wszystkich obywateli.
+                  Fundacja Dobre Państwo narodziła się z potrzeby radykalnych zmian w polskim systemie politycznym, społecznym i gospodarczym. Naszym celem jest przywrócenie obywatelom realnej kontroli nad demokratycznymi procesami oraz budowanie lepszego jutra dla wszystkich Polaków.
                 </p>
+                
+                <div className="mt-6 space-y-4">
+                  <h3 className="text-xl md:text-2xl font-sans font-semibold" style={{ color: '#333333' }}>
+                    Nasze główne obszary działania:
+                  </h3>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+                    <div className="p-4 rounded-lg" style={{ backgroundColor: 'rgba(255, 255, 255, 0.4)' }}>
+                      <h4 className="font-semibold text-base" style={{ color: '#333333' }}>Szkatułka kosztowności</h4>
+                      <p className="text-sm mt-2" style={{ color: '#666666' }}>Dokumentujemy i analizujemy wydatki publiczne, kontrolując jak wykorzystywane są podatki obywateli.</p>
+                    </div>
+                    
+                    <div className="p-4 rounded-lg" style={{ backgroundColor: 'rgba(255, 255, 255, 0.4)' }}>
+                      <h4 className="font-semibold text-base" style={{ color: '#333333' }}>Szczypta Soli</h4>
+                      <p className="text-sm mt-2" style={{ color: '#666666' }}>Inicjatywa fact-checkingowa weryfikująca informacje w przestrzeni publicznej.</p>
+                    </div>
+                    
+                    <div className="p-4 rounded-lg" style={{ backgroundColor: 'rgba(255, 255, 255, 0.4)' }}>
+                      <h4 className="font-semibold text-base" style={{ color: '#333333' }}>Głosy które słychać</h4>
+                      <p className="text-sm mt-2" style={{ color: '#666666' }}>Platforma dla obywateli do dzielenia się doświadczeniami z administracją publiczną.</p>
+                    </div>
+                  </div>
+                  
+                  <p className="text-base md:text-lg font-sans leading-relaxed text-justify mt-6" style={{
+                    color: '#333333'
+                  }}>
+                    Od listopada 2023 do września 2024 zainicjowaliśmy aż <strong>66 oddolnych inicjatyw społecznych</strong>, które zostały przedłożone władzy w formie petycji i lobbingu. Zabiegamy o skrócenie X kadencji Sejmu i przedterminowe wybory parlamentarne.
+                  </p>
+                </div>
               </div>
             </div>
           </section>
@@ -139,7 +164,7 @@ const Index = () => {
                     }}>Email</h4>
                       <p className="font-sans text-sm" style={{
                       color: '#666666'
-                    }}>kontakt@example.com</p>
+                    }}>fundacja@dobrepanstwo.org</p>
                     </div>
                   </div>
                   
@@ -157,7 +182,7 @@ const Index = () => {
                     }}>Telefon</h4>
                       <p className="font-sans text-sm" style={{
                       color: '#666666'
-                    }}>+48 123 456 789</p>
+                    }}>+48 501 010101</p>
                     </div>
                   </div>
                   
@@ -175,7 +200,7 @@ const Index = () => {
                     }}>Lokalizacja</h4>
                       <p className="font-sans text-sm" style={{
                       color: '#666666'
-                    }}>Warszawa, Polska</p>
+                    }}>Żbikowa 14, 61-065 Poznań</p>
                     </div>
                   </div>
                 </div>
