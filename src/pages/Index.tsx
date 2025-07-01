@@ -1,4 +1,5 @@
 
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -13,7 +14,7 @@ const Index = () => {
       <header className="py-4 px-6 flex-shrink-0">
         <div className="container mx-auto max-w-6xl">
           <div className="flex justify-center">
-            <div className="max-w-3xl w-full">
+            <div className="max-w-4xl w-full">
               <div style={{
               backgroundColor: 'rgba(255, 255, 255, 0.5)',
               boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)'
@@ -207,3 +208,4 @@ const Index = () => {
     </div>;
 };
 export default Index;
+
