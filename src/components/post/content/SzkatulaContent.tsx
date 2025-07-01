@@ -340,71 +340,74 @@ export const SzkatulaContent = ({ post, postId }: SzkatulaContentProps) => {
         </div>
       );
 
-    case 'ekonomiczne-niewolnictwo-xxi-wieku':
+    case 'czas-giddensa':
       return (
         <div className="prose prose-lg max-w-none">
           <h2 className="text-xl font-semibold mb-4" style={{ color: '#333333' }}>
-            Nie ma pracy – jest marka. Nie ma człowieka – jest podwykonawca.
+            O teorii strukturacji Anthony'ego Giddensa
           </h2>
           <p className="mb-4 text-justify">
-            <img 
-              src={ekonomiczneImage} 
-              alt="Ekonomiczne niewolnictwo XXI wieku" 
-              className="float-right ml-6 mb-6 w-48 h-48 object-cover rounded-lg shadow-md"
-            />
-            Współczesny outsourcing pracowniczy nie przypomina przenoszenia produkcji sprzed dekady; to ucieczka od pracy, o której ostrzegała Naomi Klein w „No Logo". Korporacje, od Amazona po Zarę, porzuciły odpowiedzialność za zatrudnienie i zamieniły fabryki w globalne cienie, tworząc strefy wolnego handlu oraz cyfrowe platformy, w których pracownik staje się wyłącznie kosztem do zminimalizowania.
-          </p>
-          <p className="mt-12 mb-6 text-justify">
-            Marka zastąpiła człowieka, zysk zastąpił etykę, a wielkie firmy świętują kolejne rekordy zysków dzięki redukcji etatów. Fabryki przeniesiono do Azji lub Ameryki Łacińskiej, lecz prawa pracownicze wywieziono także z Warszawy, Berlina i Paryża.
-          </p>
-        </div>
-      );
-
-    case 'zderegulujmy-rzecznika-msp':
-      return (
-        <div className="prose prose-lg max-w-none">
-          <h2 className="text-xl font-semibold mb-4" style={{ color: '#333333' }}>
-            Gadała baba do obrazu, a dziad do niej ani razu.
-          </h2>
-          <p className="mb-4 text-justify">
-            <img 
-              src={rzecznikImage} 
-              alt="Zderegulujmy Rzecznika MŚP" 
-              className="float-right ml-6 mb-6 w-48 h-48 object-cover rounded-lg shadow-md"
-            />
-            Tak można by podsumować dotychczasowe relacje Rzecznika Małych i Średnich Przedsiębiorców z rzeczywistością. Choć powołany 6 marca 2018 roku przez Prawo i Sprawiedliwość dzierżące pełnię władzy politycznej, urząd ten miał być głosem małych i średnich przedsiębiorców, to po siedmiu latach nadal nie wiemy… ilu ich tak naprawdę jest.
-          </p>
-          <p className="mt-12 mb-6 text-justify">
-            Ile przedsiębiorstw z tych małych to samozatrudnieni? Z iloma z nich sektor MŚP współpracuje w modelu B2B? Jakie mają przychody, marże, rentowność? Jakie są realia ich codziennego funkcjonowania? CEDiG milczy, GUS wzrusza ramionami, a Biuro Rzecznika – cóż, zdaje się zadowolone z samego faktu swego istnienia.
-          </p>
-        </div>
-      );
-
-    case 'gdy-ziemia-krzyczy-glosem-ludu':
-      return (
-        <div className="prose prose-lg max-w-none">
-          <h2 className="text-xl font-semibold mb-4" style={{ color: '#333333' }}>
-            Prawa ludów rdzennych jako ostatni mur przeciw końcowi świata
-          </h2>
-          <p className="mb-4 text-justify">
-            <img 
-              src={ziemiaImage} 
-              alt="Gdy Ziemia krzyczy głosem ludu" 
-              className="float-right ml-6 mb-6 w-48 h-48 object-cover rounded-lg shadow-md"
-            />
-            W krainie Fosen, gdzie wiatr niegdyś śpiewał tylko w koronach świerków, a renifery przemykały pośród gór w rytmie nieznanym zegarkom inwestorów, dziś toczą się protesty. Nie o wiatraki – lecz o coś znacznie większego: o przyszłość, o sprawiedliwość, o przetrwanie kultury, która nigdy nie zbudowała imperium, ale dała światu lekcję: jak być człowiekiem wobec ziemi, a nie jej panem?
-          </p>
-          <p className="mt-12 mb-6 text-justify">
-            Saamowie protestują nie dlatego, że są przeciwnikami energii odnawialnej. Protestują, bo wiedzą, że nie można niszczyć jednego świata, by zbudować inny, który ma być zielony tylko z wierzchu. Widzieli już tamę w Alcie. Widzieli pałki w Oslo. Widzieli, jak pod pozorem transformacji energetycznej powraca demon kolonizacji – grabież przebrana w zielony PR i wykresy rentowności.
-          </p>
-          <h3 className="text-lg font-semibold mb-3" style={{ color: '#333333' }}>
-            Ziemia należy do przyszłych pokoleń
-          </h3>
-          <p className="mb-4 text-justify">
-            Saamski światopogląd głosi, że ziemia nie należy do nas – my należymy do ziemi. To fundamentalna różnica w myśleniu o własności, rozwoju i odpowiedzialności. Gdy rząd norweski wydaje koncesje na budowę farm wiatrowych na terenach wypasu reniferów, łamie nie tylko międzynarodowe prawo, ale i rdzenną mądrość o równowadze między potrzebami człowieka a prawami natury.
+            Anthony Giddens stworzył jedną z najważniejszych teorii społecznych XX wieku - teorię strukturacji. To próba przezwyciężenia klasycznego dualizmu między strukturą społeczną a działaniem jednostki. Giddens pokazuje, że struktura i sprawczość (agency) to nie przeciwieństwa, lecz dwa aspekty tej samej rzeczywistości społecznej.
           </p>
           <p className="mb-6 text-justify">
-            To, co dzieje się w Fosen, to mikrokosmos globalnej walki o sprawiedliwość klimatyczną. Ci, którzy najmniej przyczynili się do kryzysu klimatycznego, ponoszą jego największe koszty. Ludy rdzenne, stanowiące mniej niż 5% światowej populacji, chronią 80% bioróżnorodności planety. To nie przypadek – to efekt tysięcy lat życia w harmonii z naturą.
+            Według Giddensa, struktury społeczne istnieją tylko w praktykach społecznych. Są one jednocześnie medium i rezultatem działań, które organizują. Ludzie w swoich działaniach odtwarzają struktury, ale mogą je też zmieniać. To dialektyka reprodukcji i transformacji.
+          </p>
+          <h3 className="text-lg font-semibold mb-3" style={{ color: '#333333' }}>
+            Nowoczesność i refleksyjność
+          </h3>
+          <p className="mb-4 text-justify">
+            Giddens analizuje również specyfikę nowoczesności. Jego zdaniem, cechą charakterystyczną nowoczesnych społeczeństw jest refleksyjność - ciągłe monitorowanie i rewidowanie praktyk społecznych w świetle napływających informacji.
+          </p>
+          <p className="mb-6 text-justify">
+            Nowoczesność to nie tylko sekularyzacja i industrializacja, lecz przede wszystkim nowy typ stosunku do tradycji, autorytetu i wiedzy. To społeczeństwo, które nieustannie kwestionuje samo siebie.
+          </p>
+        </div>
+      );
+
+    case 'gdy-rynki-zawodza-ludzie-milkna':
+      return (
+        <div className="prose prose-lg max-w-none">
+          <h2 className="text-xl font-semibold mb-4" style={{ color: '#333333' }}>
+            O kryzysach ekonomicznych i społecznych
+          </h2>
+          <p className="mb-4 text-justify">
+            Kiedy rynki zawodzą, a ludzie milkną, społeczeństwo wchodzi w stan zawieszenia. To moment, gdy ekonomiczne kategorie przestają wystarczać do opisu rzeczywistości, a polityczne instytucje okazują się bezradne wobec problemów, których nie potrafią ani zrozumieć, ani rozwiązać.
+          </p>
+          <p className="mb-6 text-justify">
+            Kryzys ekonomiczny to nie tylko spadek PKB czy wzrost bezrobocia. To kryzys sensów, wartości, zaufania. Gdy zawodzą mechanizmy rynkowe, na które społeczeństwo postawiło swoje nadzieje, rodzi się głębokie poczucie dezorientacji i bezsilności.
+          </p>
+          <h3 className="text-lg font-semibold mb-3" style={{ color: '#333333' }}>
+            Milczenie jako opór
+          </h3>
+          <p className="mb-4 text-justify">
+            Milczenie ludzi w obliczu kryzysu to nie tylko bierność. To często forma oporu wobec systemu, który przestał być wiarygodny. To wyrażenie braku zaufania do oficjalnych narracji i propozycji rozwiązań.
+          </p>
+          <p className="mb-6 text-justify">
+            Jednak milczenie ma swoją cenę. Gdy obywatele wycofują się z życia publicznego, przestrzeń polityczna zostaje zdominowana przez tych, którzy krzyczą najgłośniej - często populistów i demagogów.
+          </p>
+        </div>
+      );
+
+    case 'panstwo-nie-wchodzi-do-swiatyni':
+      return (
+        <div className="prose prose-lg max-w-none">
+          <h2 className="text-xl font-semibold mb-4" style={{ color: '#333333' }}>
+            O relacjach państwo-kościół w Polsce
+          </h2>
+          <p className="mb-4 text-justify">
+            "Państwo nie wchodzi do świątyni, lecz adres jej zna" - ta parafraza znanego powiedzenia dobrze oddaje polską specyfikę relacji między władzą świecką a duchowną. Formalnie mamy rozdział kościoła od państwa, faktycznie - skomplikowany splot powiązań, wpływów i uzależnień.
+          </p>
+          <p className="mb-6 text-justify">
+            Polski model to nie teokracja, ale też nie laicyzm francuskiego typu. To system, w którym kościół zachowuje znaczące wpływy na politykę, edukację, kulturę, nie ponosząc przy tym pełnej odpowiedzialności za swoje publiczne działania.
+          </p>
+          <h3 className="text-lg font-semibold mb-3" style={{ color: '#333333' }}>
+            Adres znany
+          </h3>
+          <p className="mb-4 text-justify">
+            "Adres znany" oznacza, że państwo bardzo dobrze wie, gdzie szukać kościoła, gdy potrzebuje jego wsparcia. Kościół zaś wie, gdzie szukać państwa, gdy potrzebuje jego protekcji. To układ korzystny dla obu stron, ale niekoniecznie dla społeczeństwa.
+          </p>
+          <p className="mb-6 text-justify">
+            Prawdziwy rozdział oznaczałby, że państwo i kościół działają w swoich sferach kompetencji, nie wtrącając się w sprawy drugiej strony. W Polsce jesteśmy od tego ideału daleko.
           </p>
         </div>
       );
