@@ -119,5 +119,62 @@ export const GlosyContent = ({ post, postId }: GlosyContentProps) => {
           </div>
         </div>
       );
+
+    case 'trojka-do-wyboru-petycja':
+      return (
+        <div className="prose prose-lg max-w-none">
+          <h2 className="text-xl font-semibold mb-4" style={{ color: '#333333' }}>
+            Petycja w sprawie reformy systemu wyborczego
+          </h2>
+          <p className="mb-4 text-justify">
+            Fundacja Dobre Państwo postuluje wprowadzenie systemu "trójki do wyboru" w wyborach do Sejmu RP. Nasz postulat zakłada, że wyborca powinien mieć możliwość wskazania trzech kandydatów w kolejności preferencji, co znacząco zwiększy reprezentatywność wyborów.
+          </p>
+          <h3 className="text-lg font-semibold mb-3" style={{ color: '#333333' }}>
+            Uzasadnienie reformy
+          </h3>
+          <p className="mb-4 text-justify">
+            Obecny system wyborczy powoduje, że znaczna część głosów jest "marnowana" na kandydatów, którzy nie uzyskują mandatów. System preferowania trzech kandydatów pozwoli na:
+          </p>
+          <ul className="mb-6 ml-6">
+            <li className="mb-2">Lepsze odzwierciedlenie rzeczywistych preferencji wyborców</li>
+            <li className="mb-2">Zmniejszenie polaryzacji politycznej</li>
+            <li className="mb-2">Zwiększenie szans dla kandydatów niezależnych</li>
+            <li className="mb-2">Wzmocnienie centrum politycznego</li>
+          </ul>
+          <h3 className="text-lg font-semibold mb-3" style={{ color: '#333333' }}>
+            Mechanizm działania
+          </h3>
+          <p className="mb-6 text-justify">
+            Wyborca wskazuje trzech kandydatów w kolejności: 1) pierwsza preferencja (3 punkty), 2) druga preferencja (2 punkty), 3) trzecia preferencja (1 punkt). Mandaty przyznawane są na podstawie łącznej liczby punktów, co zapewnia bardziej sprawiedliwy rozkład reprezentacji parlamentarnej.
+          </p>
+        </div>
+      );
+
+    case 'rejestr-dzierzaw-gruntow-rolnych-petycja':
+      return (
+        <div className="prose prose-lg max-w-none">
+          <h2 className="text-xl font-semibold mb-4" style={{ color: '#333333' }}>
+            Petycja o publiczny rejestr dzierżaw gruntów rolnych
+          </h2>
+          <p className="mb-4 text-justify">
+            Fundacja Dobre Państwo domaga się utworzenia publicznego rejestru dzierżaw gruntów rolnych, który zwiększy transparentność w gospodarowaniu ziemią rolniczą w Polsce. Rejestr ma zawierać informacje o dzierżawcach, powierzchni dzierżawionych gruntów i warunkach umów.
+          </p>
+          <h3 className="text-lg font-semibold mb-3" style={{ color: '#333333' }}>
+            Dlaczego rejestr jest potrzebny?
+          </h3>
+          <p className="mb-4 text-justify">
+            Obecnie brakuje publicznej informacji o tym, kto faktycznie gospodaruje na polskiej ziemi rolniczej. To utrudnia:
+          </p>
+          <ul className="mb-6 ml-6">
+            <li className="mb-2">Kontrolę nad koncentracją ziemi w rękach wielkich korporacji</li>
+            <li className="mb-2">Monitorowanie przestrzegania przepisów o nabywaniu gruntów przez cudzoziemców</li>
+            <li className="mb-2">Weryfikację celowości dotacji rolniczych</li>
+            <li className="mb-2">Analizę wpływu polityki rolniczej na strukturę agrarna</li>
+          </ul>
+          <p className="mb-6 text-justify">
+            Rejestr dzierżaw to narzędzie demokratycznej kontroli nad tym, jak wykorzystywana jest ziemia – podstawowe dobro narodowe.
+          </p>
+        </div>
+      );
   }
 };
