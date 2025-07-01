@@ -1,4 +1,5 @@
 
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -19,7 +20,7 @@ const Index = () => {
                 backgroundColor: 'rgba(255, 255, 255, 0.5)',
                 boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)'
               }}>
-                <img src="/lovable-uploads/8caab1ed-b0ac-4cff-8527-2f85b97f0c55.png" alt="Fundacja Dobre Państwo Logo" className="w-72 h-72 object-contain drop-shadow-lg mx-auto relative z-10" />
+                <img src="/lovable-uploads/917aefb1-57c8-4896-b21d-9a4538bbfbc3.png" alt="Fundacja Dobre Państwo Logo" className="w-72 h-72 object-contain drop-shadow-lg mx-auto relative z-10" />
               </div>
             </div>
           </div>
@@ -209,3 +210,4 @@ const Index = () => {
 };
 
 export default Index;
+
