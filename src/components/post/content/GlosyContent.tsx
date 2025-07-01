@@ -1,8 +1,4 @@
 import { Post } from "@/hooks/usePostData";
-import petycjaDwukadencyjnoscImage from "@/assets/images/petycja-dwukadencyjnosc.webp";
-import trojkaDoWyboruImage from "@/assets/images/trojka-do-wyboru.webp";
-import policzkyKosciolImage from "@/assets/images/policzmy-kosciol.webp";
-import abonamentRtvImage from "@/assets/images/abonament-rtv.webp";
 
 interface GlosyContentProps {
   post: Post;
@@ -18,11 +14,6 @@ export const GlosyContent = ({ post, postId }: GlosyContentProps) => {
             Petycja w sprawie wprowadzenia dwukadencyjności
           </h2>
           <p className="mb-4 text-justify">
-            <img 
-              src={petycjaDwukadencyjnoscImage} 
-              alt="Petycja dwukadencyjność" 
-              className="float-right ml-6 mb-6 w-48 h-48 object-cover rounded-lg shadow-md"
-            />
             Fundacja Dobre Państwo zwraca się z petycją o wprowadzenie ograniczenia liczby kadencji pełnionych przez jedną osobę w organach przedstawicielskich. Postulujemy, aby jedna osoba mogła pełnić mandat w Sejmie, Senacie, sejmiku wojewódzkim, radzie powiatu lub gminy maksymalnie przez dwie kadencje.
           </p>
           <h3 className="text-lg font-semibold mb-3" style={{ color: '#333333' }}>
@@ -50,11 +41,6 @@ export const GlosyContent = ({ post, postId }: GlosyContentProps) => {
             Petycja o zniesienie abonamentu RTV
           </h2>
           <p className="mb-4 text-justify">
-            <img 
-              src={abonamentRtvImage} 
-              alt="Abonament RTV" 
-              className="float-right ml-6 mb-6 w-48 h-48 object-cover rounded-lg shadow-md"
-            />
             Opłata abonamentowa za możliwość oglądania publicznej telewizji i słuchania radia jest archaizmem z czasów PRLu. W erze cyfrowej, gdy treści medialne są dostępne na wielu platformach, utrzymywanie przymusowej opłaty za posiadanie odbiornika jest anachronizmem.
           </p>
           <h3 className="text-lg font-semibold mb-3" style={{ color: '#333333' }}>
@@ -82,11 +68,6 @@ export const GlosyContent = ({ post, postId }: GlosyContentProps) => {
             Petycja o rejestr nieruchomości kościelnych
           </h2>
           <p className="mb-4 text-justify">
-            <img 
-              src={policzkyKosciolImage} 
-              alt="Policzmy Kościół" 
-              className="float-right ml-6 mb-6 w-48 h-48 object-cover rounded-lg shadow-md"
-            />
             Fundacja Dobre Państwo postuluje utworzenie publicznego rejestru nieruchomości należących do kościołów i związków wyznaniowych. Transparentność w zakresie majątku instytucji korzystających z przywilejów podatkowych jest podstawą demokratycznego państwa prawa.
           </p>
           <h3 className="text-lg font-semibold mb-3" style={{ color: '#333333' }}>
