@@ -1,4 +1,6 @@
 import { Post } from "@/hooks/usePostData";
+import zaufanieImage from "@/assets/images/zaufanie-ktore-wiednie.webp";
+import tpmImage from "@/assets/images/total-participation-management.webp";
 
 interface PostContentProps {
   post: Post;
@@ -15,6 +17,12 @@ export const PostContent = ({ post, section, postId }: PostContentProps) => {
           <h2 className="text-xl font-semibold mb-4" style={{ color: '#333333' }}>
             O kapitale społecznym i zdradzie wspólnoty
           </h2>
+          
+          <img 
+            src={zaufanieImage} 
+            alt="Kapitał społeczny i zaufanie" 
+            className="float-left mr-6 mb-4 w-32 h-32 object-cover rounded-lg shadow-md"
+          />
           
           <p className="mb-4">
             W społeczeństwach pozbawionych zaufania nie ma niczego stabilnego. Ani polityki, ani deliberacji, ani nawet dobrego sąsiedztwa. Kapitał społeczny, choć brzmi jak ekonomiczny żargon wciśnięty w ramy kultury, jest jednym z najważniejszych wskaźników zdrowia społecznego. To zasób niewidzialny, lecz wszechobecny – konstytuuje to, co wspólne, pozwala działać razem, uczy współodpowiedzialności.
@@ -89,6 +97,12 @@ export const PostContent = ({ post, section, postId }: PostContentProps) => {
           <h2 className="text-xl font-semibold mb-4" style={{ color: '#333333' }}>
             Filozoficzne korzenie TPM
           </h2>
+          
+          <img 
+            src={tpmImage} 
+            alt="Total Participation Management" 
+            className="float-left mr-6 mb-4 w-32 h-32 object-cover rounded-lg shadow-md"
+          />
           
           <p className="mb-4">
             Total Participation Management wyrasta z personalizmu Emmanuela Mouniera, Karola Wojtyły i Jacques'a Maritaina, dla których osoba ludzka jest celem samym w sobie. W duchu dialogicznej antropologii Martina Bubera uczestnictwo stanowi warunek realizacji ludzkiej wolności, a nie jedynie technikę zarządzania.
