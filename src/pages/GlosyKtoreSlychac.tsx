@@ -1,6 +1,5 @@
-
 import { Link } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, ExternalLink } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useState } from "react";
 
@@ -9,40 +8,68 @@ const GlosyKtoreSlychac = () => {
 
   const posts = [
     {
-      id: "1",
-      title: "Mieszkańcy o nowym parku miejskim",
-      summary: "Zbieramy opinie mieszkańców na temat nowo otwartego parku w centrum miasta...",
-      content: "Kompleksowy przegląd opinii mieszkańców na temat nowego parku miejskiego. Ankiety, wywiady i obserwacje dotyczące funkcjonalności, estetyki i wpływu na jakość życia w dzielnicy."
+      id: "straszna-dwukadencyjnosc-petycja",
+      title: "Straszna dwukadencyjność - petycja Fundacji Dobre Państwo",
+      date: "16 lipca 2024",
+      summary: "Petycja dotycząca ograniczenia kadencji parlamentarzystów do maksymalnie dwóch w celu zwiększenia rotacji i świeżości w polityce.",
+      content: "Obywatelska inicjatywa mająca na celu wprowadzenie ograniczeń kadencyjnych dla posłów i senatorów. Petycja argumentuje konieczność zwiększenia rotacji kadr politycznych dla zachowania dynamizmu demokracji.",
+      link: "https://dobrepanstwo.org/straszna-dwukadencyjnosc-petycja-fundacji-dobre-panstwo/"
     },
     {
-      id: "2", 
-      title: "Głosy przedsiębiorców o nowych regulacjach",
-      summary: "Lokalni przedsiębiorcy dzielą się swoimi doświadczeniami z nowymi przepisami...",
-      content: "Szczegółowe relacje przedsiębiorców o wpływie nowych regulacji na prowadzenie działalności gospodarczej, wyzwaniach związanych z ich wdrożeniem oraz propozycjach ulepszeń."
+      id: "trojka-do-wyboru-petycja",
+      title: "Trójka do wyboru - petycja Fundacji Dobre Państwo",
+      date: "16 lipca 2024",
+      summary: "Petycja w sprawie reformy systemu wyborczego - propozycja wyboru prezydenta z trojga, a nie dwóch kandydatów w drugiej turze.",
+      content: "Obywatelska propozycja zmiany ordynacji wyborczej w wyborach prezydenckich. Petycja postuluje umożliwienie wyboru z trzech kandydatów w drugiej turze dla zwiększenia reprezentatywności wyniku.",
+      link: "https://dobrepanstwo.org/trojka-do-wyboru-petycja-fundacji-dobre-panstwo/"
     },
     {
-      id: "3",
-      title: "Rodzice o zmianach w szkołach",
-      summary: "Opinie rodziców na temat wprowadzonych reform edukacyjnych i ich wpływu na dzieci...",
-      content: "Szeroki przegląd opinii rodziców dotyczących zmian w systemie edukacji, ich wpływu na codzienne funkcjonowanie szkół oraz skutków dla rozwoju dzieci."
+      id: "policzmy-kosciol-petycja",
+      title: "Policzmy Kościół - petycja",
+      date: "1 kwietnia 2024",
+      summary: "Petycja o transparentność finansów kościelnych i równe traktowanie wszystkich związków wyznaniowych w Polsce.",
+      content: "Obywatelska inicjatywa domagająca się pełnej transparentności finansowej Kościoła Katolickiego oraz równego traktowania wszystkich związków wyznaniowych. Petycja postuluje publikację sprawozdań finansowych i inwentaryzację majątku.",
+      link: "https://dobrepanstwo.org/policzmy-kosciol-petycja/"
     },
     {
-      id: "4",
-      title: "Seniorzy o dostępności usług publicznych",
-      summary: "Starsi mieszkańcy dzielą się swoimi doświadczeniami z korzystania z urzędów i instytucji...",
-      content: "Dogłębna analiza doświadczeń seniorów w kontakcie z administracją publiczną, identyfikacja barier oraz propozycje rozwiązań poprawiających dostępność usług."
+      id: "koniec-abonamentu-rtv-petycja",
+      title: "Koniec abonamentu RTV - petycja", 
+      date: "1 kwietnia 2024",
+      summary: "Petycja w sprawie likwidacji obowiązkowego abonamentu radiowo-telewizyjnego jako anachronicznej formy finansowania mediów publicznych.",
+      content: "Obywatelska inicjatywa dotycząca zniesienia abonamentu RTV. Petycja argumentuje, że obecny system finansowania mediów publicznych jest przestarzały i wymaga gruntownej reformy dostosowanej do cyfrowej rzeczywistości.",
+      link: "https://dobrepanstwo.org/koniec-abonamentu-rtv-petycja/"
     },
     {
-      id: "5",
-      title: "Młodzież o przestrzeni publicznej",
-      summary: "Nastolatkowie i młodzi dorośli opowiadają o swoich potrzebach w przestrzeni miejskiej...",
-      content: "Kompleksowy przegląd potrzeb młodzieży dotyczących zagospodarowania przestrzeni publicznej, propozycje nowych rozwiązań oraz ocena istniejącej infrastruktury rekreacyjnej."
+      id: "gospodynie-miejskie-petycja",
+      title: "Gospodynie Miejskie - petycja",
+      date: "1 kwietnia 2024", 
+      summary: "Petycja w sprawie bezpłatnych toalet w miejscach publicznych jako podstawowej usługi dla mieszkańców miast.",
+      content: "Obywatelska inicjatywa domagająca się zapewnienia bezpłatnego dostępu do toalet publicznych. Petycja argumentuje, że jest to podstawowa potrzeba fizjologiczna, która powinna być zaspokajana przez władze miejskie.",
+      link: "https://dobrepanstwo.org/gospodynie-miejskie-petycja/"
     },
     {
-      id: "6",
-      title: "Mieszkańcy o komunikacji publicznej",
-      summary: "Codzienni użytkownicy transportu publicznego dzielą się swoimi obserwacjami...",
-      content: "Szczegółowe relacje pasażerów komunikacji publicznej dotyczące jakości usług, punktualności, czystości oraz propozycji usprawnień w organizacji transportu miejskiego."
+      id: "konferencja-na-zawolanie-petycja",
+      title: "Konferencja na zawołanie - petycja",
+      date: "1 kwietnia 2024",
+      summary: "Petycja o obowiązkowe regularne konferencje prasowe parlamentarzystów jako element transparentności władzy.",
+      content: "Obywatelska propozycja wprowadzenia obowiązku regularnego składania sprawozdań przez parlamentarzystów w formie konferencji prasowych. Petycja ma na celu zwiększenie transparentności działań przedstawicieli narodu.",
+      link: "https://dobrepanstwo.org/konferencja-na-zawolanie-petycja/"
+    },
+    {
+      id: "petycja-z-konikiem",
+      title: "Petycja z konikiem",
+      date: "5 marca 2024",
+      summary: "Obywatelska inicjatywa dotycząca poprawy warunków życia zwierząt w miastach i zwiększenia terenów zielonych.",
+      content: "Kompleksowa petycja dotycząca poprawy jakości życia w miastach poprzez zwiększenie powierzchni terenów zielonych oraz poprawę warunków życia zwierząt w środowisku miejskim.",
+      link: "https://dobrepanstwo.org/petycja-z-konikiem/"
+    },
+    {
+      id: "petycja-kodeks-cywilny",
+      title: "Petycja w sprawie zmiany Kodeksu cywilnego",
+      date: "1 lutego 2024",
+      summary: "Petycja dotycząca modernizacji przepisów Kodeksu cywilnego w zakresie prawa rodzinnego i związków partnerskich.",
+      content: "Obywatelska inicjatywa mająca na celu dostosowanie polskiego prawa cywilnego do współczesnych realiów społecznych. Petycja postuluje wprowadzenie nowoczesnych rozwiązań w prawie rodzinnym.",
+      link: "https://dobrepanstwo.org/petycja-w-sprawie-zmiany-kodeksu-cywilnego/"
     }
   ];
 
@@ -58,6 +85,9 @@ const GlosyKtoreSlychac = () => {
           <h1 className="text-3xl font-light" style={{ color: '#333333' }}>
             Głosy, które słychać
           </h1>
+          <p className="mt-2 text-lg" style={{ color: '#666666' }}>
+            Petycje obywatelskie i inicjatywy społeczne - 66 działań na rzecz lepszego państwa
+          </p>
         </div>
       </header>
 
@@ -67,7 +97,7 @@ const GlosyKtoreSlychac = () => {
           <Card className="shadow-lg" style={{ backgroundColor: 'rgba(255, 255, 255, 0.8)' }}>
             <CardHeader>
               <CardTitle className="text-2xl" style={{ color: '#333333' }}>
-                Najnowsze relacje
+                Najnowsze petycje i inicjatywy
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
@@ -75,30 +105,33 @@ const GlosyKtoreSlychac = () => {
                 <div key={post.id} className="border-b pb-6 last:border-b-0">
                   <div className="flex items-start gap-3">
                     <img 
-                      src="/lovable-uploads/a247c62f-0c85-460a-8ed0-b9c0be25623f.png" 
+                      src="/lovable-uploads/67187d9c-6fe3-4bda-b537-0eeb08b6d5a7.png" 
                       alt="Logo" 
-                      className="w-5 h-5 mt-1 flex-shrink-0"
+                      className="w-8 h-8 mt-1 flex-shrink-0 object-contain"
                     />
                     <div className="flex-1">
-                      <Link to={`/glosy-ktore-slychac/${post.id}`}>
-                        <h3 
-                          className="text-xl font-medium mb-3 cursor-pointer hover:opacity-70 transition-opacity"
-                          style={{ color: '#333333' }}
-                        >
-                          {post.title}
-                        </h3>
-                      </Link>
-                      <p className="text-base mb-3 leading-relaxed" style={{ color: '#666666' }}>
+                      <h3 
+                        className="text-xl font-medium mb-2"
+                        style={{ color: '#333333' }}
+                      >
+                        {post.title}
+                      </h3>
+                      <p className="text-sm mb-3" style={{ color: '#666666' }}>
+                        {post.date}
+                      </p>
+                      <p className="text-base mb-4 leading-relaxed" style={{ color: '#666666' }}>
                         {post.summary}
                       </p>
-                      <div className="flex gap-4 items-center">
-                        <Link 
-                          to={`/glosy-ktore-slychac/${post.id}`}
-                          className="text-sm hover:opacity-70 transition-opacity"
-                          style={{ color: '#666666' }}
+                      <div className="flex gap-4 items-center flex-wrap">
+                        <a 
+                          href={post.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 text-sm hover:opacity-70 transition-opacity"
+                          style={{ color: '#333333' }}
                         >
-                          Czytaj więcej →
-                        </Link>
+                          Zobacz petycję <ExternalLink className="h-3 w-3" />
+                        </a>
                         <button
                           className="text-sm hover:opacity-70 transition-opacity"
                           style={{ color: '#666666' }}
@@ -128,7 +161,7 @@ const GlosyKtoreSlychac = () => {
         <div className="container mx-auto max-w-7xl">
           <div className="w-full h-px mb-6" style={{ backgroundColor: '#E5E5E5' }}></div>
           <p className="text-center text-sm font-light" style={{ color: '#666666' }}>
-            © 2024 Portfolio. Strorzone z myślą o prostocie.
+            © 2024 Fundacja Dobre Państwo. Wszystkie prawa zastrzeżone.
           </p>
         </div>
       </footer>
