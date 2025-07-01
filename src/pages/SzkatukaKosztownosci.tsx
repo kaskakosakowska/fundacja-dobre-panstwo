@@ -1,76 +1,50 @@
 import { Link } from "react-router-dom";
 import { ArrowLeft, ExternalLink } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { useState } from "react";
 
 const SzkatulaKosztownosci = () => {
   const [selectedPost, setSelectedPost] = useState<string | null>(null);
 
   const posts = [
-    {
-      id: "zaufanie-ktore-wiednie",
-      title: "Zaufanie, które więdnie",
-      date: "29 czerwca 2025",
-      summary: "Esej o kapitale społecznym i erozji zaufania w społeczeństwie. Analiza przyczyn spadku zaufania obywateli do instytucji publicznych.",
-      content: "Szczegółowa analiza zjawiska erozji zaufania społecznego w Polsce. Badanie przyczyn spadku wiarygodności instytucji publicznych oraz wpływu tego zjawiska na funkcjonowanie demokratycznego społeczeństwa.",
-      link: "https://wbrew.org/kapital-spoleczny-zaufanie/"
-    },
-    {
-      id: "total-participation-management",
-      title: "Total Participation Management (TPM)",
-      date: "29 czerwca 2025",
-      summary: "Zarządzanie pełnią człowieczeństwa w nowoczesnych organizacjach. Nowe podejście do zarządzania zasobami ludzkimi.",
-      content: "Kompleksowa analiza nowego modelu zarządzania, który uwzględnia pełny potencjał pracowników. Rozważania o humanizacji środowiska pracy i wpływie na produktywność organizacji.",
-      link: "https://wbrew.org/total-participation-management-tpm-zarzadzanie-pelnia-czlowieczenstwa/"
-    },
-    {
-      id: "ekonomiczne-niewolnictwo-xxi-wieku",
-      title: "Ekonomiczne niewolnictwo XXI wieku",
-      date: "29 czerwca 2025", 
-      summary: "Głos prekariatu przeciw outsourcingowi w nowoczesnej ekonomii. Krytyczna analiza współczesnych form zatrudnienia.",
-      content: "Dogłębna analiza zjawiska prekariatu we współczesnej gospodarce. Badanie wpływu outsourcingu na prawa pracownicze oraz propozycje reform systemu zatrudnienia.",
-      link: "https://wbrew.org/prekariat-vs-outsourcing/"
-    },
-    {
-      id: "zderegulujmy-rzecznika-msp",
-      title: "Zderegulujmy Rzecznika MŚP",
-      date: "27 czerwca 2025",
-      summary: "O konieczności redukcji fikcji dialogu w administracji publicznej. Analiza efektywności instytucji rzecznika.",
-      content: "Krytyczna ocena funkcjonowania instytucji Rzecznika Małych i Średnich Przedsiębiorców. Analiza skuteczności działań oraz propozycje reform strukturalnych.",
-      link: "https://wbrew.org/zderegulujmy-rzecznika-msp-zredukujmy-fikcje-dialogu/"
-    },
-    {
-      id: "zanim-kultura-sie-wydarzy",
-      title: "Zanim kultura się wydarzy",
-      date: "21 czerwca 2025",
-      summary: "Trzy przeszkody epistemiczne i manifest kreacyjnej metodologii w kulturze współczesnej.",
-      content: "Rozważania o przeszkodach w rozwoju kultury współczesnej oraz propozycje nowych metodologii twórczych. Analiza filozoficzna procesów kulturowych.",
-      link: "https://dobrepanstwo.org/zanim-kultura-sie-wydarzy/"
-    },
-    {
-      id: "gdy-ziemia-krzyczy-glosem-ludu",
-      title: "Gdy Ziemia krzyczy głosem ludu",
-      date: "21 czerwca 2025",
-      summary: "Prawa ludów rdzennych jako ostatni mur przeciw końcowi świata. Ekologiczne i społeczne aspekty ochrony środowiska.",
-      content: "Analiza znaczenia praw ludów rdzennych w kontekście kryzysu klimatycznego. Badanie relacji między sprawiedliwością społeczną a ochroną środowiska.",
-      link: "https://dobrepanstwo.org/gdy-ziemia-krzyczy-glosem-ludu/"
-    },
-    {
-      id: "alt-right-miedzy-memem-a-metapolityka",
-      title: "Zjawisko Alt-Right: między memem a metapolityką",
-      date: "21 czerwca 2025",
-      summary: "Analiza współczesnych ruchów politycznych w erze internetu i mediów społecznościowych.",
-      content: "Szczegółowe badanie zjawiska Alt-Right jako nowej formy politycznego aktywizmu. Analiza wpływu memów i kultury internetowej na współczesną politykę.",
-      link: "https://dobrepanstwo.org/zjawisko-alt-right-miedzy-memem-a-metapolityka/"
-    },
-    {
-      id: "teoria-chaosu-nauka-zlozonosci",
-      title: "Teoria chaosu – nauka złożoności i efektu motyla",
-      date: "21 czerwca 2025",
-      summary: "Zastosowanie teorii chaosu w analizie zjawisk społecznych i politycznych.",
-      content: "Wprowadzenie do teorii chaosu i jej zastosowań w naukach społecznych. Analiza efektu motyla w kontekście przemian politycznych i społecznych.",
-      link: "https://dobrepanstwo.org/teoria-chaosu-nauka-zlozonosci-i-efektu-motyla/"
-    }
+    // Czerwiec 2025
+    { id: "zaufanie-ktore-wiednie", title: "Zaufanie, które więdnie", date: "29 czerwca 2025", summary: "Esej o kapitale społecznym i erozji zaufania w społeczeństwie.", content: "Analiza przyczyn spadku zaufania obywateli do instytucji publicznych.", link: "https://wbrew.org/kapital-spoleczny-zaufanie/" },
+    { id: "total-participation-management", title: "Total Participation Management (TPM)", date: "29 czerwca 2025", summary: "Zarządzanie pełnią człowieczeństwa w nowoczesnych organizacjach.", content: "Nowe podejście do zarządzania zasobami ludzkimi.", link: "https://wbrew.org/total-participation-management-tpm-zarzadzanie-pelnia-czlowieczenstwa/" },
+    { id: "ekonomiczne-niewolnictwo-xxi-wieku", title: "Ekonomiczne niewolnictwo XXI wieku", date: "29 czerwca 2025", summary: "Głos prekariatu przeciw outsourcingowi w nowoczesnej ekonomii.", content: "Krytyczna analiza współczesnych form zatrudnienia.", link: "https://wbrew.org/prekariat-vs-outsourcing/" },
+    { id: "wzorzec-ktory-marzy", title: "Wzorzec, który marzy", date: "29 czerwca 2025", summary: "Rozważania o osobliwości i tożsamości we współczesnym świecie.", content: "Filozoficzna analiza wzorców społecznych.", link: "https://wbrew.org/wzorzec-osobliwosc-tozsamosc/" },
+    { id: "zderegulujmy-rzecznika-msp", title: "Zderegulujmy Rzecznika MŚP", date: "27 czerwca 2025", summary: "O konieczności redukcji fikcji dialogu w administracji publicznej.", content: "Analiza efektywności instytucji rzecznika.", link: "https://wbrew.org/zderegulujmy-rzecznika-msp-zredukujmy-fikcje-dialogu/" },
+    { id: "zanim-kultura-sie-wydarzy", title: "Zanim kultura się wydarzy", date: "21 czerwca 2025", summary: "Trzy przeszkody epistemiczne i manifest kreacyjnej metodologii w kulturze.", content: "Rozważania o przeszkodach w rozwoju kultury współczesnej.", link: "https://dobrepanstwo.org/zanim-kultura-sie-wydarzy/" },
+    { id: "czlowiek-ktory-zapomnial-miec-tors", title: "Człowiek, który zapomniał mieć tors", date: "21 czerwca 2025", summary: "Filozoficzne rozważania o cielesności i tożsamości.", content: "Antropologiczna analiza współczesnego człowieka.", link: "https://dobrepanstwo.org/czlowiek-ktory-zapomnial-miec-tors/" },
+    { id: "gdy-ziemia-krzyczy-glosem-ludu", title: "Gdy Ziemia krzyczy głosem ludu", date: "21 czerwca 2025", summary: "Prawa ludów rdzennych jako ostatni mur przeciw końcowi świata.", content: "Ekologiczne i społeczne aspekty ochrony środowiska.", link: "https://dobrepanstwo.org/gdy-ziemia-krzyczy-glosem-ludu/" },
+    { id: "alt-right-miedzy-memem-a-metapolityka", title: "Zjawisko Alt-Right: między memem a metapolityką", date: "21 czerwca 2025", summary: "Analiza współczesnych ruchów politycznych w erze internetu.", content: "Szczegółowe badanie zjawiska Alt-Right jako nowej formy politycznego aktywizmu.", link: "https://dobrepanstwo.org/zjawisko-alt-right-miedzy-memem-a-metapolityka/" },
+    { id: "teoria-chaosu-nauka-zlozonosci", title: "Teoria chaosu – nauka złożoności i efektu motyla", date: "21 czerwca 2025", summary: "Zastosowanie teorii chaosu w analizie zjawisk społecznych i politycznych.", content: "Wprowadzenie do teorii chaosu i jej zastosowań w naukach społecznych.", link: "https://dobrepanstwo.org/teoria-chaosu-nauka-zlozonosci-i-efektu-motyla/" },
+    
+    // Maj 2025 - kontynuacja czerwcowych dat
+    { id: "wszystko-plynie-nieregularnie", title: "Wszystko płynie nieregularnie", date: "11 czerwca 2025", summary: "Rozważania o zmienności w życiu społecznym i politycznym.", content: "Analiza niestabilności współczesnego świata.", link: "https://dobrepanstwo.org/wszystko-plynie-nieregularnie/" },
+    { id: "utopia-sznurka-pieczatki", title: "Utopia sznurka, pieczątki i paralizatora", date: "11 czerwca 2025", summary: "Krytyka biurokracji i jej wpływu na społeczeństwo.", content: "Analiza mechanizmów biurokratycznych.", link: "https://dobrepanstwo.org/utopia-sznurka-pieczatki-i-paralizatora/" },
+    { id: "czas-giddensa", title: "Czas Giddensa", date: "11 czerwca 2025", summary: "Refleksje nad socjologią Anthony'ego Giddensa.", content: "Analiza teorii społecznej Giddensa.", link: "https://dobrepanstwo.org/czas-giddensa/" },
+    { id: "gdy-rynki-zawodza-ludzie-milkna", title: "Gdy rynki zawodzą, a ludzie milkną", date: "11 czerwca 2025", summary: "O kryzysach rynkowych i ich społecznych konsekwencjach.", content: "Analiza wpływu kryzysów na społeczeństwo.", link: "https://dobrepanstwo.org/gdy-rynki-zawodza-a-ludzie-milkna/" },
+    { id: "panstwo-nie-wchodzi-do-swiatyni", title: "Państwo nie wchodzi do świątyni, lecz adres jej zna", date: "10 czerwca 2025", summary: "O relacjach między państwem a kościołem w Polsce.", content: "Analiza stosunków państwo-kościół.", link: "https://dobrepanstwo.org/panstwo-nie-wchodzi-do-swiatyni-lecz-adres-jej-zna/" },
+    
+    // Pozostałe z maja 2025
+    { id: "analiza-inwestycji-publicznych", title: "Analiza inwestycji publicznych podnoszących jakość życia", date: "15 maja 2025", summary: "Badanie efektywności wydatków publicznych.", content: "Kompleksowa analiza inwestycji publicznych.", link: "https://dobrepanstwo.org/analiza-inwestycji-publicznych-podnoszacych-jakosc-zycia/" },
+    { id: "koniec-praw-poczatek-praw", title: "Koniec praw, początek praw", date: "14 maja 2025", summary: "O przemianach w systemie prawnym.", content: "Analiza ewolucji prawa.", link: "https://dobrepanstwo.org/koniec-praw-poczatek-praw/" },
+    { id: "paradygmat-ku-samozatrudnieniu", title: "Paradygmat ku samozatrudnieniu?", date: "13 maja 2025", summary: "Trendy w zatrudnieniu i samozatrudnieniu.", content: "Analiza zmian na rynku pracy.", link: "https://dobrepanstwo.org/paradygmat-ku-samozatrudnieniu/" },
+    { id: "na-smyczy-zysku-tancu-wartosci", title: "Na smyczy zysku, czy w tańcu wartości", date: "12 maja 2025", summary: "O konflikcie między zyskiem a wartościami.", content: "Etyczna analiza biznesu.", link: "https://dobrepanstwo.org/na-smyczy-zysku-czy-w-tancu-wartosci/" },
+    
+    // Seria prekariackiej pracy
+    { id: "niewidzialni-przy-stole", title: "Niewidzialni przy stole", date: "10 maja 2025", summary: "Kogo nie ma w dialogu społecznym i dlaczego.", content: "Analiza wykluczenia z debaty publicznej.", link: "https://dobrepanstwo.org/niewidzialni-przy-stole-kogo-nie-ma-w-dialogu-spolecznym-i-dlaczego/" },
+    { id: "elastycznosc-bez-zobowiazan", title: "Elastyczność bez zobowiązań", date: "9 maja 2025", summary: "O pozornych wolnościach deregulowanego rynku.", content: "Krytyka elastycznego zatrudnienia.", link: "https://dobrepanstwo.org/elastycznosc-bez-zobowiazan-o-pozornych-wolnosciach-deregulowanego-rynku/" },
+    { id: "w-cieniu-zlecenia", title: "W cieniu zlecenia", date: "8 maja 2025", summary: "Państwo i ekonomika umywania rąk.", content: "Analiza umów zlecenia.", link: "https://dobrepanstwo.org/w-cieniu-zlecenia-panstwo-i-ekonomika-umywania-rak/" },
+    { id: "nowy-porzadek-feudalny", title: "Nowy porządek feudalny", date: "7 maja 2025", summary: "O degradacji pracy i znikających ludziach.", content: "Krytyka współczesnych stosunków pracy.", link: "https://dobrepanstwo.org/nowy-porzadek-feudalny-o-degradacji-pracy-i-znikajacych-ludziach/" },
+    
+    // Polityka i demokracja
+    { id: "o-sejmu-skrocenie", title: "O Sejmu skrócenie", date: "5 maja 2025", summary: "Propozycja skrócenia kadencji parlamentu.", content: "Argumenty za krótszymi kadencjami.", link: "https://dobrepanstwo.org/o-sejmu-skrocenie/" },
+    { id: "dlaczego-tylko-dwie-kadencje", title: "Dlaczego tylko dwie (kadencje)?", date: "4 maja 2025", summary: "O ograniczeniu liczby kadencji parlamentarzystów.", content: "Uzasadnienie limitów kadencyjnych.", link: "https://dobrepanstwo.org/dlaczego-tylko-dwie-kadencje/" },
+    { id: "total-recall", title: "Total recall", date: "3 maja 2025", summary: "O mechanizmach odwołania politików.", content: "Propozycje demokratycznej kontroli.", link: "https://dobrepanstwo.org/total-recall/" },
+    { id: "wiecej-demokracji-referendalnej", title: "Więcej DEMOkracji (referendalnej)", date: "2 maja 2025", summary: "Argumenty za rozszerzeniem demokracji bezpośredniej.", content: "Analiza referendum jako narzędzia.", link: "https://dobrepanstwo.org/wiecej-demokracji-referendalnej/" },
+    { id: "mandat-tuz-za-progiem", title: "Mandat tuż za (p)rogiem", date: "1 maja 2025", summary: "O progach wyborczych i reprezentacji.", content: "Analiza systemu wyborczego.", link: "https://dobrepanstwo.org/mandat-tuz-za-progiem/" }
   ];
 
   return (
@@ -97,11 +71,13 @@ const SzkatulaKosztownosci = () => {
           <Card className="shadow-lg" style={{ backgroundColor: 'rgba(255, 255, 255, 0.8)' }}>
             <CardHeader>
               <CardTitle className="text-2xl" style={{ color: '#333333' }}>
-                Najnowsze wpisy
+                Najnowsze wpisy ({posts.length})
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-6">
-              {posts.map((post) => (
+            <CardContent>
+              <ScrollArea className="h-[70vh]">
+                <div className="space-y-6 pr-4">
+                  {posts.map((post) => (
                 <div key={post.id} className="border-b pb-6 last:border-b-0">
                   <div className="flex items-start gap-3">
                     <img 
@@ -148,7 +124,9 @@ const SzkatulaKosztownosci = () => {
                     </div>
                   </div>
                 </div>
-              ))}
+                  ))}
+                </div>
+              </ScrollArea>
             </CardContent>
           </Card>
         </div>
