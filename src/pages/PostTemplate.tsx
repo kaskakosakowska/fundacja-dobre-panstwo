@@ -113,27 +113,40 @@ const PostTemplate = () => {
                       
                       {/* Post content */}
                       <div className="text-base leading-relaxed" style={{ color: '#333333' }}>
-                        <p className="mb-4">
-                          {post.content}
+                        <p className="mb-6 text-lg font-medium" style={{ color: '#666666' }}>
+                          {post.summary}
                         </p>
-                        <p className="mb-4">
-                          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                        </p>
-                        <p className="mb-4">
-                          Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                        </p>
-                        <p className="mb-4">
-                          Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.
-                        </p>
-                        <p className="mb-4">
-                          Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
-                        </p>
-                        <p className="mb-4">
-                          Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
-                        </p>
-                        <p>
-                          At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.
-                        </p>
+                        <div className="prose prose-lg">
+                          <p className="mb-4">
+                            {post.content}
+                          </p>
+                          
+                          <p className="mb-4">
+                            Ten artykuł stanowi część naszej analizy współczesnych wyzwań społecznych i politycznych. 
+                            Fundacja Dobre Państwo konsekwentnie bada i opisuje zjawiska wpływające na jakość demokracji 
+                            oraz funkcjonowanie instytucji publicznych w Polsce.
+                          </p>
+                          
+                          <p className="mb-4">
+                            Nasze badania opierają się na analizie danych publicznych, wywiadach z ekspertami oraz 
+                            obserwacji procesów społecznych. Każdy artykuł jest wynikiem dogłębnej analizy tematu 
+                            i przedstawia zarówno diagnosis problemu, jak i propozycje rozwiązań.
+                          </p>
+                          
+                          <p className="mb-4">
+                            Zachęcamy do śledzenia naszych publikacji oraz włączania się w dyskusję na temat 
+                            przyszłości polskiego państwa i społeczeństwa. Razem możemy budować lepsze jutro.
+                          </p>
+                          
+                          <div className="mt-8 p-4 rounded-lg" style={{ backgroundColor: 'rgba(255, 255, 255, 0.8)' }}>
+                            <p className="text-sm" style={{ color: '#666666' }}>
+                              <strong>Źródło:</strong> Publikacja dostępna w pełnej wersji na stronie{' '}
+                              <a href={post.link} target="_blank" rel="noopener noreferrer" className="underline hover:opacity-70">
+                                {post.link.includes('wbrew.org') ? 'wbrew.org' : 'dobrepanstwo.org'}
+                              </a>
+                            </p>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </ScrollArea>
