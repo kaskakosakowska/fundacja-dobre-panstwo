@@ -27,16 +27,7 @@ const PostTemplate = () => {
                 </CardHeader>
                 <CardContent className="h-full">
                   <ScrollArea className="h-full max-h-[550px] pr-4">
-                    <div className="relative">
-                      {/* Image in top right corner */}
-                      <img 
-                        src="/lovable-uploads/a247c62f-0c85-460a-8ed0-b9c0be25623f.png" 
-                        alt="Post image" 
-                        className="float-right ml-6 mb-4 w-48 h-32 object-cover rounded-lg shadow-md"
-                      />
-                      
-                      <PostContent post={post} section={section} postId={postId} />
-                    </div>
+                    <PostContent post={post} section={section} postId={postId} />
                   </ScrollArea>
                 </CardContent>
               </Card>
