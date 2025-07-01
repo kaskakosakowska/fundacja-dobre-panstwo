@@ -123,15 +123,13 @@ const SzkatulaKosztownosci = () => {
                         {post.summary}
                       </p>
                       <div className="flex gap-4 items-center flex-wrap">
-                        <a 
-                          href={post.link}
-                          target="_blank"
-                          rel="noopener noreferrer"
+                        <Link 
+                          to={`/szkatulka-kosztownosci/${post.id}`}
                           className="inline-flex items-center gap-1 text-sm hover:opacity-70 transition-opacity"
                           style={{ color: '#333333' }}
                         >
                           Czytaj pełną wersję <ExternalLink className="h-3 w-3" />
-                        </a>
+                        </Link>
                         <button
                           className="text-sm hover:opacity-70 transition-opacity"
                           style={{ color: '#666666' }}
