@@ -20,7 +20,7 @@ const Index = () => {
                 backgroundColor: 'rgba(255, 255, 255, 0.5)',
                 boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)'
               }}>
-                <img src="/lovable-uploads/917aefb1-57c8-4896-b21d-9a4538bbfbc3.png" alt="Fundacja Dobre Państwo Logo" className="w-72 h-72 object-contain drop-shadow-lg mx-auto relative z-10" />
+                <img src="/lovable-uploads/917aefb1-57c8-4896-b21d-9a4538bbfbc3.png" alt="Fundacja Dobre Państwo Logo" className="w-80 h-80 object-contain drop-shadow-lg mx-auto relative z-10" />
               </div>
             </div>
           </div>
