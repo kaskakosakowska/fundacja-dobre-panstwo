@@ -88,152 +88,138 @@ function parseWordPressXML(xmlContent: string): ParsedPost[] {
     
     console.log('Processing', allItems.length, 'items...');
     
+    
     for (let i = 0; i < allItems.length; i++) {
       const itemContent = allItems[i];
       console.log(`Processing item ${i + 1}/${allItems.length}, length:`, itemContent.length);
-        
-        // Extract basic fields with multiple patterns
-        const titlePatterns = [
-          /<title><!\[CDATA\[(.*?)\]\]><\/title>/,
-          /<title>(.*?)<\/title>/
-        ];
-        
-        const contentPatterns = [
-          /<content:encoded><!\[CDATA\[([\s\S]*?)\]\]><\/content:encoded>/,
-          /<encoded><!\[CDATA\[([\s\S]*?)\]\]><\/encoded>/,
-          /<description><!\[CDATA\[([\s\S]*?)\]\]><\/description>/
-        ];
-        
-        const excerptPatterns = [
-          /<excerpt:encoded><!\[CDATA\[(.*?)\]\]><\/excerpt:encoded>/,
-          /<excerpt><!\[CDATA\[(.*?)\]\]><\/excerpt>/
-        ];
-        
-        let title = '';
-        let content = '';
-        let excerpt = '';
-        
-        // Try different title patterns
-        for (const titlePattern of titlePatterns) {
-          const match = itemContent.match(titlePattern);
-          if (match) {
-            title = match[1];
-            break;
-          }
+      
+      // Extract basic fields with multiple patterns
+      const titlePatterns = [
+        /<title><!\[CDATA\[(.*?)\]\]><\/title>/,
+        /<title>(.*?)<\/title>/
+      ];
+      
+      const contentPatterns = [
+        /<content:encoded><!\[CDATA\[([\s\S]*?)\]\]><\/content:encoded>/,
+        /<encoded><!\[CDATA\[([\s\S]*?)\]\]><\/encoded>/,
+        /<description><!\[CDATA\[([\s\S]*?)\]\]><\/description>/
+      ];
+      
+      const excerptPatterns = [
+        /<excerpt:encoded><!\[CDATA\[(.*?)\]\]><\/excerpt:encoded>/,
+        /<excerpt><!\[CDATA\[(.*?)\]\]><\/excerpt>/
+      ];
+      
+      let title = '';
+      let content = '';
+      let excerpt = '';
+      
+      // Try different title patterns
+      for (const titlePattern of titlePatterns) {
+        const match = itemContent.match(titlePattern);
+        if (match) {
+          title = match[1];
+          break;
         }
-        
-        // Try different content patterns
-        for (const contentPattern of contentPatterns) {
-          const match = itemContent.match(contentPattern);
-          if (match) {
-            content = match[1];
-            break;
-          }
-        }
-        
-        // Try different excerpt patterns
-        for (const excerptPattern of excerptPatterns) {
-          const match = itemContent.match(excerptPattern);
-          if (match) {
-            excerpt = match[1];
-            break;
-          }
-        }
-        
-        const pubDateMatch = itemContent.match(/<pubDate>(.*?)<\/pubDate>/);
-        const authorMatch = itemContent.match(/<dc:creator><!\[CDATA\[(.*?)\]\]><\/dc:creator>/);
-        const statusMatch = itemContent.match(/<wp:status>(.*?)<\/wp:status>/);
-        const typeMatch = itemContent.match(/<wp:post_type>(.*?)<\/wp:post_type>/);
-        
-        console.log('Extracted data:', { title: title.substring(0, 50), content: content.substring(0, 50), status: statusMatch?.[1], type: typeMatch?.[1] });
-        
-        // Only process published posts and pages
-        if (statusMatch && !['publish', 'draft', 'private'].includes(statusMatch[1])) {
-          console.log('Skipping due to status:', statusMatch[1]);
-          continue;
-        }
-        if (typeMatch && !['post', 'page'].includes(typeMatch[1])) {
-          console.log('Skipping due to type:', typeMatch[1]);
-          continue;
-        }
-        
-        const publishedDate = pubDateMatch ? new Date(pubDateMatch[1]).toISOString().split('T')[0] : '';
-        const author = authorMatch ? authorMatch[1] : 'Fundacja Dobre Państwo';
-        
-        if (!title) {
-          console.log('Skipping - no title found');
-          continue;
-        }
-        
-        if (!content) {
-          // If no content, try to use excerpt or title as content
-          content = excerpt || title;
-        }
-        
-        // Extract attachments and featured image
-        const attachments: string[] = [];
-        let featuredImage: string | undefined;
-        
-        // Look for wp:attachment_url
-        const attachmentPattern = /<wp:attachment_url>(.*?)<\/wp:attachment_url>/g;
-        let attachmentMatch;
-        while ((attachmentMatch = attachmentPattern.exec(itemContent)) !== null) {
-          attachments.push(attachmentMatch[1]);
-        }
-        
-        // Look for featured image in post meta
-        const metaPattern = /<wp:postmeta>([\s\S]*?)<\/wp:postmeta>/g;
-        let metaMatch;
-        while ((metaMatch = metaPattern.exec(itemContent)) !== null) {
-          const metaContent = metaMatch[1];
-          const keyMatch = metaContent.match(/<wp:meta_key><!\[CDATA\[(.*?)\]\]><\/wp:meta_key>/);
-          const valueMatch = metaContent.match(/<wp:meta_value><!\[CDATA\[(.*?)\]\]><\/wp:meta_value>/);
-          
-          if (keyMatch && valueMatch && keyMatch[1] === '_thumbnail_id') {
-            // This would need additional processing to get the actual image URL
-            // For now, we'll extract images from content
-          }
-        }
-        
-        // Extract images from content
-        const imgPattern = /<img[^>]+src="([^"]+)"/g;
-        let imgMatch;
-        while ((imgMatch = imgPattern.exec(content)) !== null) {
-          if (!featuredImage) {
-            featuredImage = imgMatch[1];
-          }
-          if (!attachments.includes(imgMatch[1])) {
-            attachments.push(imgMatch[1]);
-          }
-        }
-        
-        const section = categorizePost(title, content, publishedDate);
-        
-        posts.push({
-          title,
-          content,
-          excerpt: excerpt || content.substring(0, 200) + '...',
-          publishedDate,
-          author,
-          featuredImage,
-          attachments,
-          section
-        });
-        
-        console.log('Added post:', title);
       }
       
-      if (foundItems) break; // If we found items with this pattern, don't try others
+      // Try different content patterns
+      for (const contentPattern of contentPatterns) {
+        const match = itemContent.match(contentPattern);
+        if (match) {
+          content = match[1];
+          break;
+        }
+      }
+      
+      // Try different excerpt patterns
+      for (const excerptPattern of excerptPatterns) {
+        const match = itemContent.match(excerptPattern);
+        if (match) {
+          excerpt = match[1];
+          break;
+        }
+      }
+      
+      const pubDateMatch = itemContent.match(/<pubDate>(.*?)<\/pubDate>/);
+      const authorMatch = itemContent.match(/<dc:creator><!\[CDATA\[(.*?)\]\]><\/dc:creator>/);
+      const statusMatch = itemContent.match(/<wp:status>(.*?)<\/wp:status>/);
+      const typeMatch = itemContent.match(/<wp:post_type>(.*?)<\/wp:post_type>/);
+      
+      console.log('Extracted data:', { 
+        title: title.substring(0, 50), 
+        content: content.substring(0, 50), 
+        status: statusMatch?.[1], 
+        type: typeMatch?.[1] 
+      });
+      
+      // Process all posts and pages regardless of status for now
+      const publishedDate = pubDateMatch ? new Date(pubDateMatch[1]).toISOString().split('T')[0] : '';
+      const author = authorMatch ? authorMatch[1] : 'Fundacja Dobre Państwo';
+      
+      if (!title) {
+        console.log('Skipping - no title found');
+        continue;
+      }
+      
+      if (!content) {
+        // If no content, try to use excerpt or title as content
+        content = excerpt || title;
+      }
+      
+      // Extract attachments and featured image
+      const attachments: string[] = [];
+      let featuredImage: string | undefined;
+      
+      // Look for wp:attachment_url
+      const attachmentPattern = /<wp:attachment_url>(.*?)<\/wp:attachment_url>/g;
+      let attachmentMatch;
+      while ((attachmentMatch = attachmentPattern.exec(itemContent)) !== null) {
+        attachments.push(attachmentMatch[1]);
+      }
+      
+      // Look for featured image in post meta
+      const metaPattern = /<wp:postmeta>([\s\S]*?)<\/wp:postmeta>/g;
+      let metaMatch;
+      while ((metaMatch = metaPattern.exec(itemContent)) !== null) {
+        const metaContent = metaMatch[1];
+        const keyMatch = metaContent.match(/<wp:meta_key><!\[CDATA\[(.*?)\]\]><\/wp:meta_key>/);
+        const valueMatch = metaContent.match(/<wp:meta_value><!\[CDATA\[(.*?)\]\]><\/wp:meta_value>/);
+        
+        if (keyMatch && valueMatch && keyMatch[1] === '_thumbnail_id') {
+          // This would need additional processing to get the actual image URL
+          // For now, we'll extract images from content
+        }
+      }
+      
+      // Extract images from content
+      const imgPattern = /<img[^>]+src="([^"]+)"/g;
+      let imgMatch;
+      while ((imgMatch = imgPattern.exec(content)) !== null) {
+        if (!featuredImage) {
+          featuredImage = imgMatch[1];
+        }
+        if (!attachments.includes(imgMatch[1])) {
+          attachments.push(imgMatch[1]);
+        }
+      }
+      
+      const section = categorizePost(title, content, publishedDate);
+      
+      posts.push({
+        title,
+        content,
+        excerpt: excerpt || content.substring(0, 200) + '...',
+        publishedDate,
+        author,
+        featuredImage,
+        attachments,
+        section
+      });
+      
+      console.log('Added post:', title);
     }
     
-    if (!foundItems) {
-      console.log('No items found with any pattern. XML structure might be different.');
-      // Let's try to find any content at all
-      const anyItemMatch = xmlContent.match(/<item[\s\S]*?<\/item>/);
-      if (anyItemMatch) {
-        console.log('Found raw item example:', anyItemMatch[0].substring(0, 500));
-      }
-    }
   } catch (error) {
     console.error('Error parsing XML:', error);
   }
