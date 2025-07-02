@@ -55,38 +55,51 @@ function parseWordPressXML(xmlContent: string): ParsedPost[] {
   
   try {
     console.log('XML content length:', xmlContent.length);
-    console.log('XML preview:', xmlContent.substring(0, 2000));
+    console.log('XML preview:', xmlContent.substring(0, 1000));
     
-    // First, let's see what the actual structure looks like
-    const itemTest = xmlContent.match(/<item>/);
-    const channelTest = xmlContent.match(/<channel>/);
-    const rssTest = xmlContent.match(/<rss/);
+    // Look for all possible post structures
+    const itemTest = xmlContent.match(/<item>/g);
+    const wpPostTest = xmlContent.match(/<wp:post>/g);
+    const entryTest = xmlContent.match(/<entry>/g);
     
-    console.log('Structure tests:', {
-      hasItem: !!itemTest,
-      hasChannel: !!channelTest, 
-      hasRss: !!rssTest
+    console.log('Structure analysis:', {
+      itemCount: itemTest?.length || 0,
+      wpPostCount: wpPostTest?.length || 0,
+      entryCount: entryTest?.length || 0
     });
     
-    // Try to find any item tags first
-    const allItems = xmlContent.match(/<item[\s\S]*?<\/item>/g);
-    console.log('Found items count:', allItems?.length || 0);
+    // Find all possible post containers
+    let allItems: string[] = [];
     
-    if (!allItems || allItems.length === 0) {
-      console.log('No <item> tags found. Looking for alternative structures...');
-      
-      // Try looking for wp:post elements directly
-      const wpPosts = xmlContent.match(/<wp:post[\s\S]*?<\/wp:post>/g);
-      console.log('Found wp:post count:', wpPosts?.length || 0);
-      
-      // Show sample of what we're working with
-      const sampleContent = xmlContent.substring(1000, 3000);
-      console.log('Sample content structure:', sampleContent);
-      
-      return posts; // Return empty for now to see the logs
+    // Try <item> tags first (standard RSS/WordPress export)
+    const items = xmlContent.match(/<item[\s\S]*?<\/item>/g);
+    if (items) {
+      allItems = allItems.concat(items);
+      console.log('Found <item> tags:', items.length);
     }
     
-    console.log('Processing', allItems.length, 'items...');
+    // Try <wp:post> elements (extended WordPress export)
+    const wpPosts = xmlContent.match(/<wp:post[\s\S]*?<\/wp:post>/g);
+    if (wpPosts) {
+      allItems = allItems.concat(wpPosts);
+      console.log('Found <wp:post> tags:', wpPosts.length);
+    }
+    
+    // Try <entry> elements (Atom format)
+    const entries = xmlContent.match(/<entry[\s\S]*?<\/entry>/g);
+    if (entries) {
+      allItems = allItems.concat(entries);
+      console.log('Found <entry> tags:', entries.length);
+    }
+    
+    if (allItems.length === 0) {
+      console.log('No recognizable post elements found. Showing sample structure:');
+      const sampleContent = xmlContent.substring(1000, 5000);
+      console.log('Sample content:', sampleContent);
+      return posts;
+    }
+    
+    console.log('Processing', allItems.length, 'total elements...');
     
     
     for (let i = 0; i < allItems.length; i++) {
