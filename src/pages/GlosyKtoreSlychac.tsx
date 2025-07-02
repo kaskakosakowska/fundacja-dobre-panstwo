@@ -2,76 +2,35 @@ import { Link } from "react-router-dom";
 import { ArrowLeft, ExternalLink } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useState } from "react";
+import { useArticles } from "@/hooks/useArticles";
 
 const GlosyKtoreSlychac = () => {
   const [selectedPost, setSelectedPost] = useState<string | null>(null);
+  const { articles, loading, error } = useArticles('glosy');
 
-  const posts = [
-    {
-      id: "straszna-dwukadencyjnosc-petycja",
-      title: "Straszna dwukadencyjność - petycja Fundacji Dobre Państwo",
-      date: "16 lipca 2024",
-      summary: "Petycja dotycząca ograniczenia kadencji parlamentarzystów do maksymalnie dwóch w celu zwiększenia rotacji i świeżości w polityce.",
-      content: "Obywatelska inicjatywa mająca na celu wprowadzenie ograniczeń kadencyjnych dla posłów i senatorów. Petycja argumentuje konieczność zwiększenia rotacji kadr politycznych dla zachowania dynamizmu demokracji.",
-      link: "https://dobrepanstwo.org/straszna-dwukadencyjnosc-petycja-fundacji-dobre-panstwo/"
-    },
-    {
-      id: "trojka-do-wyboru-petycja",
-      title: "Trójka do wyboru - petycja Fundacji Dobre Państwo",
-      date: "16 lipca 2024",
-      summary: "Petycja w sprawie reformy systemu wyborczego - propozycja wyboru prezydenta z trojga, a nie dwóch kandydatów w drugiej turze.",
-      content: "Obywatelska propozycja zmiany ordynacji wyborczej w wyborach prezydenckich. Petycja postuluje umożliwienie wyboru z trzech kandydatów w drugiej turze dla zwiększenia reprezentatywności wyniku.",
-      link: "https://dobrepanstwo.org/trojka-do-wyboru-petycja-fundacji-dobre-panstwo/"
-    },
-    {
-      id: "policzmy-kosciol-petycja",
-      title: "Policzmy Kościół - petycja",
-      date: "1 kwietnia 2024",
-      summary: "Petycja o transparentność finansów kościelnych i równe traktowanie wszystkich związków wyznaniowych w Polsce.",
-      content: "Obywatelska inicjatywa domagająca się pełnej transparentności finansowej Kościoła Katolickiego oraz równego traktowania wszystkich związków wyznaniowych. Petycja postuluje publikację sprawozdań finansowych i inwentaryzację majątku.",
-      link: "https://dobrepanstwo.org/policzmy-kosciol-petycja/"
-    },
-    {
-      id: "koniec-abonamentu-rtv-petycja",
-      title: "Koniec abonamentu RTV - petycja", 
-      date: "1 kwietnia 2024",
-      summary: "Petycja w sprawie likwidacji obowiązkowego abonamentu radiowo-telewizyjnego jako anachronicznej formy finansowania mediów publicznych.",
-      content: "Obywatelska inicjatywa dotycząca zniesienia abonamentu RTV. Petycja argumentuje, że obecny system finansowania mediów publicznych jest przestarzały i wymaga gruntownej reformy dostosowanej do cyfrowej rzeczywistości.",
-      link: "https://dobrepanstwo.org/koniec-abonamentu-rtv-petycja/"
-    },
-    {
-      id: "gospodynie-miejskie-petycja",
-      title: "Gospodynie Miejskie - petycja",
-      date: "1 kwietnia 2024", 
-      summary: "Petycja w sprawie bezpłatnych toalet w miejscach publicznych jako podstawowej usługi dla mieszkańców miast.",
-      content: "Obywatelska inicjatywa domagająca się zapewnienia bezpłatnego dostępu do toalet publicznych. Petycja argumentuje, że jest to podstawowa potrzeba fizjologiczna, która powinna być zaspokajana przez władze miejskie.",
-      link: "https://dobrepanstwo.org/gospodynie-miejskie-petycja/"
-    },
-    {
-      id: "konferencja-na-zawolanie-petycja",
-      title: "Konferencja na zawołanie - petycja",
-      date: "1 kwietnia 2024",
-      summary: "Petycja o obowiązkowe regularne konferencje prasowe parlamentarzystów jako element transparentności władzy.",
-      content: "Obywatelska propozycja wprowadzenia obowiązku regularnego składania sprawozdań przez parlamentarzystów w formie konferencji prasowych. Petycja ma na celu zwiększenie transparentności działań przedstawicieli narodu.",
-      link: "https://dobrepanstwo.org/konferencja-na-zawolanie-petycja/"
-    },
-    {
-      id: "petycja-z-konikiem",
-      title: "Petycja z konikiem",
-      date: "5 marca 2024",
-      summary: "Obywatelska inicjatywa dotycząca poprawy warunków życia zwierząt w miastach i zwiększenia terenów zielonych.",
-      content: "Kompleksowa petycja dotycząca poprawy jakości życia w miastach poprzez zwiększenie powierzchni terenów zielonych oraz poprawę warunków życia zwierząt w środowisku miejskim.",
-      link: "https://dobrepanstwo.org/petycja-z-konikiem/"
-    },
-    {
-      id: "petycja-kodeks-cywilny",
-      title: "Petycja w sprawie zmiany Kodeksu cywilnego",
-      date: "1 lutego 2024",
-      summary: "Petycja dotycząca modernizacji przepisów Kodeksu cywilnego w zakresie prawa rodzinnego i związków partnerskich.",
-      content: "Obywatelska inicjatywa mająca na celu dostosowanie polskiego prawa cywilnego do współczesnych realiów społecznych. Petycja postuluje wprowadzenie nowoczesnych rozwiązań w prawie rodzinnym.",
-      link: "https://dobrepanstwo.org/petycja-w-sprawie-zmiany-kodeksu-cywilnego/"
-    }
-  ];
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('pl-PL', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: '#F6F4EF' }}>
+        <p style={{ color: '#666666' }}>Ładowanie artykułów...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: '#F6F4EF' }}>
+        <p style={{ color: '#666666' }}>Błąd: {error}</p>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#F6F4EF' }}>
@@ -86,7 +45,7 @@ const GlosyKtoreSlychac = () => {
             Głosy, które słychać
           </h1>
           <p className="mt-2 text-lg" style={{ color: '#666666' }}>
-            Petycje obywatelskie i inicjatywy społeczne - 66 działań na rzecz lepszego państwa
+            Petycje obywatelskie i inicjatywy społeczne - głosy za zmianą
           </p>
         </div>
       </header>
@@ -97,58 +56,77 @@ const GlosyKtoreSlychac = () => {
           <Card className="shadow-lg" style={{ backgroundColor: 'rgba(255, 255, 255, 0.8)' }}>
             <CardHeader>
               <CardTitle className="text-2xl" style={{ color: '#333333' }}>
-                Najnowsze petycje i inicjatywy
+                Najnowsze petycje i inicjatywy ({articles.length})
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
-              {posts.map((post) => (
-                <div key={post.id} className="border-b pb-6 last:border-b-0">
-                  <div className="flex items-start gap-3">
-                    <img 
-                      src="/lovable-uploads/67187d9c-6fe3-4bda-b537-0eeb08b6d5a7.png" 
-                      alt="Logo" 
-                      className="w-8 h-8 mt-1 flex-shrink-0 object-contain"
-                    />
-                    <div className="flex-1">
-                      <h3 
-                        className="text-xl font-medium mb-2"
-                        style={{ color: '#333333' }}
-                      >
-                        {post.title}
-                      </h3>
-                      <p className="text-sm mb-3" style={{ color: '#666666' }}>
-                        {post.date}
-                      </p>
-                      <p className="text-base mb-4 leading-relaxed" style={{ color: '#666666' }}>
-                        {post.summary}
-                      </p>
-                      <div className="flex gap-4 items-center flex-wrap">
-                        <Link 
-                          to={`/glosy-ktore-slychac/${post.id}`}
-                          className="inline-flex items-center gap-1 text-sm hover:opacity-70 transition-opacity"
+              {articles.length === 0 ? (
+                <p className="text-center text-lg" style={{ color: '#666666' }}>
+                  Brak artykułów w tej sekcji.
+                </p>
+              ) : (
+                articles.map((article) => (
+                  <div key={article.id} className="border-b pb-6 last:border-b-0">
+                    <div className="flex items-start gap-3">
+                      <img 
+                        src="/lovable-uploads/67187d9c-6fe3-4bda-b537-0eeb08b6d5a7.png" 
+                        alt="Logo" 
+                        className="w-8 h-8 mt-1 flex-shrink-0 object-contain"
+                      />
+                      <div className="flex-1">
+                        <h3 
+                          className="text-xl font-medium mb-2"
                           style={{ color: '#333333' }}
                         >
-                          Zobacz petycję <ExternalLink className="h-3 w-3" />
-                        </Link>
-                        <button
-                          className="text-sm hover:opacity-70 transition-opacity"
-                          style={{ color: '#666666' }}
-                          onClick={() => setSelectedPost(selectedPost === post.id ? null : post.id)}
-                        >
-                          {selectedPost === post.id ? 'Zwiń podgląd' : 'Podgląd'}
-                        </button>
-                      </div>
-                      {selectedPost === post.id && (
-                        <div className="mt-4 p-6 rounded-lg" style={{ backgroundColor: 'rgba(255, 255, 255, 0.6)' }}>
-                          <p className="text-base leading-relaxed" style={{ color: '#333333' }}>
-                            {post.content}
-                          </p>
+                          {article.title}
+                        </h3>
+                        <p className="text-sm mb-3" style={{ color: '#666666' }}>
+                          {formatDate(article.published_date)} | {article.author}
+                        </p>
+                        <p className="text-base mb-4 leading-relaxed" style={{ color: '#666666' }}>
+                          {article.summary}
+                        </p>
+                        <div className="flex gap-4 items-center flex-wrap">
+                          <Link 
+                            to={`/glosy-ktore-slychac/${article.slug}`}
+                            className="inline-flex items-center gap-1 text-sm hover:opacity-70 transition-opacity"
+                            style={{ color: '#333333' }}
+                          >
+                            Zobacz petycję <ExternalLink className="h-3 w-3" />
+                          </Link>
+                          <button
+                            className="text-sm hover:opacity-70 transition-opacity"
+                            style={{ color: '#666666' }}
+                            onClick={() => setSelectedPost(selectedPost === article.id ? null : article.id)}
+                          >
+                            {selectedPost === article.id ? 'Zwiń podgląd' : 'Podgląd'}
+                          </button>
+                          {article.original_url && (
+                            <a 
+                              href={article.original_url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-sm hover:opacity-70 transition-opacity"
+                              style={{ color: '#666666' }}
+                            >
+                              Oryginał
+                            </a>
+                          )}
                         </div>
-                      )}
+                        {selectedPost === article.id && (
+                          <div className="mt-4 p-6 rounded-lg" style={{ backgroundColor: 'rgba(255, 255, 255, 0.6)' }}>
+                            <div 
+                              className="text-base leading-relaxed prose max-w-none"
+                              style={{ color: '#333333' }}
+                              dangerouslySetInnerHTML={{ __html: article.content.substring(0, 500) + '...' }}
+                            />
+                          </div>
+                        )}
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))
+              )}
             </CardContent>
           </Card>
         </div>
