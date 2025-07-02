@@ -92,7 +92,7 @@ export const LatestArticles = () => {
           {articles.map((article) => {
             console.log('LatestArticles: Rendering article:', article.title);
             return (
-              <div key={article.id} className="p-6 rounded-lg" style={{ backgroundColor: 'rgba(255, 255, 255, 0.7)', boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)' }}>
+              <div key={article.id} className="p-6 rounded-lg border border-red-500" style={{ backgroundColor: 'red', boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)', minHeight: '200px' }}>
                 <h3 className="font-semibold text-lg mb-2" style={{ color: '#333333' }}>
                   {article.title}
                 </h3>
