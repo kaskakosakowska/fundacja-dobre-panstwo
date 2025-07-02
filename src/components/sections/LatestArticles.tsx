@@ -89,26 +89,29 @@ export const LatestArticles = () => {
         </h2>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {articles.map((article) => (
-            <div key={article.id} className="p-6 rounded-lg" style={{ backgroundColor: 'rgba(255, 255, 255, 0.7)', boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)' }}>
-              <h3 className="font-semibold text-lg mb-2" style={{ color: '#333333' }}>
-                {article.title}
-              </h3>
-              <p className="text-sm mb-3" style={{ color: '#666666' }}>
-                {formatDate(article.published_date)}
-              </p>
-              <p className="text-sm leading-relaxed mb-4" style={{ color: '#666666' }}>
-                {article.summary}
-              </p>
-              <Link 
-                to={`${getSectionPath(article.section)}/${article.slug}`}
-                className="text-sm font-medium hover:opacity-70 transition-opacity" 
-                style={{ color: '#333333' }}
-              >
-                Czytaj więcej →
-              </Link>
-            </div>
-          ))}
+          {articles.map((article) => {
+            console.log('LatestArticles: Rendering article:', article.title);
+            return (
+              <div key={article.id} className="p-6 rounded-lg" style={{ backgroundColor: 'rgba(255, 255, 255, 0.7)', boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)' }}>
+                <h3 className="font-semibold text-lg mb-2" style={{ color: '#333333' }}>
+                  {article.title}
+                </h3>
+                <p className="text-sm mb-3" style={{ color: '#666666' }}>
+                  {formatDate(article.published_date)}
+                </p>
+                <p className="text-sm leading-relaxed mb-4" style={{ color: '#666666' }}>
+                  {article.summary}
+                </p>
+                <Link 
+                  to={`${getSectionPath(article.section)}/${article.slug}`}
+                  className="text-sm font-medium hover:opacity-70 transition-opacity" 
+                  style={{ color: '#333333' }}
+                >
+                  Czytaj więcej →
+                </Link>
+              </div>
+            );
+          })}
         </div>
         
         {articles.length === 0 && !loading && (
