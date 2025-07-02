@@ -12,45 +12,57 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-// Abbreviated sample data for testing - in production we'd load all ~120 articles
-const SAMPLE_POSTS = {
-  szkatulka: {
-    "zaufanie-ktore-wiednie": { 
-      title: "Zaufanie, które więdnie", 
-      date: "29 czerwca 2025", 
-      summary: "Esej o kapitale społecznym i erozji zaufania w społeczeństwie", 
-      link: "https://wbrew.org/kapital-spoleczny-zaufanie/" 
-    },
-    "total-participation-management": { 
-      title: "Total Participation Management (TPM)", 
-      date: "29 czerwca 2025", 
-      summary: "Zarządzanie pełnią człowieczeństwa w nowoczesnych organizacjach", 
-      link: "https://wbrew.org/total-participation-management-tpm-zarzadzanie-pelnia-czlowieczenstwa/" 
-    },
-    "ekonomiczne-niewolnictwo-xxi-wieku": { 
-      title: "Ekonomiczne niewolnictwo XXI wieku", 
-      date: "29 czerwca 2025", 
-      summary: "Głos prekariatu przeciw outsourcingowi", 
-      link: "https://wbrew.org/prekariat-vs-outsourcing/" 
-    }
+// Articles to migrate with full content extraction
+const ARTICLES_TO_MIGRATE = [
+  {
+    title: "Zaufanie, które więdnie",
+    url: "https://wbrew.org/kapital-spoleczny-zaufanie/",
+    section: "szkatulka",
+    published_date: "2025-06-29"
   },
-  szczypta: {
-    "wzmacnianie-csr-biznesu": { 
-      title: "Wzmacnianie Społecznej Odpowiedzialności Biznesu", 
-      date: "30 września 2024", 
-      summary: "Strategiczne partnerstwa z interesariuszami", 
-      link: "https://dobrepanstwo.org/wzmacnianie-spolecznej-odpowiedzialnosci-biznesu/" 
-    }
+  {
+    title: "Total Participation Management (TPM)",
+    url: "https://wbrew.org/total-participation-management-tpm-zarzadzanie-pelnia-czlowieczenstwa/",
+    section: "szkatulka", 
+    published_date: "2025-06-29"
   },
-  glosy: {
-    "policzmy-kosciol-petycja": { 
-      title: "Policzmy Kościół - petycja", 
-      date: "1 kwietnia 2024", 
-      summary: "Petycja o transparentność finansów kościelnych", 
-      link: "https://dobrepanstwo.org/policzmy-kosciol-petycja/" 
-    }
+  {
+    title: "Ekonomiczne niewolnictwo XXI wieku",
+    url: "https://wbrew.org/prekariat-vs-outsourcing/",
+    section: "szkatulka",
+    published_date: "2025-06-29"
+  },
+  {
+    title: "Wzmacnianie Społecznej Odpowiedzialności Biznesu",
+    url: "https://dobrepanstwo.org/wzmacnianie-spolecznej-odpowiedzialnosci-biznesu/",
+    section: "szczypta",
+    published_date: "2024-09-30"
+  },
+  {
+    title: "Gdy Ziemia krzyczy głosem ludu",
+    url: "https://dobrepanstwo.org/gdy-ziemia-krzyczy-glosem-ludu/",
+    section: "szczypta",
+    published_date: "2025-06-21"
+  },
+  {
+    title: "Zawód Ksiądz – Niebiańska Praca czy Państwowa Fikcja?",
+    url: "https://dobrepanstwo.org/zawod-ksiadz-niebianska-praca-czy-panstwowa-fikcja/",
+    section: "szczypta",
+    published_date: "2024-09-27"
+  },
+  {
+    title: "Straszna dwukadencyjność",
+    url: "https://dobrepanstwo.org/straszna-dwukadencyjnosc-petycja-fundacji-dobre-panstwo/",
+    section: "glosy",
+    published_date: "2024-07-16"
+  },
+  {
+    title: "Policzmy mienie Kościoła!",
+    url: "https://dobrepanstwo.org/policzmy-mienie-kosciola/",
+    section: "glosy", 
+    published_date: "2024-06-01"
   }
-};
+];
 
 async function crawlArticle(url: string, firecrawlApiKey: string) {
   try {
@@ -153,91 +165,129 @@ serve(async (req) => {
         let totalProcessed = 0;
         let totalSuccess = 0;
         let totalFailed = 0;
-        const totalArticles = Object.values(SAMPLE_POSTS).reduce((acc, section) => acc + Object.keys(section).length, 0);
+        const totalArticles = ARTICLES_TO_MIGRATE.length;
         
-        console.log(`migrate-content: Processing ${totalArticles} sample articles`);
+        console.log(`migrate-content: Processing ${totalArticles} articles with full content`);
 
-        for (const [sectionKey, posts] of Object.entries(SAMPLE_POSTS)) {
-          console.log(`migrate-content: Processing section ${sectionKey}`);
+        for (const article of ARTICLES_TO_MIGRATE) {
+          totalProcessed++;
+          console.log(`migrate-content: Processing ${article.title} (${totalProcessed}/${totalArticles})`);
           
-          for (const [postSlug, postData] of Object.entries(posts)) {
-            totalProcessed++;
-            console.log(`migrate-content: Processing ${postSlug} (${totalProcessed}/${totalArticles})`);
-            
-            try {
-              // Log start
-              await supabaseClient.from('migration_log').insert({
-                url: postData.link,
-                status: 'pending'
-              });
+          try {
+            // Log start
+            await supabaseClient.from('migration_log').insert({
+              url: article.url,
+              status: 'pending'
+            });
 
-              // Crawl content
-              console.log(`migrate-content: Crawling ${postData.link}`);
-              const crawlResult = await crawlArticle(postData.link, firecrawlApiKey);
-              
-              if (!crawlResult.success) {
-                console.error(`migrate-content: Crawl failed for ${postData.link}:`, crawlResult.error);
+            // Crawl content
+            console.log(`migrate-content: Crawling ${article.url}`);
+            const crawlResult = await crawlArticle(article.url, firecrawlApiKey);
+            
+            if (!crawlResult.success) {
+              console.error(`migrate-content: Crawl failed for ${article.url}:`, crawlResult.error);
+              await supabaseClient.from('migration_log').update({
+                status: 'failed',
+                error_message: crawlResult.error
+              }).eq('url', article.url);
+              totalFailed++;
+              continue;
+            }
+
+            // Create slug and summary from content
+            const articleSlug = createSlug(article.title);
+            const content = crawlResult.content || 'Treść artykułu zostanie uzupełniona.';
+            const summary = content.substring(0, 200).replace(/#+\s*/g, '') + '...';
+
+            console.log(`migrate-content: Inserting article ${articleSlug}`);
+            
+            // Check if article exists
+            const { data: existingArticle } = await supabaseClient
+              .from('articles')
+              .select('id')
+              .eq('slug', articleSlug)
+              .single();
+
+            if (existingArticle) {
+              // Update existing article
+              const { error: updateError } = await supabaseClient
+                .from('articles')
+                .update({
+                  title: article.title,
+                  summary: summary,
+                  content: content,
+                  excerpt: summary,
+                  published_date: article.published_date,
+                  section: article.section,
+                  original_url: article.url,
+                  author: 'Fundacja Dobre Państwo',
+                  meta_description: summary,
+                  is_published: true
+                })
+                .eq('slug', articleSlug);
+
+              if (updateError) {
+                console.error(`migrate-content: Article update failed for ${articleSlug}:`, updateError);
                 await supabaseClient.from('migration_log').update({
                   status: 'failed',
-                  error_message: crawlResult.error
-                }).eq('url', postData.link);
+                  error_message: updateError.message
+                }).eq('url', article.url);
                 totalFailed++;
                 continue;
               }
 
-              // Create article
-              const articleSlug = createSlug(postData.title);
-              const publishedDate = parsePolishDate(postData.date);
-
-              console.log(`migrate-content: Inserting article ${articleSlug}`);
-              const { data: article, error: articleError } = await supabaseClient
+              console.log(`migrate-content: Updated existing article ${article.title}`);
+            } else {
+              // Insert new article
+              const { data: newArticle, error: insertError } = await supabaseClient
                 .from('articles')
                 .insert({
-                  title: postData.title,
+                  title: article.title,
                   slug: articleSlug,
-                  summary: postData.summary,
-                  content: crawlResult.content || 'Treść artykułu zostanie uzupełniona.',
-                  excerpt: postData.summary,
-                  published_date: publishedDate,
-                  section: sectionKey,
-                  original_url: postData.link,
+                  summary: summary,
+                  content: content,
+                  excerpt: summary,
+                  published_date: article.published_date,
+                  section: article.section,
+                  original_url: article.url,
                   author: 'Fundacja Dobre Państwo',
-                  meta_description: postData.summary,
+                  meta_description: summary,
                   is_published: true
                 })
                 .select()
                 .single();
 
-              if (articleError) {
-                console.error(`migrate-content: Article insert failed for ${articleSlug}:`, articleError);
+              if (insertError) {
+                console.error(`migrate-content: Article insert failed for ${articleSlug}:`, insertError);
                 await supabaseClient.from('migration_log').update({
                   status: 'failed',
-                  error_message: articleError.message
-                }).eq('url', postData.link);
+                  error_message: insertError.message
+                }).eq('url', article.url);
                 totalFailed++;
                 continue;
               }
 
-              // Update log with success
-              await supabaseClient.from('migration_log').update({
-                status: 'success',
-                article_id: article.id
-              }).eq('url', postData.link);
-
-              totalSuccess++;
-              console.log(`migrate-content: Successfully migrated ${postData.title} (${totalSuccess}/${totalArticles})`);
-
-              // Small delay to avoid rate limiting
-              await new Promise(resolve => setTimeout(resolve, 2000));
-
-            } catch (error) {
-              console.error(`migrate-content: Failed to migrate ${postData.title}:`, error);
-              await supabaseClient.from('migration_log').update({
-                status: 'failed',
-                error_message: error.message
-              }).eq('url', postData.link);
-              totalFailed++;
+              console.log(`migrate-content: Inserted new article ${article.title}`);
             }
+
+            // Update log with success
+            await supabaseClient.from('migration_log').update({
+              status: 'success'
+            }).eq('url', article.url);
+
+            totalSuccess++;
+            console.log(`migrate-content: Successfully migrated ${article.title} (${totalSuccess}/${totalArticles})`);
+
+            // Delay to avoid rate limiting
+            await new Promise(resolve => setTimeout(resolve, 3000));
+
+          } catch (error) {
+            console.error(`migrate-content: Failed to migrate ${article.title}:`, error);
+            await supabaseClient.from('migration_log').update({
+              status: 'failed',
+              error_message: error.message
+            }).eq('url', article.url);
+            totalFailed++;
           }
         }
 
@@ -249,7 +299,7 @@ serve(async (req) => {
 
       return new Response(JSON.stringify({ 
         message: 'Migration started in background',
-        totalArticles: Object.values(SAMPLE_POSTS).reduce((acc, section) => acc + Object.keys(section).length, 0)
+        totalArticles: ARTICLES_TO_MIGRATE.length
       }), {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });

@@ -64,96 +64,33 @@ export const MigrationDashboard = () => {
     setMigrationStarted(true);
     
     try {
-      console.log('MigrationDashboard: Starting DIRECT migration...');
+      console.log('MigrationDashboard: Starting REAL migration with full content...');
       
-      // Simulate migration for demo - create sample articles directly
-      const sampleArticles = [
-        {
-          title: "Zaufanie, które więdnie",
-          slug: "zaufanie-ktore-wiednie", 
-          summary: "Esej o kapitale społecznym i erozji zaufania w społeczeństwie",
-          content: "To jest przykładowa treść artykułu o zaufaniu społecznym. W rzeczywistej migracji tutaj byłaby pełna treść pobrana z oryginalnej strony.",
-          section: "szkatulka" as const,
-          published_date: "2025-06-29",
-          original_url: "https://wbrew.org/kapital-spoleczny-zaufanie/",
-          author: "Fundacja Dobre Państwo",
-          is_published: true,
-          excerpt: "Esej o kapitale społecznym i erozji zaufania w społeczeństwie",
-          meta_description: "Esej o kapitale społecznym i erozji zaufania w społeczeństwie"
-        },
-        {
-          title: "Total Participation Management (TPM)",
-          slug: "total-participation-management",
-          summary: "Zarządzanie pełnią człowieczeństwa w nowoczesnych organizacjach", 
-          content: "To jest przykładowa treść artykułu o TPM. W rzeczywistej migracji tutaj byłaby pełna treść pobrana z oryginalnej strony.",
-          section: "szkatulka" as const,
-          published_date: "2025-06-29",
-          original_url: "https://wbrew.org/total-participation-management-tpm-zarzadzanie-pelnia-czlowieczenstwa/",
-          author: "Fundacja Dobre Państwo", 
-          is_published: true,
-          excerpt: "Zarządzanie pełnią człowieczeństwa w nowoczesnych organizacjach",
-          meta_description: "Zarządzanie pełnią człowieczeństwa w nowoczesnych organizacjach"
-        },
-        {
-          title: "Wzmacnianie Społecznej Odpowiedzialności Biznesu",
-          slug: "wzmacnianie-csr-biznesu",
-          summary: "Strategiczne partnerstwa z interesariuszami",
-          content: "To jest przykładowa treść artykułu o CSR. W rzeczywistej migracji tutaj byłaby pełna treść pobrana z oryginalnej strony.",
-          section: "szczypta" as const, 
-          published_date: "2024-09-30",
-          original_url: "https://dobrepanstwo.org/wzmacnianie-spolecznej-odpowiedzialnosci-biznesu/",
-          author: "Fundacja Dobre Państwo",
-          is_published: true,
-          excerpt: "Strategiczne partnerstwa z interesariuszami",
-          meta_description: "Strategiczne partnerstwa z interesariuszami"
-        }
-      ];
+      // Call the real migration function with action parameter
+      const { data, error } = await supabase.functions.invoke('migrate-content', {
+        body: { action: 'start' }
+      });
+      
+      if (error) {
+        console.error('Migration function error:', error);
+        throw error;
+      }
+
+      console.log('Migration response:', data);
 
       toast({
         title: "Migracja rozpoczęta",
-        description: `Dodawanie ${sampleArticles.length} przykładowych artykułów...`,
-      });
-
-      // Insert articles one by one
-      let successCount = 0;
-      for (const article of sampleArticles) {
-        try {
-          console.log(`Inserting article: ${article.title}`);
-          
-          const { data, error } = await supabase
-            .from('articles')
-            .insert(article)
-            .select()
-            .single();
-
-          if (error) {
-            console.error(`Failed to insert ${article.title}:`, error);
-          } else {
-            successCount++;
-            console.log(`Successfully inserted: ${article.title}`);
-          }
-          
-          // Simulate some delay
-          await new Promise(resolve => setTimeout(resolve, 1000));
-          
-        } catch (err) {
-          console.error(`Error inserting ${article.title}:`, err);
-        }
-      }
-
-      toast({
-        title: "Migracja zakończona",
-        description: `${successCount} artykułów dodanych pomyślnie!`,
+        description: `Rozpoczęto migrację ${data?.totalArticles || 8} artykułów z pełną treścią. Proces trwa w tle...`,
       });
 
       // Refresh status
       await fetchStatus();
 
     } catch (error) {
-      console.error('MigrationDashboard: Error in direct migration:', error);
+      console.error('MigrationDashboard: Error in real migration:', error);
       toast({
-        title: "Błąd",
-        description: `Szczegóły: ${error.message}`,
+        title: "Błąd migracji",
+        description: error?.message || "Wystąpił błąd podczas migracji",
         variant: "destructive"
       });
     } finally {
