@@ -14,6 +14,11 @@ const Index = () => {
       
       <main className="flex-1 px-6 flex flex-col justify-center">
         <div className="container mx-auto max-w-6xl">
+          <div className="mb-8 text-center">
+            <a href="/admin" className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+              🔧 Panel Administracyjny - Migracja Treści
+            </a>
+          </div>
           <NavigationCards />
           <AboutFoundation />
           <LatestArticles />
