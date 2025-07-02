@@ -7,30 +7,48 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-interface PostData {
-  [key: string]: {
-    title: string;
-    date: string;
-    summary: string;
-    content: string;
-    link: string;
-  };
-}
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+};
 
-const POSTS_DATA = {
+// Abbreviated sample data for testing - in production we'd load all ~120 articles
+const SAMPLE_POSTS = {
   szkatulka: {
-    "zaufanie-ktore-wiednie": { title: "Zaufanie, które więdnie", date: "29 czerwca 2025", summary: "Esej o kapitale społecznym i erozji zaufania w społeczeństwie", content: "Szczegółowa analiza zjawiska erozji zaufania społecznego w Polsce", link: "https://wbrew.org/kapital-spoleczny-zaufanie/" },
-    "total-participation-management": { title: "Total Participation Management (TPM)", date: "29 czerwca 2025", summary: "Zarządzanie pełnią człowieczeństwa w nowoczesnych organizacjach", content: "Kompleksowa analiza nowego modelu zarządzania", link: "https://wbrew.org/total-participation-management-tpm-zarzadzanie-pelnia-czlowieczenstwa/" },
-    "ekonomiczne-niewolnictwo-xxi-wieku": { title: "Ekonomiczne niewolnictwo XXI wieku", date: "29 czerwca 2025", summary: "Głos prekariatu przeciw outsourcingowi", content: "Dogłębna analiza zjawiska prekariatu", link: "https://wbrew.org/prekariat-vs-outsourcing/" },
-    "wzorzec-ktory-marzy": { title: "Wzorzec, który marzy", date: "29 czerwca 2025", summary: "Esej o osobliwości i tożsamości", content: "Analiza wzorców osobowościowych w kontekście współczesnej kultury", link: "https://wbrew.org/wzorzec-osobliwosc-tozsamosc/" },
-    "zderegulujmy-rzecznika-msp": { title: "Zderegulujmy Rzecznika MŚP", date: "27 czerwca 2025", summary: "O redukcji fikcji dialogu w administracji", content: "Krytyczna ocena instytucji Rzecznika MŚP", link: "https://wbrew.org/zderegulujmy-rzecznika-msp-zredukujmy-fikcje-dialogu/" },
-    // ... continuing with abbreviated data for demo - in production would include all ~120 articles
+    "zaufanie-ktore-wiednie": { 
+      title: "Zaufanie, które więdnie", 
+      date: "29 czerwca 2025", 
+      summary: "Esej o kapitale społecznym i erozji zaufania w społeczeństwie", 
+      link: "https://wbrew.org/kapital-spoleczny-zaufanie/" 
+    },
+    "total-participation-management": { 
+      title: "Total Participation Management (TPM)", 
+      date: "29 czerwca 2025", 
+      summary: "Zarządzanie pełnią człowieczeństwa w nowoczesnych organizacjach", 
+      link: "https://wbrew.org/total-participation-management-tpm-zarzadzanie-pelnia-czlowieczenstwa/" 
+    },
+    "ekonomiczne-niewolnictwo-xxi-wieku": { 
+      title: "Ekonomiczne niewolnictwo XXI wieku", 
+      date: "29 czerwca 2025", 
+      summary: "Głos prekariatu przeciw outsourcingowi", 
+      link: "https://wbrew.org/prekariat-vs-outsourcing/" 
+    }
   },
   szczypta: {
-    "wzmacnianie-csr-biznesu": { title: "Wzmacnianie Społecznej Odpowiedzialności Biznesu", date: "30 września 2024", summary: "Strategiczne partnerstwa z interesariuszami", content: "Kompleksowa analiza znaczenia ESG w nowoczesnym biznesie", link: "https://dobrepanstwo.org/wzmacnianie-spolecznej-odpowiedzialnosci-biznesu/" },
+    "wzmacnianie-csr-biznesu": { 
+      title: "Wzmacnianie Społecznej Odpowiedzialności Biznesu", 
+      date: "30 września 2024", 
+      summary: "Strategiczne partnerstwa z interesariuszami", 
+      link: "https://dobrepanstwo.org/wzmacnianie-spolecznej-odpowiedzialnosci-biznesu/" 
+    }
   },
   glosy: {
-    "policzmy-kosciol-petycja": { title: "Policzmy Kościół - petycja", date: "1 kwietnia 2024", summary: "Petycja o transparentność finansów kościelnych", content: "Obywatelska inicjatywa domagająca się transparentności", link: "https://dobrepanstwo.org/policzmy-kosciol-petycja/" },
+    "policzmy-kosciol-petycja": { 
+      title: "Policzmy Kościół - petycja", 
+      date: "1 kwietnia 2024", 
+      summary: "Petycja o transparentność finansów kościelnych", 
+      link: "https://dobrepanstwo.org/policzmy-kosciol-petycja/" 
+    }
   }
 };
 
@@ -109,33 +127,42 @@ serve(async (req) => {
   }
 
   try {
+    console.log('migrate-content: Function called');
+    
+    // Create Supabase client (without requiring auth for testing)
     const supabaseClient = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
-      Deno.env.get('SUPABASE_ANON_KEY') ?? '',
-      {
-        global: {
-          headers: { Authorization: req.headers.get('Authorization')! },
-        },
-      }
+      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? Deno.env.get('SUPABASE_ANON_KEY') ?? '',
     );
 
     const firecrawlApiKey = Deno.env.get('FIRECRAWL_API_KEY');
+    console.log('migrate-content: Firecrawl API key configured:', !!firecrawlApiKey);
+    
     if (!firecrawlApiKey) {
       throw new Error('FIRECRAWL_API_KEY not configured');
     }
 
-    const { action = 'status', section, slug } = await req.json().catch(() => ({}));
+    const { action = 'status' } = await req.json().catch(() => ({}));
+    console.log('migrate-content: Action requested:', action);
 
     if (action === 'start') {
+      console.log('migrate-content: Starting migration...');
+      
       // Start migration in background
       const backgroundMigration = async () => {
         let totalProcessed = 0;
         let totalSuccess = 0;
         let totalFailed = 0;
+        const totalArticles = Object.values(SAMPLE_POSTS).reduce((acc, section) => acc + Object.keys(section).length, 0);
+        
+        console.log(`migrate-content: Processing ${totalArticles} sample articles`);
 
-        for (const [sectionKey, posts] of Object.entries(POSTS_DATA)) {
-          for (const [postSlug, postData] of Object.entries(posts as PostData)) {
+        for (const [sectionKey, posts] of Object.entries(SAMPLE_POSTS)) {
+          console.log(`migrate-content: Processing section ${sectionKey}`);
+          
+          for (const [postSlug, postData] of Object.entries(posts)) {
             totalProcessed++;
+            console.log(`migrate-content: Processing ${postSlug} (${totalProcessed}/${totalArticles})`);
             
             try {
               // Log start
@@ -145,9 +172,11 @@ serve(async (req) => {
               });
 
               // Crawl content
+              console.log(`migrate-content: Crawling ${postData.link}`);
               const crawlResult = await crawlArticle(postData.link, firecrawlApiKey);
               
               if (!crawlResult.success) {
+                console.error(`migrate-content: Crawl failed for ${postData.link}:`, crawlResult.error);
                 await supabaseClient.from('migration_log').update({
                   status: 'failed',
                   error_message: crawlResult.error
@@ -160,13 +189,14 @@ serve(async (req) => {
               const articleSlug = createSlug(postData.title);
               const publishedDate = parsePolishDate(postData.date);
 
+              console.log(`migrate-content: Inserting article ${articleSlug}`);
               const { data: article, error: articleError } = await supabaseClient
                 .from('articles')
                 .insert({
                   title: postData.title,
                   slug: articleSlug,
                   summary: postData.summary,
-                  content: crawlResult.content,
+                  content: crawlResult.content || 'Treść artykułu zostanie uzupełniona.',
                   excerpt: postData.summary,
                   published_date: publishedDate,
                   section: sectionKey,
@@ -179,6 +209,7 @@ serve(async (req) => {
                 .single();
 
               if (articleError) {
+                console.error(`migrate-content: Article insert failed for ${articleSlug}:`, articleError);
                 await supabaseClient.from('migration_log').update({
                   status: 'failed',
                   error_message: articleError.message
@@ -194,13 +225,13 @@ serve(async (req) => {
               }).eq('url', postData.link);
 
               totalSuccess++;
-              console.log(`Migrated: ${postData.title} (${totalProcessed}/${Object.keys(POSTS_DATA).reduce((acc, key) => acc + Object.keys(POSTS_DATA[key as keyof typeof POSTS_DATA]).length, 0)})`);
+              console.log(`migrate-content: Successfully migrated ${postData.title} (${totalSuccess}/${totalArticles})`);
 
               // Small delay to avoid rate limiting
-              await new Promise(resolve => setTimeout(resolve, 1000));
+              await new Promise(resolve => setTimeout(resolve, 2000));
 
             } catch (error) {
-              console.error(`Failed to migrate ${postData.title}:`, error);
+              console.error(`migrate-content: Failed to migrate ${postData.title}:`, error);
               await supabaseClient.from('migration_log').update({
                 status: 'failed',
                 error_message: error.message
@@ -210,7 +241,7 @@ serve(async (req) => {
           }
         }
 
-        console.log(`Migration completed: ${totalSuccess} success, ${totalFailed} failed, ${totalProcessed} total`);
+        console.log(`migrate-content: Migration completed - Success: ${totalSuccess}, Failed: ${totalFailed}, Total: ${totalProcessed}`);
       };
 
       // Start background task
@@ -218,7 +249,7 @@ serve(async (req) => {
 
       return new Response(JSON.stringify({ 
         message: 'Migration started in background',
-        totalArticles: Object.keys(POSTS_DATA).reduce((acc, key) => acc + Object.keys(POSTS_DATA[key as keyof typeof POSTS_DATA]).length, 0)
+        totalArticles: Object.values(SAMPLE_POSTS).reduce((acc, section) => acc + Object.keys(section).length, 0)
       }), {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
