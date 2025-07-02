@@ -1,4 +1,6 @@
 import { useParams, useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
 
 export interface Post {
   title: string;
@@ -11,6 +13,8 @@ export interface Post {
 export const usePostData = () => {
   const { postId } = useParams();
   const location = useLocation();
+  const [post, setPost] = useState<Post | null>(null);
+  const [loading, setLoading] = useState(true);
   
   const getSection = () => {
     if (location.pathname.includes('szkatulka-kosztownosci')) return 'szkatulka';
@@ -21,7 +25,48 @@ export const usePostData = () => {
 
   const section = getSection();
 
-  const getPostData = (): Post => {
+  useEffect(() => {
+    const fetchPost = async () => {
+      if (!postId) return;
+      
+      try {
+        const { data, error } = await supabase
+          .from('articles')
+          .select('title, slug, summary, content, published_date, author')
+          .eq('slug', postId)
+          .eq('is_published', true)
+          .single();
+
+        if (error) {
+          console.error('Error fetching post:', error);
+          setPost(getFallbackPostData());
+        } else if (data) {
+          setPost({
+            title: data.title,
+            date: new Date(data.published_date).toLocaleDateString('pl-PL', { 
+              year: 'numeric', 
+              month: 'long', 
+              day: 'numeric' 
+            }),
+            summary: data.summary || '',
+            content: data.content || '',
+            link: `#`
+          });
+        } else {
+          setPost(getFallbackPostData());
+        }
+      } catch (err) {
+        console.error('Error:', err);
+        setPost(getFallbackPostData());
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPost();
+  }, [postId]);
+
+  const getFallbackPostData = (): Post => {
     const posts = {
       szkatulka: {
         // CZERWIEC 2025 - wszystkie posty
@@ -182,9 +227,10 @@ export const usePostData = () => {
   };
 
   return {
-    post: getPostData(),
+    post: post || getFallbackPostData(),
     section,
     postId,
-    getBackPath
+    getBackPath,
+    loading
   };
 };
