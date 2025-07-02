@@ -1,6 +1,5 @@
 import { Post } from "@/hooks/usePostData";
-import zaufanieImage from "@/assets/images/zaufanie-ktore-wiednie.webp";
-import tpmImage from "@/assets/images/total-participation-management.webp";
+import { ZaufanieKtoreWiednie, TotalParticipationManagement, WzorzecKtoryMarzy } from './szkatula';
 import ekonomiczneImage from "@/assets/images/ekonomiczne-niewolnictwo.webp";
 import rzecznikImage from "@/assets/images/zderegulujmy-rzecznika.png";
 import ziemiaImage from "@/assets/images/gdy-ziemia-krzyczy.png";
@@ -13,80 +12,13 @@ interface SzkatulaContentProps {
 export const SzkatulaContent = ({ post, postId }: SzkatulaContentProps) => {
   switch (postId) {
     case 'zaufanie-ktore-wiednie':
-      return (
-        <div className="prose prose-lg max-w-none">
-          <h2 className="text-xl font-semibold mb-4" style={{ color: '#333333' }}>
-            O kapitale społecznym i zdradzie wspólnoty
-          </h2>
-          <p className="mb-4 text-justify">
-            <img 
-              src={zaufanieImage} 
-              alt="Kapitał społeczny i zaufanie" 
-              className="float-right ml-6 mb-6 w-48 h-48 object-cover rounded-lg shadow-md"
-            />
-            W społeczeństwach pozbawionych zaufania nie ma niczego stabilnego. Ani polityki, ani deliberacji, ani nawet dobrego sąsiedztwa. Kapitał społeczny, choć brzmi jak ekonomiczny żargon wciśnięty w ramy kultury, jest jednym z najważniejszych wskaźników zdrowia społecznego. To zasób niewidzialny, lecz wszechobecny – konstytuuje to, co wspólne, pozwala działać razem, uczy współodpowiedzialności.
-          </p>
-          <p className="mt-12 mb-6 text-justify">
-            Gdy słabnie, rozpada się nie tylko więź międzyludzka, ale i sama zdolność do życia zbiorowego. A tam, gdzie życie zbiorowe zamiera, polityka zamienia się w zarządzanie nieufnością.
-          </p>
-          <h3 className="text-lg font-semibold mb-3" style={{ color: '#333333' }}>
-            Między mostem a fortyfikacją – natura kapitału społecznego
-          </h3>
-          <p className="mb-4 text-justify">
-            Kapitał społeczny to sieć wzajemnych powiązań, norm, wzorców współpracy i, przede wszystkim, zaufania – zarówno wobec znanych, jak i nieznajomych. Można powiedzieć: to metafizyczna infrastruktura nowoczesności, bez której żadna wspólnota nie utrzyma się dłużej niż do najbliższego kryzysu.
-          </p>
-          <p className="mb-6 text-justify">
-            W teorii socjologicznej wyróżnia się dwa podstawowe typy kapitału społecznego: <strong>spajający</strong> (bonding) i <strong>łączący</strong> (bridging). Pierwszy działa jak fortyfikacja – tworzy silne, homogeniczne więzi wewnątrz grupy, podtrzymuje lojalność i tożsamość. Drugi – to most, konstrukcja łącząca różne grupy, otwarta i inkluzywna. Oba typy są potrzebne, lecz ich równowaga decyduje o zdolności wspólnoty do adaptacji i dialogu.
-          </p>
-        </div>
-      );
+      return <ZaufanieKtoreWiednie post={post} />;
 
     case 'total-participation-management':
-      return (
-        <div className="prose prose-lg max-w-none">
-          <h2 className="text-xl font-semibold mb-4" style={{ color: '#333333' }}>
-            Filozoficzne korzenie TPM
-          </h2>
-          <p className="mb-4 text-justify">
-            <img 
-              src={tpmImage} 
-              alt="Total Participation Management" 
-              className="float-right ml-6 mb-6 w-48 h-48 object-cover rounded-lg shadow-md"
-            />
-            Total Participation Management wyrasta z personalizmu Emmanuela Mouniera, Karola Wojtyły i Jacques'a Maritaina, dla których osoba ludzka jest celem samym w sobie. W duchu dialogicznej antropologii Martina Bubera uczestnictwo stanowi warunek realizacji ludzkiej wolności, a nie jedynie technikę zarządzania.
-          </p>
-          <p className="mt-12 mb-6 text-justify">
-            TPM czerpie również z krytyki alienacji pracy u Karola Marksa oraz z koncepcji <em>learning organization</em> Petera Senge'a, podkreślając, że wiedza rodzi się w relacji, nie w izolacji.
-          </p>
-          <h3 className="text-lg font-semibold mb-3" style={{ color: '#333333' }}>
-            Ekonomiczne inspiracje
-          </h3>
-          <p className="mb-6">
-            Koncepcja łączy teorię dóbr wspólnych Elinor Ostrom, ekonomikę możliwości Amartyi Sena i myśl Josepha Schumpetera o endogenicznej innowacji. TPM odrzuca redukowanie pracy do kosztu, wpisując się w postgrowth economics i ekonomię partycypacyjną, gdzie wartość powstaje dzięki współodpowiedzialności i sensowi działania.
-          </p>
-        </div>
-      );
+      return <TotalParticipationManagement post={post} />;
 
     case 'wzorzec-ktory-marzy':
-      return (
-        <div className="prose prose-lg max-w-none">
-          <h2 className="text-xl font-semibold mb-4" style={{ color: '#333333' }}>
-            O osobliwości i tożsamości we współczesnym świecie
-          </h2>
-          <p className="mb-4 text-justify">
-            Wzorzec nie jest już dziś tym, czym był wczoraj. W świecie, gdzie wszystko staje się płynne, zmienne i nieprzewidywalne, pytanie o to, co stanowi wzorzec, nabiera szczególnej wagi. Czy można mówić o wzorcu w epoce, która celebruje różnorodność i odrzuca uniwersalia?
-          </p>
-          <p className="mb-6 text-justify">
-            Współczesny wzorzec to paradoks: ma być jednocześnie unikalny i uniwersalny, osobliwy i powszechny, autentyczny i atrakcyjny dla mas. To wzorzec, który marzy o byciu wzorcem, ale boi się własnej normatywności.
-          </p>
-          <h3 className="text-lg font-semibold mb-3" style={{ color: '#333333' }}>
-            Tożsamość jako projekt
-          </h3>
-          <p className="mb-6 text-justify">
-            W epoce tożsamości projektowanych, konstruowanych i rekonstruowanych, wzorzec przestaje być zewnętrznym punktem odniesienia, a staje się wewnętrznym kompasem. Już nie naśladujemy wzorców – tworzymy je. Każdy jest swoim własnym wzorcem, swoją własną marką, swoim własnym projektem tożsamościowym.
-          </p>
-        </div>
-      );
+      return <WzorzecKtoryMarzy post={post} />;
 
     case 'zanim-kultura-sie-wydarzy':
       return (
