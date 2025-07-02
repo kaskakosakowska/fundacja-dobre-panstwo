@@ -153,148 +153,141 @@ serve(async (req) => {
     console.log('migrate-content: Action requested:', action);
 
     if (action === 'start') {
-      console.log('migrate-content: Starting migration...');
+      console.log('migrate-content: Starting direct migration...');
       
-      // Start migration in background
-      const backgroundMigration = async () => {
-        let totalProcessed = 0;
-        let totalSuccess = 0;
-        let totalFailed = 0;
-        const totalArticles = ARTICLES_TO_MIGRATE.length;
+      let totalProcessed = 0;
+      let totalSuccess = 0;
+      let totalFailed = 0;
+      const totalArticles = ARTICLES_TO_MIGRATE.length;
+      
+      console.log(`migrate-content: Processing ${totalArticles} articles with full content`);
+
+      for (const article of ARTICLES_TO_MIGRATE) {
+        totalProcessed++;
+        console.log(`migrate-content: Processing ${article.title} (${totalProcessed}/${totalArticles})`);
         
-        console.log(`migrate-content: Processing ${totalArticles} articles with full content`);
+        try {
+          // Log start
+          await supabaseClient.from('migration_log').insert({
+            url: article.url,
+            status: 'pending'
+          });
 
-        for (const article of ARTICLES_TO_MIGRATE) {
-          totalProcessed++;
-          console.log(`migrate-content: Processing ${article.title} (${totalProcessed}/${totalArticles})`);
+          // Crawl content
+          console.log(`migrate-content: Crawling ${article.url}`);
+          const crawlResult = await crawlArticle(article.url, firecrawlApiKey);
           
-          try {
-            // Log start
-            await supabaseClient.from('migration_log').insert({
-              url: article.url,
-              status: 'pending'
-            });
+          if (!crawlResult.success) {
+            console.error(`migrate-content: Crawl failed for ${article.url}:`, crawlResult.error);
+            await supabaseClient.from('migration_log').update({
+              status: 'failed',
+              error_message: crawlResult.error
+            }).eq('url', article.url);
+            totalFailed++;
+            continue;
+          }
 
-            // Crawl content
-            console.log(`migrate-content: Crawling ${article.url}`);
-            const crawlResult = await crawlArticle(article.url, firecrawlApiKey);
-            
-            if (!crawlResult.success) {
-              console.error(`migrate-content: Crawl failed for ${article.url}:`, crawlResult.error);
+          // Create slug and summary from content
+          const articleSlug = createSlug(article.title);
+          const content = crawlResult.content || 'Treść artykułu zostanie uzupełniona.';
+          const summary = content.substring(0, 200).replace(/#+\s*/g, '') + '...';
+
+          console.log(`migrate-content: Inserting article ${articleSlug}`);
+          
+          // Check if article exists
+          const { data: existingArticle } = await supabaseClient
+            .from('articles')
+            .select('id')
+            .eq('slug', articleSlug)
+            .single();
+
+          if (existingArticle) {
+            // Update existing article
+            const { error: updateError } = await supabaseClient
+              .from('articles')
+              .update({
+                title: article.title,
+                summary: summary,
+                content: content,
+                excerpt: summary,
+                published_date: article.published_date,
+                section: article.section,
+                original_url: article.url,
+                author: 'Fundacja Dobre Państwo',
+                meta_description: summary,
+                is_published: true
+              })
+              .eq('slug', articleSlug);
+
+            if (updateError) {
+              console.error(`migrate-content: Article update failed for ${articleSlug}:`, updateError);
               await supabaseClient.from('migration_log').update({
                 status: 'failed',
-                error_message: crawlResult.error
+                error_message: updateError.message
               }).eq('url', article.url);
               totalFailed++;
               continue;
             }
 
-            // Create slug and summary from content
-            const articleSlug = createSlug(article.title);
-            const content = crawlResult.content || 'Treść artykułu zostanie uzupełniona.';
-            const summary = content.substring(0, 200).replace(/#+\s*/g, '') + '...';
-
-            console.log(`migrate-content: Inserting article ${articleSlug}`);
-            
-            // Check if article exists
-            const { data: existingArticle } = await supabaseClient
+            console.log(`migrate-content: Updated existing article ${article.title}`);
+          } else {
+            // Insert new article
+            const { data: newArticle, error: insertError } = await supabaseClient
               .from('articles')
-              .select('id')
-              .eq('slug', articleSlug)
+              .insert({
+                title: article.title,
+                slug: articleSlug,
+                summary: summary,
+                content: content,
+                excerpt: summary,
+                published_date: article.published_date,
+                section: article.section,
+                original_url: article.url,
+                author: 'Fundacja Dobre Państwo',
+                meta_description: summary,
+                is_published: true
+              })
+              .select()
               .single();
 
-            if (existingArticle) {
-              // Update existing article
-              const { error: updateError } = await supabaseClient
-                .from('articles')
-                .update({
-                  title: article.title,
-                  summary: summary,
-                  content: content,
-                  excerpt: summary,
-                  published_date: article.published_date,
-                  section: article.section,
-                  original_url: article.url,
-                  author: 'Fundacja Dobre Państwo',
-                  meta_description: summary,
-                  is_published: true
-                })
-                .eq('slug', articleSlug);
-
-              if (updateError) {
-                console.error(`migrate-content: Article update failed for ${articleSlug}:`, updateError);
-                await supabaseClient.from('migration_log').update({
-                  status: 'failed',
-                  error_message: updateError.message
-                }).eq('url', article.url);
-                totalFailed++;
-                continue;
-              }
-
-              console.log(`migrate-content: Updated existing article ${article.title}`);
-            } else {
-              // Insert new article
-              const { data: newArticle, error: insertError } = await supabaseClient
-                .from('articles')
-                .insert({
-                  title: article.title,
-                  slug: articleSlug,
-                  summary: summary,
-                  content: content,
-                  excerpt: summary,
-                  published_date: article.published_date,
-                  section: article.section,
-                  original_url: article.url,
-                  author: 'Fundacja Dobre Państwo',
-                  meta_description: summary,
-                  is_published: true
-                })
-                .select()
-                .single();
-
-              if (insertError) {
-                console.error(`migrate-content: Article insert failed for ${articleSlug}:`, insertError);
-                await supabaseClient.from('migration_log').update({
-                  status: 'failed',
-                  error_message: insertError.message
-                }).eq('url', article.url);
-                totalFailed++;
-                continue;
-              }
-
-              console.log(`migrate-content: Inserted new article ${article.title}`);
+            if (insertError) {
+              console.error(`migrate-content: Article insert failed for ${articleSlug}:`, insertError);
+              await supabaseClient.from('migration_log').update({
+                status: 'failed',
+                error_message: insertError.message
+              }).eq('url', article.url);
+              totalFailed++;
+              continue;
             }
 
-            // Update log with success
-            await supabaseClient.from('migration_log').update({
-              status: 'success'
-            }).eq('url', article.url);
-
-            totalSuccess++;
-            console.log(`migrate-content: Successfully migrated ${article.title} (${totalSuccess}/${totalArticles})`);
-
-            // Delay to avoid rate limiting
-            await new Promise(resolve => setTimeout(resolve, 3000));
-
-          } catch (error) {
-            console.error(`migrate-content: Failed to migrate ${article.title}:`, error);
-            await supabaseClient.from('migration_log').update({
-              status: 'failed',
-              error_message: error.message
-            }).eq('url', article.url);
-            totalFailed++;
+            console.log(`migrate-content: Inserted new article ${article.title}`);
           }
+
+          // Update log with success
+          await supabaseClient.from('migration_log').update({
+            status: 'success'
+          }).eq('url', article.url);
+
+          totalSuccess++;
+          console.log(`migrate-content: Successfully migrated ${article.title} (${totalSuccess}/${totalArticles})`);
+
+        } catch (error) {
+          console.error(`migrate-content: Failed to migrate ${article.title}:`, error);
+          await supabaseClient.from('migration_log').update({
+            status: 'failed',
+            error_message: error.message
+          }).eq('url', article.url);
+          totalFailed++;
         }
+      }
 
-        console.log(`migrate-content: Migration completed - Success: ${totalSuccess}, Failed: ${totalFailed}, Total: ${totalProcessed}`);
-      };
-
-      // Start background task
-      EdgeRuntime.waitUntil(backgroundMigration());
+      console.log(`migrate-content: Migration completed - Success: ${totalSuccess}, Failed: ${totalFailed}, Total: ${totalProcessed}`);
 
       return new Response(JSON.stringify({ 
-        message: 'Migration started in background',
-        totalArticles: ARTICLES_TO_MIGRATE.length
+        message: 'Migration completed',
+        totalArticles: ARTICLES_TO_MIGRATE.length,
+        success: totalSuccess,
+        failed: totalFailed
       }), {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
