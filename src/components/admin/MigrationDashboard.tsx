@@ -30,14 +30,24 @@ export const MigrationDashboard = () => {
 
   const fetchStatus = async () => {
     try {
+      console.log('MigrationDashboard: Fetching status...');
+      
       const { data, error } = await supabase.functions.invoke('migrate-content', {
         body: { action: 'status' }
       });
 
-      if (error) throw error;
-      setStatus(data);
+      console.log('MigrationDashboard: Status response:', { data, error });
+
+      if (error) {
+        console.error('MigrationDashboard: Status error:', error);
+        throw error;
+      }
+      
+      if (data) {
+        setStatus(data);
+      }
     } catch (error) {
-      console.error('Error fetching migration status:', error);
+      console.error('MigrationDashboard: Error fetching migration status:', error);
     }
   };
 
@@ -46,21 +56,28 @@ export const MigrationDashboard = () => {
     setMigrationStarted(true);
     
     try {
+      console.log('MigrationDashboard: Starting migration...');
+      
       const { data, error } = await supabase.functions.invoke('migrate-content', {
         body: { action: 'start' }
       });
 
-      if (error) throw error;
+      console.log('MigrationDashboard: Function response:', { data, error });
+
+      if (error) {
+        console.error('MigrationDashboard: Function error:', error);
+        throw error;
+      }
 
       toast({
         title: "Migracja rozpoczęta",
-        description: `Pobieranie ${data.totalArticles} artykułów w tle...`,
+        description: `Pobieranie ${data?.totalArticles || 'kilku'} artykułów w tle...`,
       });
 
       // Start polling for status
       const interval = setInterval(async () => {
         await fetchStatus();
-        if (status.completed) {
+        if (status.completed && status.total > 0) {
           clearInterval(interval);
           toast({
             title: "Migracja zakończona",
@@ -69,11 +86,14 @@ export const MigrationDashboard = () => {
         }
       }, 5000);
 
+      // Auto clear interval after 5 minutes
+      setTimeout(() => clearInterval(interval), 300000);
+
     } catch (error) {
-      console.error('Error starting migration:', error);
+      console.error('MigrationDashboard: Error starting migration:', error);
       toast({
         title: "Błąd",
-        description: "Nie udało się rozpocząć migracji",
+        description: `Szczegóły: ${error.message || JSON.stringify(error)}`,
         variant: "destructive"
       });
     } finally {
