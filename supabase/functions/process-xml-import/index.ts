@@ -106,6 +106,27 @@ function parseWordPressXML(xmlContent: string): ParsedPost[] {
       const itemContent = allItems[i];
       console.log(`Processing item ${i + 1}/${allItems.length}, length:`, itemContent.length);
       
+      // First check if this is actually a blog post
+      const statusMatch = itemContent.match(/<wp:status>(.*?)<\/wp:status>/);
+      const typeMatch = itemContent.match(/<wp:post_type>(.*?)<\/wp:post_type>/);
+      
+      console.log('Item type check:', { 
+        status: statusMatch?.[1], 
+        type: typeMatch?.[1] 
+      });
+      
+      // Only process actual blog posts, skip categories, tags, comments, attachments, etc.
+      if (typeMatch && typeMatch[1] !== 'post') {
+        console.log(`Skipping - not a post, type: ${typeMatch[1]}`);
+        continue;
+      }
+      
+      // Only process published posts and drafts, skip trash, auto-draft, etc.
+      if (statusMatch && !['publish', 'draft'].includes(statusMatch[1])) {
+        console.log(`Skipping - status: ${statusMatch[1]}`);
+        continue;
+      }
+      
       // Extract basic fields with multiple patterns
       const titlePatterns = [
         /<title><!\[CDATA\[(.*?)\]\]><\/title>/,
@@ -115,12 +136,14 @@ function parseWordPressXML(xmlContent: string): ParsedPost[] {
       const contentPatterns = [
         /<content:encoded><!\[CDATA\[([\s\S]*?)\]\]><\/content:encoded>/,
         /<encoded><!\[CDATA\[([\s\S]*?)\]\]><\/encoded>/,
-        /<description><!\[CDATA\[([\s\S]*?)\]\]><\/description>/
+        /<description><!\[CDATA\[([\s\S]*?)\]\]><\/description>/,
+        /<content>([\s\S]*?)<\/content>/
       ];
       
       const excerptPatterns = [
         /<excerpt:encoded><!\[CDATA\[(.*?)\]\]><\/excerpt:encoded>/,
-        /<excerpt><!\[CDATA\[(.*?)\]\]><\/excerpt>/
+        /<excerpt><!\[CDATA\[(.*?)\]\]><\/excerpt>/,
+        /<wp:post_excerpt><!\[CDATA\[(.*?)\]\]><\/wp:post_excerpt>/
       ];
       
       let title = '';
@@ -154,19 +177,21 @@ function parseWordPressXML(xmlContent: string): ParsedPost[] {
         }
       }
       
-      const pubDateMatch = itemContent.match(/<pubDate>(.*?)<\/pubDate>/);
-      const authorMatch = itemContent.match(/<dc:creator><!\[CDATA\[(.*?)\]\]><\/dc:creator>/);
-      const statusMatch = itemContent.match(/<wp:status>(.*?)<\/wp:status>/);
-      const typeMatch = itemContent.match(/<wp:post_type>(.*?)<\/wp:post_type>/);
+      const pubDateMatch = itemContent.match(/<pubDate>(.*?)<\/pubDate>/) || 
+                          itemContent.match(/<wp:post_date><!\[CDATA\[(.*?)\]\]><\/wp:post_date>/);
+      const authorMatch = itemContent.match(/<dc:creator><!\[CDATA\[(.*?)\]\]><\/dc:creator>/) ||
+                         itemContent.match(/<wp:post_author_display_name><!\[CDATA\[(.*?)\]\]><\/wp:post_author_display_name>/);
       
       console.log('Extracted data:', { 
         title: title.substring(0, 50), 
-        content: content.substring(0, 50), 
+        content: content.substring(0, 100), 
         status: statusMatch?.[1], 
-        type: typeMatch?.[1] 
+        type: typeMatch?.[1],
+        hasContent: !!content,
+        hasTitle: !!title
       });
       
-      // Process all posts and pages regardless of status for now
+      // Process only actual blog posts
       const publishedDate = pubDateMatch ? new Date(pubDateMatch[1]).toISOString().split('T')[0] : '';
       const author = authorMatch ? authorMatch[1] : 'Fundacja Dobre Państwo';
       
