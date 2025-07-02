@@ -1,8 +1,9 @@
 
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
+import { FileUpload } from "@/components/upload/FileUpload";
 
 const ONas = () => {
   return (
@@ -200,6 +201,20 @@ const ONas = () => {
                     <p className="font-sans" style={{ color: '#666666' }}>Tak, od 2019 roku</p>
                   </div>
                 </div>
+              </CardContent>
+            </Card>
+          </section>
+
+          {/* File Upload Section */}
+          <section className="py-8">
+            <Card className="border-0 shadow-lg" style={{ backgroundColor: 'rgba(255, 255, 255, 0.8)' }}>
+              <CardHeader>
+                <CardTitle className="text-2xl font-serif font-medium" style={{ color: '#333333' }}>
+                  Przesyłanie dokumentów XML
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <FileUpload />
               </CardContent>
             </Card>
           </section>
