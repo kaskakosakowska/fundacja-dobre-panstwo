@@ -1,1 +1,4 @@
 project_id = "zoapwlqgjicxadzywbwy"
+
+[functions.migrate-content]
+verify_jwt = false
