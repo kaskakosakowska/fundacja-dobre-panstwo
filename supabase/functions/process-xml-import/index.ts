@@ -70,9 +70,9 @@ function parseWordPressXML(xmlContent: string): ParsedPost[] {
       const statusMatch = itemContent.match(/<wp:status>(.*?)<\/wp:status>/);
       const typeMatch = itemContent.match(/<wp:post_type>(.*?)<\/wp:post_type>/);
       
-      // Only process published posts
-      if (statusMatch && statusMatch[1] !== 'publish') continue;
-      if (typeMatch && typeMatch[1] !== 'post') continue;
+      // Only process published posts and pages
+      if (statusMatch && !['publish', 'draft', 'private'].includes(statusMatch[1])) continue;
+      if (typeMatch && !['post', 'page'].includes(typeMatch[1])) continue;
       
       const title = titleMatch ? titleMatch[1] : '';
       const content = contentMatch ? contentMatch[1] : '';
