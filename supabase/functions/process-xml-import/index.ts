@@ -55,26 +55,42 @@ function parseWordPressXML(xmlContent: string): ParsedPost[] {
   
   try {
     console.log('XML content length:', xmlContent.length);
-    console.log('XML preview:', xmlContent.substring(0, 1000));
+    console.log('XML preview:', xmlContent.substring(0, 2000));
     
-    // Extract posts using regex patterns - try multiple patterns
-    const itemPatterns = [
-      /<item>([\s\S]*?)<\/item>/g,
-      /<item\s*>([\s\S]*?)<\/item>/g,
-      /<wp:post_type>post<\/wp:post_type>([\s\S]*?)(?=<item|<\/rss|$)/g
-    ];
+    // First, let's see what the actual structure looks like
+    const itemTest = xmlContent.match(/<item>/);
+    const channelTest = xmlContent.match(/<channel>/);
+    const rssTest = xmlContent.match(/<rss/);
     
-    let itemMatch;
-    let foundItems = false;
+    console.log('Structure tests:', {
+      hasItem: !!itemTest,
+      hasChannel: !!channelTest, 
+      hasRss: !!rssTest
+    });
     
-    for (const pattern of itemPatterns) {
-      console.log('Trying pattern:', pattern.source);
-      pattern.lastIndex = 0; // Reset regex
+    // Try to find any item tags first
+    const allItems = xmlContent.match(/<item[\s\S]*?<\/item>/g);
+    console.log('Found items count:', allItems?.length || 0);
+    
+    if (!allItems || allItems.length === 0) {
+      console.log('No <item> tags found. Looking for alternative structures...');
       
-      while ((itemMatch = pattern.exec(xmlContent)) !== null) {
-        foundItems = true;
-        const itemContent = itemMatch[1];
-        console.log('Found item, length:', itemContent.length);
+      // Try looking for wp:post elements directly
+      const wpPosts = xmlContent.match(/<wp:post[\s\S]*?<\/wp:post>/g);
+      console.log('Found wp:post count:', wpPosts?.length || 0);
+      
+      // Show sample of what we're working with
+      const sampleContent = xmlContent.substring(1000, 3000);
+      console.log('Sample content structure:', sampleContent);
+      
+      return posts; // Return empty for now to see the logs
+    }
+    
+    console.log('Processing', allItems.length, 'items...');
+    
+    for (let i = 0; i < allItems.length; i++) {
+      const itemContent = allItems[i];
+      console.log(`Processing item ${i + 1}/${allItems.length}, length:`, itemContent.length);
         
         // Extract basic fields with multiple patterns
         const titlePatterns = [
