@@ -106,12 +106,26 @@ function parsePostItem(itemContent: string, index: number, total: number): Parse
     hasTitle: !!title
   });
   
-  if (!title) {
-    console.log('Skipping - no title found');
+  // Additional quality validation
+  if (!title || title.length < 5) {
+    console.log('Skipping - title too short or missing:', title);
+    return null;
+  }
+  
+  // Skip if title is just numbers or common non-content patterns
+  if (/^\d+$/.test(title) || title.toLowerCase().includes('auto-draft') || title.toLowerCase().includes('revision')) {
+    console.log('Skipping - invalid title pattern:', title);
     return null;
   }
   
   const finalContent = content || excerpt || title;
+  
+  // Skip if content is too short or empty
+  if (!finalContent || finalContent.length < 50) {
+    console.log('Skipping - content too short:', title);
+    return null;
+  }
+  
   const section = categorizePost(title, finalContent, publishedDate);
   
   return {
@@ -128,6 +142,8 @@ function parsePostItem(itemContent: string, index: number, total: number): Parse
 
 function extractContent(itemContent: string): { title: string; content: string; excerpt: string } {
   const titlePatterns = [
+    // WordPress specific patterns first
+    /<wp:post_name><!\[CDATA\[(.*?)\]\]><\/wp:post_name>/,
     /<title><!\[CDATA\[(.*?)\]\]><\/title>/,
     /<title>(.*?)<\/title>/
   ];
@@ -152,17 +168,21 @@ function extractContent(itemContent: string): { title: string; content: string; 
   // Try different title patterns
   for (const titlePattern of titlePatterns) {
     const match = itemContent.match(titlePattern);
-    if (match) {
-      title = match[1];
-      break;
+    if (match && match[1]) {
+      const candidateTitle = match[1].trim();
+      // Skip if title is just a number or too short
+      if (candidateTitle.length > 3 && !/^\d+$/.test(candidateTitle)) {
+        title = candidateTitle;
+        break;
+      }
     }
   }
   
   // Try different content patterns
   for (const contentPattern of contentPatterns) {
     const match = itemContent.match(contentPattern);
-    if (match) {
-      content = match[1];
+    if (match && match[1]) {
+      content = match[1].trim();
       break;
     }
   }
@@ -170,8 +190,8 @@ function extractContent(itemContent: string): { title: string; content: string; 
   // Try different excerpt patterns
   for (const excerptPattern of excerptPatterns) {
     const match = itemContent.match(excerptPattern);
-    if (match) {
-      excerpt = match[1];
+    if (match && match[1]) {
+      excerpt = match[1].trim();
       break;
     }
   }
