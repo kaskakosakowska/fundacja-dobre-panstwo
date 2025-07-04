@@ -5,7 +5,7 @@ import { ContactCard } from "@/components/about/ContactCard";
 import { MissionSection } from "@/components/about/MissionSection";
 import { BoardSection } from "@/components/about/BoardSection";
 import { LegalInfoSection } from "@/components/about/LegalInfoSection";
-import { FileManagementSection } from "@/components/about/FileManagementSection";
+
 import { AboutFooter } from "@/components/about/AboutFooter";
 
 const ONas = () => {
@@ -28,7 +28,6 @@ const ONas = () => {
           <MissionSection />
           <BoardSection />
           <LegalInfoSection />
-          <FileManagementSection />
         </div>
       </main>
 
