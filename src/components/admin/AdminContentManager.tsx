@@ -146,7 +146,7 @@ export const AdminContentManager = () => {
       }
 
       // Create article
-      const { error } = await supabase
+      const { data: result, error } = await supabase
         .from("articles")
         .insert({
           title: data.title,
@@ -155,17 +155,23 @@ export const AdminContentManager = () => {
           content: data.content,
           excerpt: data.excerpt,
           summary: data.excerpt,
-          tags: data.tags.split(",").map(tag => tag.trim()),
-          pdf_url: pdfUrl,
-          audio_url: audioUrl,
-          featured_image_url: imageUrl,
-          seo_title: data.seo_title,
-          seo_description: data.seo_description,
+          tags: data.tags.split(",").map(tag => tag.trim()).filter(Boolean),
+          pdf_url: pdfUrl || null,
+          audio_url: audioUrl || null,
+          featured_image_url: imageUrl || null,
+          seo_title: data.seo_title || null,
+          seo_description: data.seo_description || null,
           published_date: new Date().toISOString().split('T')[0],
           is_published: true,
-        });
+        })
+        .select();
 
-      if (error) throw error;
+      if (error) {
+        console.error('Publication error:', error);
+        throw error;
+      }
+
+      console.log('Article published successfully:', result);
 
       toast({
         title: "Wpis opublikowany!",
