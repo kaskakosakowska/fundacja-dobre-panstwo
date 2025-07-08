@@ -84,10 +84,10 @@ const SzkatulaKosztownosci = () => {
                               {article.title}
                             </h3>
                             <p className="text-sm mb-3" style={{ color: '#666666' }}>
-                              {formatDate(article.published_date)} | {article.author}
+                              {formatDate(article.published_date)} | {article.author || 'Autor nieznany'}
                             </p>
                             <p className="text-base mb-4 leading-relaxed" style={{ color: '#666666' }}>
-                              {article.summary}
+                              {article.summary || 'Brak podsumowania'}
                             </p>
                             <div className="flex gap-4 items-center flex-wrap">
                               <Link 
@@ -118,11 +118,11 @@ const SzkatulaKosztownosci = () => {
                             </div>
                             {selectedPost === article.id && (
                               <div className="mt-4 p-6 rounded-lg" style={{ backgroundColor: 'rgba(255, 255, 255, 0.6)' }}>
-                                <div 
-                                  className="text-base leading-relaxed prose max-w-none"
-                                  style={{ color: '#333333' }}
-                                  dangerouslySetInnerHTML={{ __html: article.content?.substring(0, 500) + '...' }}
-                                />
+                                 <div 
+                                   className="text-base leading-relaxed prose max-w-none"
+                                   style={{ color: '#333333' }}
+                                   dangerouslySetInnerHTML={{ __html: (article.content?.substring(0, 500) || 'Brak treści') + '...' }}
+                                 />
                               </div>
                             )}
                           </div>

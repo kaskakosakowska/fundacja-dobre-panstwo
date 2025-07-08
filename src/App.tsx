@@ -5,7 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
-import SzkatukaKosztownosci from "./pages/SzkatukaKosztownosci";
+import SzkatulaKosztownosci from "./pages/SzkatulaKosztownosci";
 import SzczyptaSoli from "./pages/SzczyptaSoli";
 import GlosyKtoreSlychac from "./pages/GlosyKtoreSlychac";
 import ApiKnowledge from "./pages/ApiKnowledge";
@@ -24,7 +24,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
-          <Route path="/szkatulka-kosztownosci" element={<SzkatukaKosztownosci />} />
+          <Route path="/szkatulka-kosztownosci" element={<SzkatulaKosztownosci />} />
           <Route path="/szczypta-soli" element={<SzczyptaSoli />} />
           <Route path="/glosy-ktore-slychac" element={<GlosyKtoreSlychac />} />
           <Route path="/api-knowledge" element={<ApiKnowledge />} />
