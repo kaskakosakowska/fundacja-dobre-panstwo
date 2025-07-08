@@ -121,7 +121,7 @@ const SzkatulaKosztownosci = () => {
                                 <div 
                                   className="text-base leading-relaxed prose max-w-none"
                                   style={{ color: '#333333' }}
-                                  dangerouslySetInnerHTML={{ __html: article.content.substring(0, 500) + '...' }}
+                                  dangerouslySetInnerHTML={{ __html: article.content?.substring(0, 500) + '...' }}
                                 />
                               </div>
                             )}

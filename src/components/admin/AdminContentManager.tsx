@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,9 +10,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { FileUpload } from "./FileUpload";
 import { ArticlePreview } from "./ArticlePreview";
+import { ArticlesList } from "./ArticlesList";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import { Upload, Eye, Send } from "lucide-react";
+import { Upload, Eye, Send, List, Edit } from "lucide-react";
 
 interface ArticleFormData {
   title: string;
@@ -35,6 +36,7 @@ export const AdminContentManager = () => {
   const [uploadedFiles, setUploadedFiles] = useState<UploadedFiles>({});
   const [isUploading, setIsUploading] = useState(false);
   const [isPublishing, setIsPublishing] = useState(false);
+  const [editingArticleId, setEditingArticleId] = useState<string | null>(null);
   const { toast } = useToast();
   
   const form = useForm<ArticleFormData>({
@@ -194,8 +196,122 @@ export const AdminContentManager = () => {
     }
   };
 
+  const handleEditArticle = async (articleId: string) => {
+    try {
+      const { data: article, error } = await supabase
+        .from('articles')
+        .select('*')
+        .eq('id', articleId)
+        .single();
+
+      if (error) throw error;
+
+      // Populate form with article data
+      form.setValue('title', article.title);
+      form.setValue('section', article.section as 'szkatulka' | 'szczypta' | 'glosy');
+      form.setValue('content', article.content || '');
+      form.setValue('excerpt', article.excerpt || '');
+      form.setValue('tags', article.tags?.join(', ') || '');
+      form.setValue('seo_title', article.seo_title || '');
+      form.setValue('seo_description', article.seo_description || '');
+
+      setEditingArticleId(articleId);
+      setCurrentStep('basics');
+
+      toast({
+        title: "Artykuł załadowany",
+        description: "Możesz teraz edytować artykuł.",
+      });
+    } catch (error: any) {
+      toast({
+        title: "Błąd",
+        description: error.message || "Nie udało się załadować artykułu.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const updateArticle = async (data: ArticleFormData) => {
+    if (!editingArticleId) return;
+
+    setIsPublishing(true);
+    
+    try {
+      const slug = generateSlug(data.title);
+      let pdfUrl = "";
+      let audioUrl = "";
+      let imageUrl = "";
+
+      // Upload files if they exist
+      if (uploadedFiles.pdf) {
+        pdfUrl = await uploadFile(uploadedFiles.pdf, "articles-pdfs", `${slug}/${uploadedFiles.pdf.name}`);
+      }
+      
+      if (uploadedFiles.audio) {
+        audioUrl = await uploadFile(uploadedFiles.audio, "articles-audio", `${slug}/${uploadedFiles.audio.name}`);
+      }
+      
+      if (uploadedFiles.image) {
+        imageUrl = await uploadFile(uploadedFiles.image, "articles-images", `${slug}/${uploadedFiles.image.name}`);
+      }
+
+      // Update article
+      const updateData: any = {
+        title: data.title,
+        slug,
+        section: data.section,
+        content: data.content,
+        excerpt: data.excerpt,
+        summary: data.excerpt,
+        tags: data.tags.split(",").map(tag => tag.trim()).filter(Boolean),
+        seo_title: data.seo_title || null,
+        seo_description: data.seo_description || null,
+        updated_at: new Date().toISOString(),
+      };
+
+      // Only update file URLs if new files were uploaded
+      if (pdfUrl) updateData.pdf_url = pdfUrl;
+      if (audioUrl) updateData.audio_url = audioUrl;
+      if (imageUrl) updateData.featured_image_url = imageUrl;
+
+      const { error } = await supabase
+        .from("articles")
+        .update(updateData)
+        .eq('id', editingArticleId);
+
+      if (error) {
+        console.error('Update error:', error);
+        throw error;
+      }
+
+      toast({
+        title: "Artykuł zaktualizowany!",
+        description: "Artykuł został pomyślnie zaktualizowany.",
+      });
+
+      // Reset form
+      form.reset();
+      setUploadedFiles({});
+      setEditingArticleId(null);
+      setCurrentStep("basics");
+
+    } catch (error: any) {
+      toast({
+        title: "Błąd aktualizacji",
+        description: error.message || "Wystąpił błąd podczas aktualizowania artykułu.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsPublishing(false);
+    }
+  };
+
   const onSubmit = (data: ArticleFormData) => {
-    publishArticle(data);
+    if (editingArticleId) {
+      updateArticle(data);
+    } else {
+      publishArticle(data);
+    }
   };
 
   return (
@@ -203,24 +319,48 @@ export const AdminContentManager = () => {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Upload className="h-6 w-6" />
-            System Zarządzania Treścią
+            {editingArticleId ? <Edit className="h-6 w-6" /> : <Upload className="h-6 w-6" />}
+            {editingArticleId ? 'Edycja artykułu' : 'System Zarządzania Treścią'}
           </CardTitle>
           <CardDescription>
-            Prosty formularz do dodawania nowych wpisów - "na przycisk"
+            {editingArticleId ? 'Edytuj istniejący artykuł' : 'Prosty formularz do dodawania nowych wpisów - "na przycisk"'}
           </CardDescription>
+          {editingArticleId && (
+            <Button 
+              variant="outline" 
+              onClick={() => {
+                setEditingArticleId(null);
+                form.reset();
+                setUploadedFiles({});
+                setCurrentStep("basics");
+              }}
+            >
+              Anuluj edycję
+            </Button>
+          )}
         </CardHeader>
 
         <CardContent>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               <Tabs value={currentStep} onValueChange={setCurrentStep}>
-                <TabsList className="grid w-full grid-cols-4">
+                <TabsList className="grid w-full grid-cols-5">
+                  <TabsTrigger value="list">Lista</TabsTrigger>
                   <TabsTrigger value="basics">Podstawy</TabsTrigger>
                   <TabsTrigger value="content">Treść</TabsTrigger>
                   <TabsTrigger value="files">Pliki</TabsTrigger>
                   <TabsTrigger value="preview">Podgląd</TabsTrigger>
                 </TabsList>
+
+                <TabsContent value="list" className="space-y-4">
+                  <ArticlesList onEditArticle={handleEditArticle} />
+                  
+                  <div className="flex justify-end">
+                    <Button type="button" onClick={() => setCurrentStep("basics")}>
+                      Dodaj nowy artykuł →
+                    </Button>
+                  </div>
+                </TabsContent>
 
                 <TabsContent value="basics" className="space-y-4">
                   <FormField
@@ -260,7 +400,10 @@ export const AdminContentManager = () => {
                     )}
                   />
 
-                  <div className="flex justify-end">
+                  <div className="flex justify-between">
+                    <Button type="button" variant="outline" onClick={() => setCurrentStep("list")}>
+                      ← Lista
+                    </Button>
                     <Button 
                       type="button" 
                       onClick={() => setCurrentStep("content")}
@@ -372,7 +515,7 @@ export const AdminContentManager = () => {
                       ) : (
                         <>
                           <Send className="h-4 w-4 mr-2" />
-                          Publikuj wpis
+                          {editingArticleId ? 'Zaktualizuj artykuł' : 'Publikuj wpis'}
                         </>
                       )}
                     </Button>
