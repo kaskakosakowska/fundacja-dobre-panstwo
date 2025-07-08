@@ -26,6 +26,7 @@ export type Database = {
           id: string
           is_published: boolean | null
           meta_description: string | null
+          mind_map_data: Json | null
           original_url: string | null
           pdf_url: string | null
           published_date: string | null
@@ -51,6 +52,7 @@ export type Database = {
           id?: string
           is_published?: boolean | null
           meta_description?: string | null
+          mind_map_data?: Json | null
           original_url?: string | null
           pdf_url?: string | null
           published_date?: string | null
@@ -76,6 +78,7 @@ export type Database = {
           id?: string
           is_published?: boolean | null
           meta_description?: string | null
+          mind_map_data?: Json | null
           original_url?: string | null
           pdf_url?: string | null
           published_date?: string | null

@@ -13,6 +13,7 @@ export interface Post {
   featured_image_url?: string;
   tags?: string[];
   author?: string;
+  mind_map_data?: any;
 }
 
 export const usePostData = () => {
@@ -37,7 +38,7 @@ export const usePostData = () => {
       try {
         const { data, error } = await supabase
           .from('articles')
-          .select('title, slug, summary, content, published_date, author, pdf_url, audio_url, featured_image_url, tags')
+          .select('title, slug, summary, content, published_date, author, pdf_url, audio_url, featured_image_url, tags, mind_map_data')
           .eq('slug', postId)
           .eq('is_published', true)
           .single();
@@ -60,7 +61,8 @@ export const usePostData = () => {
             audio_url: data.audio_url || undefined,
             featured_image_url: data.featured_image_url || undefined,
             tags: data.tags || [],
-            author: data.author || ''
+            author: data.author || '',
+            mind_map_data: data.mind_map_data || undefined
           });
         } else {
           setPost(getFallbackPostData());

@@ -11,9 +11,10 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { FileUpload } from "./FileUpload";
 import { ArticlePreview } from "./ArticlePreview";
 import { ArticlesList } from "./ArticlesList";
+import { MindMapEditor } from "./MindMapEditor";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import { Upload, Eye, Send, List, Edit } from "lucide-react";
+import { Upload, Eye, Send, List, Edit, Map } from "lucide-react";
 
 interface ArticleFormData {
   title: string;
@@ -34,6 +35,7 @@ interface UploadedFiles {
 export const AdminContentManager = () => {
   const [currentStep, setCurrentStep] = useState("basics");
   const [uploadedFiles, setUploadedFiles] = useState<UploadedFiles>({});
+  const [mindMapData, setMindMapData] = useState<any>(null);
   const [isUploading, setIsUploading] = useState(false);
   const [isPublishing, setIsPublishing] = useState(false);
   const [editingArticleId, setEditingArticleId] = useState<string | null>(null);
@@ -95,6 +97,11 @@ export const AdminContentManager = () => {
 
   const handleFileUpload = (files: UploadedFiles) => {
     setUploadedFiles(files);
+  };
+
+  const handleMindMapSave = (data: any, tags: string[]) => {
+    setMindMapData(data);
+    form.setValue("tags", tags.join(", "));
   };
 
   const handleAutoGenerate = () => {
@@ -161,6 +168,7 @@ export const AdminContentManager = () => {
           pdf_url: pdfUrl || null,
           audio_url: audioUrl || null,
           featured_image_url: imageUrl || null,
+          mind_map_data: mindMapData || null,
           seo_title: data.seo_title || null,
           seo_description: data.seo_description || null,
           published_date: new Date().toISOString().split('T')[0],
@@ -183,6 +191,7 @@ export const AdminContentManager = () => {
       // Reset form
       form.reset();
       setUploadedFiles({});
+      setMindMapData(null);
       setCurrentStep("basics");
 
     } catch (error: any) {
@@ -214,6 +223,8 @@ export const AdminContentManager = () => {
       form.setValue('tags', article.tags?.join(', ') || '');
       form.setValue('seo_title', article.seo_title || '');
       form.setValue('seo_description', article.seo_description || '');
+      
+      setMindMapData(article.mind_map_data);
 
       setEditingArticleId(articleId);
       setCurrentStep('basics');
@@ -264,6 +275,7 @@ export const AdminContentManager = () => {
         excerpt: data.excerpt,
         summary: data.excerpt,
         tags: data.tags.split(",").map(tag => tag.trim()).filter(Boolean),
+        mind_map_data: mindMapData || null,
         seo_title: data.seo_title || null,
         seo_description: data.seo_description || null,
         updated_at: new Date().toISOString(),
@@ -292,6 +304,7 @@ export const AdminContentManager = () => {
       // Reset form
       form.reset();
       setUploadedFiles({});
+      setMindMapData(null);
       setEditingArticleId(null);
       setCurrentStep("basics");
 
@@ -332,6 +345,7 @@ export const AdminContentManager = () => {
                 setEditingArticleId(null);
                 form.reset();
                 setUploadedFiles({});
+                setMindMapData(null);
                 setCurrentStep("basics");
               }}
             >
@@ -344,10 +358,11 @@ export const AdminContentManager = () => {
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               <Tabs value={currentStep} onValueChange={setCurrentStep}>
-                <TabsList className="grid w-full grid-cols-5">
+                <TabsList className="grid w-full grid-cols-6">
                   <TabsTrigger value="list">Lista</TabsTrigger>
                   <TabsTrigger value="basics">Podstawy</TabsTrigger>
                   <TabsTrigger value="content">Treść</TabsTrigger>
+                  <TabsTrigger value="mindmap">Mapa myśli</TabsTrigger>
                   <TabsTrigger value="files">Pliki</TabsTrigger>
                   <TabsTrigger value="preview">Podgląd</TabsTrigger>
                 </TabsList>
@@ -473,7 +488,7 @@ export const AdminContentManager = () => {
                       </Button>
                       <Button 
                         type="button" 
-                        onClick={() => setCurrentStep("files")}
+                        onClick={() => setCurrentStep("mindmap")}
                         disabled={!form.getValues("content")}
                       >
                         Dalej →
@@ -482,11 +497,29 @@ export const AdminContentManager = () => {
                   </div>
                 </TabsContent>
 
+                <TabsContent value="mindmap" className="space-y-4">
+                  <MindMapEditor
+                    articleId={editingArticleId || undefined}
+                    initialTags={form.getValues("tags").split(",").map(t => t.trim()).filter(Boolean)}
+                    initialMindMapData={mindMapData}
+                    onSave={handleMindMapSave}
+                  />
+                  
+                  <div className="flex justify-between">
+                    <Button type="button" variant="outline" onClick={() => setCurrentStep("content")}>
+                      ← Wstecz
+                    </Button>
+                    <Button type="button" onClick={() => setCurrentStep("files")}>
+                      Dalej →
+                    </Button>
+                  </div>
+                </TabsContent>
+
                 <TabsContent value="files" className="space-y-4">
                   <FileUpload onFilesUploaded={handleFileUpload} />
                   
                   <div className="flex justify-between">
-                    <Button type="button" variant="outline" onClick={() => setCurrentStep("content")}>
+                    <Button type="button" variant="outline" onClick={() => setCurrentStep("mindmap")}>
                       ← Wstecz
                     </Button>
                     <Button type="button" onClick={() => setCurrentStep("preview")}>

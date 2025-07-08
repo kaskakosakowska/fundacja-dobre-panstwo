@@ -1,6 +1,7 @@
 import { SidebarCard } from "./SidebarCard";
 import { Post } from "@/hooks/usePostData";
 import { FileText, Music, Map } from "lucide-react";
+import { MindMap } from "@/components/mindmap/MindMap";
 
 interface PostSidebarProps {
   post: Post;
@@ -69,13 +70,46 @@ export const PostSidebar = ({ post }: PostSidebarProps) => {
 
       {/* Mind Map Container */}
       <SidebarCard title="Mapa pojęć">
-        <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center" style={{ color: '#666666' }}>
-          <div className="flex items-center justify-center gap-2 mb-2">
-            <Map className="h-4 w-4" />
-            <span className="text-sm">Mind Map</span>
+        {post.tags && post.tags.length > 0 ? (
+          <div className="space-y-4">
+            {/* Tags Display */}
+            <div className="space-y-2">
+              <div className="flex items-center gap-2 mb-2">
+                <Map className="h-4 w-4" style={{ color: '#666666' }} />
+                <span className="text-sm font-medium" style={{ color: '#333333' }}>Tagi</span>
+              </div>
+              <div className="flex flex-wrap gap-1">
+                {post.tags.map((tag, index) => (
+                  <span
+                    key={index}
+                    className="px-2 py-1 text-xs rounded-full bg-gray-100"
+                    style={{ color: '#666666' }}
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+            
+            {/* Mind Map */}
+            <div className="space-y-2">
+              <span className="text-sm font-medium" style={{ color: '#333333' }}>Mapa myśli</span>
+              <MindMap
+                data={post.mind_map_data}
+                tags={post.tags}
+                readOnly={true}
+              />
+            </div>
           </div>
-          <p className="text-xs mt-2">Interaktywna mapa pojęć związanych z wpisem</p>
-        </div>
+        ) : (
+          <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center" style={{ color: '#666666' }}>
+            <div className="flex items-center justify-center gap-2 mb-2">
+              <Map className="h-4 w-4" />
+              <span className="text-sm">Mapa pojęć</span>
+            </div>
+            <p className="text-xs mt-2">Brak tagów dla tego wpisu</p>
+          </div>
+        )}
       </SidebarCard>
     </div>
   );
