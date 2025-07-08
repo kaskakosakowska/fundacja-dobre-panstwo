@@ -8,6 +8,11 @@ export interface Post {
   summary: string;
   content: string;
   link: string;
+  pdf_url?: string;
+  audio_url?: string;
+  featured_image_url?: string;
+  tags?: string[];
+  author?: string;
 }
 
 export const usePostData = () => {
@@ -32,7 +37,7 @@ export const usePostData = () => {
       try {
         const { data, error } = await supabase
           .from('articles')
-          .select('title, slug, summary, content, published_date, author')
+          .select('title, slug, summary, content, published_date, author, pdf_url, audio_url, featured_image_url, tags')
           .eq('slug', postId)
           .eq('is_published', true)
           .single();
@@ -50,7 +55,12 @@ export const usePostData = () => {
             }),
             summary: data.summary || '',
             content: data.content || '',
-            link: `#`
+            link: `#`,
+            pdf_url: data.pdf_url || undefined,
+            audio_url: data.audio_url || undefined,
+            featured_image_url: data.featured_image_url || undefined,
+            tags: data.tags || [],
+            author: data.author || ''
           });
         } else {
           setPost(getFallbackPostData());
