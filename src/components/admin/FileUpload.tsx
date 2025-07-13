@@ -34,6 +34,7 @@ export const FileUpload = ({ onFilesUploaded, existingFiles }: FileUploadProps) 
   const [errors, setErrors] = useState<string[]>([]);
   const [imagePosition, setImagePosition] = useState(existingFiles?.image_position || "inline-left");
   const [imageSize, setImageSize] = useState(existingFiles?.image_size || "medium");
+  const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
 
   // Initialize with existing files
   useEffect(() => {
@@ -288,13 +289,7 @@ export const FileUpload = ({ onFilesUploaded, existingFiles }: FileUploadProps) 
                 <Label htmlFor="image-position" className="text-sm">Pozycja</Label>
                 <Select value={imagePosition} onValueChange={(value) => {
                   setImagePosition(value);
-                  const newFiles = { 
-                    ...files, 
-                    image_position: value,
-                    image_size: imageSize
-                  };
-                  setFiles(newFiles);
-                  onFilesUploaded(newFiles);
+                  setHasUnsavedChanges(true);
                 }}>
                   <SelectTrigger id="image-position">
                     <SelectValue />
@@ -311,13 +306,7 @@ export const FileUpload = ({ onFilesUploaded, existingFiles }: FileUploadProps) 
                 <Label htmlFor="image-size" className="text-sm">Wielkość</Label>
                 <Select value={imageSize} onValueChange={(value) => {
                   setImageSize(value);
-                  const newFiles = { 
-                    ...files, 
-                    image_position: imagePosition,
-                    image_size: value
-                  };
-                  setFiles(newFiles);
-                  onFilesUploaded(newFiles);
+                  setHasUnsavedChanges(true);
                 }}>
                   <SelectTrigger id="image-size">
                     <SelectValue />
@@ -330,6 +319,28 @@ export const FileUpload = ({ onFilesUploaded, existingFiles }: FileUploadProps) 
                 </Select>
               </div>
             </div>
+            
+            {/* Przycisk zachowaj zmiany */}
+            {hasUnsavedChanges && (
+              <div className="pt-4 border-t">
+                <Button 
+                  onClick={() => {
+                    const newFiles = { 
+                      ...files, 
+                      image_position: imagePosition,
+                      image_size: imageSize
+                    };
+                    setFiles(newFiles);
+                    onFilesUploaded(newFiles);
+                    setHasUnsavedChanges(false);
+                  }}
+                  className="w-full"
+                  variant="default"
+                >
+                  Zachowaj zmiany
+                </Button>
+              </div>
+            )}
           </CardContent>
         </Card>
       )}
