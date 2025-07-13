@@ -56,19 +56,10 @@ export const ContentPreview = ({ data, files, existingFiles }: ContentPreviewPro
             {hasImage && imageSrc && imagePosition ? (
               <div className="relative overflow-hidden">
                 {/* Inline images that float with content */}
-                {/* DEBUG: Pokaż co się dzieje */}
-                <div className="bg-yellow-100 p-2 mb-4 text-xs">
-                  <div>imagePosition: {imagePosition}</div>
-                  <div>imageSize: {imageSize}</div>
-                  <div>Warunek inline: {(imagePosition === 'inline-left' || imagePosition === 'inline-right').toString()}</div>
-                  <div>Warunek above: {(imagePosition && !imagePosition.startsWith('inline')).toString()}</div>
-                </div>
-
                 {(imagePosition === 'inline-left' || imagePosition === 'inline-right') && (
                    <img 
                      src={imageSrc} 
                      alt="Preview"
-                     style={{ border: '3px solid red' }} // Dodaję czerwoną ramkę żeby było widać
                      className={`
                        rounded-lg shadow-sm
                        ${imageSize === 'small' ? 'max-w-[200px]' : 

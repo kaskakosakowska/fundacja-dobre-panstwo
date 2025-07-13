@@ -238,6 +238,8 @@ export const AdminContentManager = () => {
       form.setValue('tags', article.tags?.join(', ') || '');
       form.setValue('seo_title', article.seo_title || '');
       form.setValue('seo_description', article.seo_description || '');
+      form.setValue('image_position', article.image_position || 'inline-left');
+      form.setValue('image_size', article.image_size || 'medium');
       
       // Set uploaded files data to preserve image settings
       setUploadedFiles({
@@ -564,11 +566,7 @@ export const AdminContentManager = () => {
 
                 <TabsContent value="preview" className="space-y-4">
                   <ArticlePreview 
-                    data={{
-                      ...form.getValues(),
-                      image_position: uploadedFiles.image_position,
-                      image_size: uploadedFiles.image_size
-                    }} 
+                    data={form.getValues()} 
                     files={uploadedFiles}
                     existingFiles={editingArticleData ? {
                       pdf_url: editingArticleData.pdf_url,
