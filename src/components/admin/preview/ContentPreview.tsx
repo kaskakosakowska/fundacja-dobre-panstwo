@@ -30,6 +30,12 @@ export const ContentPreview = ({ data, files, existingFiles }: ContentPreviewPro
     "files.image": !!files.image,
     "existingFiles?.featured_image_url": existingFiles?.featured_image_url
   });
+  
+  console.log("ContentPreview FINAL VALUES:", {
+    "imagePosition": data.image_position || 'inline-left',
+    "imageSize": data.image_size || 'medium',
+    "hasImage": !!(files.image || existingFiles?.featured_image_url)
+  });
 
   // Get image source - either new file or existing URL
   const getImageSrc = () => {
