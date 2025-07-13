@@ -23,6 +23,8 @@ export const PostContent = ({ post, section, postId }: PostContentProps) => {
   const [currentImageUrl, setCurrentImageUrl] = useState(post.featured_image_url);
   const [imagePosition, setImagePosition] = useState('center');
   const [imageSize, setImageSize] = useState('medium');
+  const [tempImagePosition, setTempImagePosition] = useState('center');
+  const [tempImageSize, setTempImageSize] = useState('medium');
   const { toast } = useToast();
 
   const getFullContent = () => {
@@ -149,31 +151,70 @@ export const PostContent = ({ post, section, postId }: PostContentProps) => {
     
     // Position classes
     switch (imagePosition) {
+      case 'inline-left':
+        classes += "float-left mr-4 mb-4";
+        break;
+      case 'inline-right':
+        classes += "float-right ml-4 mb-4";
+        break;
       case 'left':
-        classes += "mr-auto";
+        classes += "mr-auto block";
         break;
       case 'right':
-        classes += "ml-auto";
+        classes += "ml-auto block";
         break;
       case 'center':
-        classes += "mx-auto";
+        classes += "mx-auto block";
         break;
       case 'full':
-        classes += "w-full max-w-full";
+        classes += "w-full max-w-full block";
         break;
       default:
-        classes += "mx-auto";
+        classes += "mx-auto block";
     }
     
     return classes;
   };
 
+  const saveImageSettings = () => {
+    setImagePosition(tempImagePosition);
+    setImageSize(tempImageSize);
+    setIsEditingImage(false);
+    
+    toast({
+      title: "Ustawienia zapisane",
+      description: "Zmiany w układzie obrazka zostały zastosowane.",
+    });
+  };
+
+  const openEditDialog = () => {
+    setTempImagePosition(imagePosition);
+    setTempImageSize(imageSize);
+    setIsEditingImage(true);
+  };
+
   return (
     <div className="space-y-6">
-      {/* Featured Image */}
-      <div className="mb-6 relative group">
-        {currentImageUrl ? (
-          <>
+      {/* Tags */}
+      {post.tags && post.tags.length > 0 && (
+        <div className="flex flex-wrap gap-2 mb-4">
+          {post.tags.map((tag, index) => (
+            <span
+              key={index}
+              className="px-3 py-1 text-xs rounded-full bg-gray-100"
+              style={{ color: '#666666' }}
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+      )}
+      
+      {/* Content with potential inline image */}
+      <div className="text-base leading-relaxed" style={{ color: '#333333' }}>
+        {/* Featured Image for non-inline positions */}
+        {currentImageUrl && !imagePosition.startsWith('inline') && (
+          <div className="mb-6 relative group">
             <img 
               src={currentImageUrl} 
               alt={post.title}
@@ -182,7 +223,7 @@ export const PostContent = ({ post, section, postId }: PostContentProps) => {
             <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
               <Dialog open={isEditingImage} onOpenChange={setIsEditingImage}>
                 <DialogTrigger asChild>
-                  <Button size="sm" variant="secondary" className="h-8 w-8 p-0">
+                  <Button size="sm" variant="secondary" className="h-8 w-8 p-0" onClick={openEditDialog}>
                     <Edit3 className="h-4 w-4" />
                   </Button>
                 </DialogTrigger>
@@ -203,11 +244,13 @@ export const PostContent = ({ post, section, postId }: PostContentProps) => {
                     <div className="grid grid-cols-2 gap-4">
                       <div className="space-y-2">
                         <Label htmlFor="position">Położenie obrazka</Label>
-                        <Select value={imagePosition} onValueChange={setImagePosition}>
+                        <Select value={tempImagePosition} onValueChange={setTempImagePosition}>
                           <SelectTrigger>
                             <SelectValue placeholder="Wybierz położenie" />
                           </SelectTrigger>
                           <SelectContent>
+                            <SelectItem value="inline-left">W tekście po lewej</SelectItem>
+                            <SelectItem value="inline-right">W tekście po prawej</SelectItem>
                             <SelectItem value="left">Po lewej</SelectItem>
                             <SelectItem value="center">Wyśrodkowany</SelectItem>
                             <SelectItem value="right">Po prawej</SelectItem>
@@ -218,7 +261,7 @@ export const PostContent = ({ post, section, postId }: PostContentProps) => {
                       
                       <div className="space-y-2">
                         <Label htmlFor="size">Wielkość obrazka</Label>
-                        <Select value={imageSize} onValueChange={setImageSize}>
+                        <Select value={tempImageSize} onValueChange={setTempImageSize}>
                           <SelectTrigger>
                             <SelectValue placeholder="Wybierz wielkość" />
                           </SelectTrigger>
@@ -232,11 +275,23 @@ export const PostContent = ({ post, section, postId }: PostContentProps) => {
                       </div>
                     </div>
                     
+                    <div className="flex gap-2 mb-4">
+                      <Button 
+                        onClick={saveImageSettings}
+                        disabled={isUploading}
+                        className="flex-1"
+                        variant="default"
+                      >
+                        Zapisz zmiany
+                      </Button>
+                    </div>
+                    
                     <div className="flex gap-2">
                       <Button 
                         onClick={handleFileSelect}
                         disabled={isUploading}
                         className="flex-1"
+                        variant="outline"
                       >
                         <Upload className="h-4 w-4 mr-2" />
                         {isUploading ? 'Ładowanie...' : 'Zmień obrazek'}
@@ -254,9 +309,12 @@ export const PostContent = ({ post, section, postId }: PostContentProps) => {
                 </DialogContent>
               </Dialog>
             </div>
-          </>
-        ) : (
-          <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center max-w-md mx-auto">
+          </div>
+        )}
+
+        {/* Show placeholder when no image */}
+        {!currentImageUrl && (
+          <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center max-w-md mx-auto mb-6">
             <p className="text-sm text-gray-500 mb-4">Brak obrazka głównego</p>
             <Button onClick={handleFileSelect} disabled={isUploading}>
               <Upload className="h-4 w-4 mr-2" />
@@ -264,26 +322,114 @@ export const PostContent = ({ post, section, postId }: PostContentProps) => {
             </Button>
           </div>
         )}
-      </div>
-      
-      {/* Tags */}
-      {post.tags && post.tags.length > 0 && (
-        <div className="flex flex-wrap gap-2 mb-4">
-          {post.tags.map((tag, index) => (
-            <span
-              key={index}
-              className="px-3 py-1 text-xs rounded-full bg-gray-100"
-              style={{ color: '#666666' }}
-            >
-              {tag}
-            </span>
-          ))}
+
+        {/* Content with inline image */}
+        <div className="relative">
+          {/* Inline image */}
+          {currentImageUrl && imagePosition.startsWith('inline') && (
+            <div className="relative group inline-block">
+              <img 
+                src={currentImageUrl} 
+                alt={post.title}
+                className={getImageClasses()}
+              />
+              <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                <Dialog open={isEditingImage} onOpenChange={setIsEditingImage}>
+                  <DialogTrigger asChild>
+                    <Button size="sm" variant="secondary" className="h-8 w-8 p-0" onClick={openEditDialog}>
+                      <Edit3 className="h-4 w-4" />
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>Edytuj obrazek główny</DialogTitle>
+                    </DialogHeader>
+                    <div className="space-y-4">
+                      <div className="text-center">
+                        <img 
+                          src={currentImageUrl} 
+                          alt={post.title}
+                          className="w-full max-w-sm mx-auto rounded-lg shadow-sm mb-4"
+                        />
+                      </div>
+                      
+                      {/* Image Layout Options */}
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                          <Label htmlFor="position">Położenie obrazka</Label>
+                          <Select value={tempImagePosition} onValueChange={setTempImagePosition}>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Wybierz położenie" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="inline-left">W tekście po lewej</SelectItem>
+                              <SelectItem value="inline-right">W tekście po prawej</SelectItem>
+                              <SelectItem value="left">Po lewej</SelectItem>
+                              <SelectItem value="center">Wyśrodkowany</SelectItem>
+                              <SelectItem value="right">Po prawej</SelectItem>
+                              <SelectItem value="full">Pełna szerokość</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                        
+                        <div className="space-y-2">
+                          <Label htmlFor="size">Wielkość obrazka</Label>
+                          <Select value={tempImageSize} onValueChange={setTempImageSize}>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Wybierz wielkość" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="small">Mały (200px)</SelectItem>
+                              <SelectItem value="medium">Średni (400px)</SelectItem>
+                              <SelectItem value="large">Duży (600px)</SelectItem>
+                              <SelectItem value="xlarge">Bardzo duży (800px)</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                      </div>
+                      
+                      <div className="flex gap-2 mb-4">
+                        <Button 
+                          onClick={saveImageSettings}
+                          disabled={isUploading}
+                          className="flex-1"
+                          variant="default"
+                        >
+                          Zapisz zmiany
+                        </Button>
+                      </div>
+                      
+                      <div className="flex gap-2">
+                        <Button 
+                          onClick={handleFileSelect}
+                          disabled={isUploading}
+                          className="flex-1"
+                          variant="outline"
+                        >
+                          <Upload className="h-4 w-4 mr-2" />
+                          {isUploading ? 'Ładowanie...' : 'Zmień obrazek'}
+                        </Button>
+                        <Button 
+                          variant="destructive"
+                          onClick={removeImage}
+                          disabled={isUploading}
+                        >
+                          <X className="h-4 w-4 mr-2" />
+                          Usuń
+                        </Button>
+                      </div>
+                    </div>
+                  </DialogContent>
+                </Dialog>
+              </div>
+            </div>
+          )}
+          
+          {/* Content with clearfix for floated images */}
+          <div className="overflow-hidden">
+            {getFullContent()}
+          </div>
         </div>
-      )}
-      
-      {/* Content */}
-      <div className="text-base leading-relaxed" style={{ color: '#333333' }}>
-        {getFullContent()}
       </div>
     </div>
   );
