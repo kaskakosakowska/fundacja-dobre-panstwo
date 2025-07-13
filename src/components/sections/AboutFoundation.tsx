@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export const AboutFoundation = () => {
   return (
     <section className="py-8 flex justify-center">
@@ -13,9 +15,19 @@ export const AboutFoundation = () => {
           </p>
           
           <div className="mt-6 space-y-4">
-            <h3 className="text-xl md:text-2xl font-sans font-semibold" style={{ color: '#333333' }}>
-              Nasze główne obszary działania:
-            </h3>
+            <div className="flex items-center justify-between">
+              <h3 className="text-xl md:text-2xl font-sans font-semibold" style={{ color: '#333333' }}>
+                Nasze główne obszary działania:
+              </h3>
+              
+              {/* Tymczasowy przycisk do CMS */}
+              <Link 
+                to="/admin" 
+                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
+              >
+                🔧 Admin CMS
+              </Link>
+            </div>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
               <div className="p-4 rounded-lg" style={{ backgroundColor: 'rgba(255, 255, 255, 0.4)' }}>
