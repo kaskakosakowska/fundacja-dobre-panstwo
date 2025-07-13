@@ -28,6 +28,10 @@ interface MindMapProps {
 }
 
 const createTagNodes = (tags: string[]): Node[] => {
+  console.log('=== createTagNodes DEBUG ===');
+  console.log('tags received:', tags);
+  console.log('tags length:', tags.length);
+  
   const centerX = 250;
   const centerY = 200;
   const radius = 150;
@@ -55,11 +59,12 @@ const createTagNodes = (tags: string[]): Node[] => {
   ];
 
   tags.forEach((tag, index) => {
+    console.log(`Processing tag ${index}:`, tag);
     const angle = (index * 2 * Math.PI) / tags.length;
     const x = centerX + radius * Math.cos(angle);
     const y = centerY + radius * Math.sin(angle);
     
-    nodes.push({
+    const newNode = {
       id: `tag-${index}`,
       type: 'default',
       position: { x, y },
@@ -72,9 +77,14 @@ const createTagNodes = (tags: string[]): Node[] => {
         fontSize: '11px',
         color: '#333333'
       }
-    });
+    };
+    
+    console.log(`Created node ${index}:`, newNode);
+    nodes.push(newNode);
   });
 
+  console.log('Final nodes:', nodes);
+  console.log('=== END createTagNodes DEBUG ===');
   return nodes;
 };
 
