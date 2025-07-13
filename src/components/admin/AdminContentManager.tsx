@@ -328,6 +328,8 @@ export const AdminContentManager = () => {
       if (audioUrl) updateData.audio_url = audioUrl;
       if (imageUrl) updateData.featured_image_url = imageUrl;
 
+      console.log("updateArticle: About to update database with:", updateData);
+
       const { error } = await supabase
         .from("articles")
         .update(updateData)
