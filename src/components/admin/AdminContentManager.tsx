@@ -346,10 +346,6 @@ export const AdminContentManager = () => {
         description: "Artykuł został pomyślnie zaktualizowany.",
       });
 
-      // Add small delay to ensure database consistency before reloading
-      await new Promise(resolve => setTimeout(resolve, 500));
-      await handleEditArticle(editingArticleId);
-
     } catch (error: any) {
       toast({
         title: "Błąd aktualizacji",
