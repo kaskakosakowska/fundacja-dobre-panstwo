@@ -92,17 +92,31 @@ export const MindMap = ({ data, tags = [], readOnly = true, onDataChange }: Mind
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
 
+  // Force update when tags change
   useEffect(() => {
-    if (data && data.nodes.length > 0) {
+    console.log('MindMap: Updating with data:', data, 'tags:', tags);
+    
+    if (data && data.nodes && data.nodes.length > 0) {
+      console.log('MindMap: Using provided data');
       setNodes(data.nodes);
-      setEdges(data.edges);
-    } else if (tags.length > 0) {
+      setEdges(data.edges || []);
+    } else if (tags && tags.length > 0) {
+      console.log('MindMap: Creating nodes from tags');
       const tagNodes = createTagNodes(tags);
       const tagEdges = createTagEdges(tags);
       setNodes(tagNodes);
       setEdges(tagEdges);
+      
+      // Immediately notify parent of the new structure
+      if (onDataChange && !readOnly) {
+        onDataChange({ nodes: tagNodes, edges: tagEdges });
+      }
+    } else {
+      console.log('MindMap: No data or tags, clearing');
+      setNodes([]);
+      setEdges([]);
     }
-  }, [data, tags, setNodes, setEdges]);
+  }, [data, tags, setNodes, setEdges, onDataChange, readOnly]);
 
   const onConnect = useCallback(
     (params: Connection) => {
@@ -117,15 +131,21 @@ export const MindMap = ({ data, tags = [], readOnly = true, onDataChange }: Mind
     (changes: NodeChange[]) => {
       if (!readOnly) {
         onNodesChange(changes);
+        // Use current state directly
         if (onDataChange) {
-          // Aktualizuj dane z opóźnieniem, żeby poczekać na zastosowanie zmian
           setTimeout(() => {
-            onDataChange({ nodes, edges });
-          }, 100);
+            setNodes((currentNodes) => {
+              setEdges((currentEdges) => {
+                onDataChange({ nodes: currentNodes, edges: currentEdges });
+                return currentEdges;
+              });
+              return currentNodes;
+            });
+          }, 50);
         }
       }
     },
-    [readOnly, onNodesChange, onDataChange, nodes, edges]
+    [readOnly, onNodesChange, onDataChange, setNodes, setEdges]
   );
 
   const handleEdgesChange = useCallback(
@@ -134,12 +154,18 @@ export const MindMap = ({ data, tags = [], readOnly = true, onDataChange }: Mind
         onEdgesChange(changes);
         if (onDataChange) {
           setTimeout(() => {
-            onDataChange({ nodes, edges });
-          }, 100);
+            setNodes((currentNodes) => {
+              setEdges((currentEdges) => {
+                onDataChange({ nodes: currentNodes, edges: currentEdges });
+                return currentEdges;
+              });
+              return currentNodes;
+            });
+          }, 50);
         }
       }
     },
-    [readOnly, onEdgesChange, onDataChange, nodes, edges]
+    [readOnly, onEdgesChange, onDataChange, setNodes, setEdges]
   );
 
   return (

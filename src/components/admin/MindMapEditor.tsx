@@ -31,15 +31,19 @@ export const MindMapEditor = ({
   const { toast } = useToast();
 
   useEffect(() => {
-    setTags(initialTags);
+    console.log('MindMapEditor: Updating with initialTags:', initialTags, 'initialMindMapData:', initialMindMapData);
+    setTags(initialTags || []);
     setMindMapData(initialMindMapData);
   }, [initialTags, initialMindMapData]);
 
   const addTag = () => {
     if (newTag.trim() && !tags.includes(newTag.trim())) {
       const updatedTags = [...tags, newTag.trim()];
+      console.log('MindMapEditor: Adding tag, new tags:', updatedTags);
       setTags(updatedTags);
       setNewTag('');
+      // Reset mind map data when tags change to force regeneration
+      setMindMapData(undefined);
       toast({
         title: "Tag dodany",
         description: `Dodano tag: ${newTag.trim()}`,
@@ -49,7 +53,10 @@ export const MindMapEditor = ({
 
   const removeTag = (tagToRemove: string) => {
     const updatedTags = tags.filter(tag => tag !== tagToRemove);
+    console.log('MindMapEditor: Removing tag, new tags:', updatedTags);
     setTags(updatedTags);
+    // Reset mind map data when tags change to force regeneration
+    setMindMapData(undefined);
     toast({
       title: "Tag usunięty",
       description: `Usunięto tag: ${tagToRemove}`,
@@ -57,17 +64,87 @@ export const MindMapEditor = ({
   };
 
   const handleMindMapChange = (data: MindMapData) => {
+    console.log('MindMapEditor: Mind map data changed:', data);
     setMindMapData(data);
   };
 
   const handleSave = () => {
-    if (onSave && mindMapData) {
-      onSave(mindMapData, tags);
+    if (onSave) {
+      console.log('MindMapEditor: Saving with mindMapData:', mindMapData, 'tags:', tags);
+      // If no mind map data, create basic structure from tags
+      const dataToSave = mindMapData || { 
+        nodes: createTagNodes(tags), 
+        edges: createTagEdges(tags) 
+      };
+      onSave(dataToSave, tags);
       toast({
         title: "Zapisano",
         description: "Mapa myśli i tagi zostały zapisane.",
       });
     }
+  };
+
+  // Helper functions from MindMap component
+  const createTagNodes = (tagList: string[]) => {
+    const centerX = 250;
+    const centerY = 200;
+    const radius = 150;
+    
+    const nodes: any[] = [
+      {
+        id: 'center',
+        type: 'default',
+        position: { x: centerX, y: centerY },
+        data: { label: 'Główny temat' },
+        style: {
+          backgroundColor: '#f6f4ef',
+          border: '2px solid #333333',
+          borderRadius: '50%',
+          width: 120,
+          height: 120,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          fontSize: '12px',
+          fontWeight: 'bold',
+          color: '#333333'
+        }
+      }
+    ];
+
+    tagList.forEach((tag, index) => {
+      const angle = (index * 2 * Math.PI) / tagList.length;
+      const x = centerX + radius * Math.cos(angle);
+      const y = centerY + radius * Math.sin(angle);
+      
+      nodes.push({
+        id: `tag-${index}`,
+        type: 'default',
+        position: { x, y },
+        data: { label: tag },
+        style: {
+          backgroundColor: '#ffffff',
+          border: '1px solid #666666',
+          borderRadius: '20px',
+          padding: '8px 12px',
+          fontSize: '11px',
+          color: '#333333'
+        }
+      });
+    });
+
+    return nodes;
+  };
+
+  const createTagEdges = (tagList: string[]) => {
+    return tagList.map((_, index) => ({
+      id: `edge-${index}`,
+      source: 'center',
+      target: `tag-${index}`,
+      type: 'straight',
+      style: { stroke: '#666666', strokeWidth: 1 },
+      animated: false
+    }));
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -136,6 +213,7 @@ export const MindMapEditor = ({
           <div className="border rounded-lg p-4 bg-gray-50">
             {tags.length > 0 ? (
               <MindMap
+                key={`mindmap-${tags.join('-')}`} // Force re-render when tags change
                 data={mindMapData}
                 tags={tags}
                 readOnly={false}
