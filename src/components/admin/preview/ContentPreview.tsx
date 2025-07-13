@@ -23,6 +23,14 @@ interface ContentPreviewProps {
 }
 
 export const ContentPreview = ({ data, files, existingFiles }: ContentPreviewProps) => {
+  // DEBUG: Log values to see what's being passed
+  console.log("ContentPreview DEBUG:", {
+    "data.image_position": data.image_position,
+    "data.image_size": data.image_size,
+    "files.image": !!files.image,
+    "existingFiles?.featured_image_url": existingFiles?.featured_image_url
+  });
+
   // Get image source - either new file or existing URL
   const getImageSrc = () => {
     if (files.image) return URL.createObjectURL(files.image);
