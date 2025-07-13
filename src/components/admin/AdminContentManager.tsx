@@ -381,10 +381,18 @@ export const AdminContentManager = () => {
       }
 
       console.log("updateArticle: Database update successful!");
+      
       toast({
         title: "Artykuł zaktualizowany!",
         description: "Artykuł został pomyślnie zaktualizowany.",
       });
+
+      // Refresh the editing data with updated values
+      setEditingArticleData(prev => ({
+        ...prev,
+        ...updateData,
+        mind_map_data: mindMapData
+      }));
 
     } catch (error: any) {
       toast({

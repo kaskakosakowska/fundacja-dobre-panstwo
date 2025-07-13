@@ -20,6 +20,7 @@ export const MindMapSection = ({ post, onRefreshPost }: MindMapSectionProps) => 
   const [canEdit, setCanEdit] = useState(false);
   const [currentMindMapData, setCurrentMindMapData] = useState(post.mind_map_data);
   const [currentTags, setCurrentTags] = useState(post.tags || []);
+  const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -46,6 +47,7 @@ export const MindMapSection = ({ post, onRefreshPost }: MindMapSectionProps) => 
   }, [post.mind_map_data, post.tags]);
 
   const handleMindMapSave = async (mindMapData: any, tags: string[]) => {
+    setIsLoading(true);
     try {
       const { error } = await supabase
         .from('articles')
@@ -58,6 +60,7 @@ export const MindMapSection = ({ post, onRefreshPost }: MindMapSectionProps) => 
 
       if (error) throw error;
 
+      // Update local state immediately
       setCurrentMindMapData(mindMapData);
       setCurrentTags(tags);
       setIsEditing(false);
@@ -67,12 +70,12 @@ export const MindMapSection = ({ post, onRefreshPost }: MindMapSectionProps) => 
         description: "Zmiany zostały pomyślnie zapisane.",
       });
 
-      // Użyj funkcji odświeżania z hooka
+      // Force refresh of post data
       if (onRefreshPost) {
-        onRefreshPost();
+        setTimeout(() => {
+          onRefreshPost();
+        }, 100); // Small delay to ensure database update is complete
       }
-
-      setIsEditing(false);
 
     } catch (error: any) {
       toast({
@@ -80,6 +83,8 @@ export const MindMapSection = ({ post, onRefreshPost }: MindMapSectionProps) => 
         description: error.message || "Nie udało się zapisać zmian.",
         variant: "destructive",
       });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -122,7 +127,14 @@ export const MindMapSection = ({ post, onRefreshPost }: MindMapSectionProps) => 
                 </DialogTitle>
               </DialogHeader>
               <div className="h-[60vh] w-full">
-                {isEditing ? (
+                {isLoading ? (
+                  <div className="flex items-center justify-center h-full">
+                    <div className="text-center">
+                      <div className="animate-spin h-8 w-8 border-b-2 border-primary mx-auto mb-2"></div>
+                      <p className="text-sm text-gray-600">Zapisywanie...</p>
+                    </div>
+                  </div>
+                ) : isEditing ? (
                   <MindMapEditor
                     articleId={post.id}
                     initialTags={currentTags}

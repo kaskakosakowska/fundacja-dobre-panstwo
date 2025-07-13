@@ -19,35 +19,40 @@ export const useArticles = (section?: 'szkatulka' | 'szczypta' | 'glosy') => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchArticles = async () => {
-      try {
-        setLoading(true);
-        let query = supabase
-          .from('articles')
-          .select('*')
-          .eq('is_published', true)
-          .order('published_date', { ascending: false })
-          .order('created_at', { ascending: false });
+  const fetchArticles = async () => {
+    try {
+      setLoading(true);
+      let query = supabase
+        .from('articles')
+        .select('*')
+        .eq('is_published', true)
+        .order('published_date', { ascending: false })
+        .order('created_at', { ascending: false });
 
-        if (section) {
-          query = query.eq('section', section);
-        }
-
-        const { data, error } = await query;
-
-        if (error) throw error;
-
-        setArticles(data || []);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Błąd pobierania artykułów');
-      } finally {
-        setLoading(false);
+      if (section) {
+        query = query.eq('section', section);
       }
-    };
 
+      const { data, error } = await query;
+
+      if (error) throw error;
+
+      setArticles(data || []);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Błąd pobierania artykułów');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
     fetchArticles();
   }, [section]);
 
-  return { articles, loading, error };
+  const refetch = () => {
+    setLoading(true);
+    fetchArticles();
+  };
+
+  return { articles, loading, error, refetch };
 };
