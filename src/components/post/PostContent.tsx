@@ -48,8 +48,8 @@ export const PostContent = ({ post, section, postId }: PostContentProps) => {
       {/* Content with potential inline image */}
       <div className="text-base leading-relaxed" style={{ color: '#333333' }}>
         <Dialog open={imageManager.isEditingImage} onOpenChange={imageManager.setIsEditingImage}>
-          {/* Featured Image for non-inline positions */}
-          {imageManager.currentImageUrl && !imageManager.imagePosition.startsWith('inline') && (
+          {/* Featured Image for non-inline positions or placeholder */}
+          {!imageManager.currentImageUrl || !imageManager.imagePosition.startsWith('inline') ? (
             <FeaturedImage
               currentImageUrl={imageManager.currentImageUrl}
               postTitle={post.title}
@@ -59,18 +59,7 @@ export const PostContent = ({ post, section, postId }: PostContentProps) => {
               handleFileSelect={imageManager.handleFileSelect}
               isUploading={imageManager.isUploading}
             />
-          )}
-
-          {/* Show placeholder when no image */}
-          <FeaturedImage
-            currentImageUrl={imageManager.currentImageUrl}
-            postTitle={post.title}
-            imagePosition={imageManager.imagePosition}
-            getImageClasses={imageManager.getImageClasses}
-            openEditDialog={imageManager.openEditDialog}
-            handleFileSelect={imageManager.handleFileSelect}
-            isUploading={imageManager.isUploading}
-          />
+          ) : null}
 
           {/* Content with inline image */}
           <div className="relative">
