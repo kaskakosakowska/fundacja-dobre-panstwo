@@ -1,4 +1,5 @@
 import { Post } from "@/hooks/usePostData";
+import { Map } from "lucide-react";
 import { SzkatulaContent } from "./content/SzkatulaContent";
 import { GlosyContent } from "./content/GlosyContent";
 import { DefaultContent } from "./content/DefaultContent";
@@ -45,20 +46,6 @@ export const PostContent = ({ post, section, postId }: PostContentProps) => {
 
   return (
     <div className="space-y-6">
-      {/* Tags */}
-      {post.tags && post.tags.length > 0 && (
-        <div className="flex flex-wrap gap-2 mb-4">
-          {post.tags.map((tag, index) => (
-            <span
-              key={index}
-              className="px-3 py-1 text-xs rounded-full bg-gray-100"
-              style={{ color: '#666666' }}
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
-      )}
       
       {/* Content with potential inline image */}
       <div className="text-base leading-relaxed" style={{ color: '#333333' }}>
@@ -97,6 +84,27 @@ export const PostContent = ({ post, section, postId }: PostContentProps) => {
           {/* Clear floats after content */}
           <div className="clear-both"></div>
         </div>
+        
+        {/* Tags Section - moved to bottom */}
+        {post.tags && post.tags.length > 0 && (
+          <div className="mt-8 pt-6 border-t border-gray-200">
+            <div className="flex items-center gap-2 mb-3">
+              <Map className="h-4 w-4" style={{ color: '#666666' }} />
+              <span className="text-sm font-medium" style={{ color: '#333333' }}>Tagi</span>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {post.tags.map((tag, index) => (
+                <span
+                  key={index}
+                  className="px-3 py-1 text-sm rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
+                  style={{ color: '#666666' }}
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

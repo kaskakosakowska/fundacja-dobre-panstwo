@@ -76,35 +76,39 @@ export const PostSidebar = ({ post }: PostSidebarProps) => {
       {/* Mind Map Container */}
       <SidebarCard title="Mapa pojęć">
         {post.tags && post.tags.length > 0 ? (
-          <div className="space-y-4">
-            {/* Tags Display */}
-            <div className="space-y-2">
-              <div className="flex items-center gap-2 mb-2">
-                <Map className="h-4 w-4" style={{ color: '#666666' }} />
-                <span className="text-sm font-medium" style={{ color: '#333333' }}>Tagi</span>
-              </div>
-              <div className="flex flex-wrap gap-1">
-                {post.tags.map((tag, index) => (
-                  <span
-                    key={index}
-                    className="px-2 py-1 text-xs rounded-full bg-gray-100"
-                    style={{ color: '#666666' }}
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
+          <div className="space-y-3">
+            <div className="flex items-center gap-2 mb-2">
+              <Map className="h-4 w-4" style={{ color: '#666666' }} />
+              <span className="text-sm font-medium" style={{ color: '#333333' }}>Kliknij aby otworzyć mapę</span>
             </div>
-            
-            {/* Mind Map */}
-            <div className="space-y-2">
-              <span className="text-sm font-medium" style={{ color: '#333333' }}>Mapa myśli</span>
-              <MindMap
-                data={post.mind_map_data}
-                tags={post.tags}
-                readOnly={true}
-              />
+            <div 
+              className="relative w-full h-12 border rounded-lg cursor-pointer hover:shadow-md transition-shadow bg-gray-50 overflow-hidden group"
+              onClick={() => {
+                const mindMapWindow = window.open('', '_blank', 'width=800,height=600,scrollbars=yes,resizable=yes');
+                if (mindMapWindow) {
+                  mindMapWindow.document.write(`
+                    <html>
+                      <head><title>Mapa pojęć - ${post.title}</title></head>
+                      <body style="margin: 20px; font-family: Arial, sans-serif;">
+                        <h2>${post.title}</h2>
+                        <div id="mindmap-container" style="width: 100%; height: 500px; border: 1px solid #ccc;"></div>
+                      </body>
+                    </html>
+                  `);
+                }
+              }}
+            >
+              <div className="w-full h-full bg-gradient-to-br from-blue-50 to-purple-50 flex items-center justify-center">
+                <div className="text-center">
+                  <Map className="h-6 w-6 mx-auto mb-1 text-blue-500" />
+                  <div className="text-xs text-gray-600">Mind Map</div>
+                </div>
+              </div>
+              <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-200"></div>
             </div>
+            <p className="text-xs text-center truncate px-2" style={{ color: '#666666' }}>
+              Mapa pojęć artykułu
+            </p>
           </div>
         ) : (
           <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center" style={{ color: '#666666' }}>
