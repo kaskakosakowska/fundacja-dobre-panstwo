@@ -181,43 +181,37 @@ export const MindMap = ({ data, tags = [], readOnly = true, onDataChange }: Mind
   console.log('Current edges count:', edges.length);
   console.log('readOnly:', readOnly);
 
-  return (
-    <div 
-      className="w-full h-full bg-red-200 border-4 border-red-500" 
-      style={{ 
-        width: '100%', 
-        height: '400px',
-        position: 'relative',
-        zIndex: 1
-      }}
-    >
-      <div style={{ 
-        position: 'absolute', 
-        top: 0, 
-        left: 0, 
-        right: 0, 
-        bottom: 0,
-        backgroundColor: '#f0f0f0'
-      }}>
-        <ReactFlow
-          nodes={nodes}
-          edges={edges}
-          onNodesChange={handleNodesChange}
-          onEdgesChange={handleEdgesChange}
-          onConnect={onConnect}
-          nodesDraggable={!readOnly}
-          nodesConnectable={!readOnly}
-          elementsSelectable={!readOnly}
-          minZoom={0.3}
-          maxZoom={1.5}
-          defaultViewport={{ x: 50, y: 50, zoom: 0.6 }}
-          fitView={true}
-          style={{ width: '100%', height: '100%', backgroundColor: '#ffffff' }}
-        >
-          <Controls showInteractive={!readOnly} />
-          <Background variant={BackgroundVariant.Dots} gap={12} size={1} />
-        </ReactFlow>
+  // Debug: force simple rendering first
+  console.log('=== FINAL RENDER CHECK ===');
+  console.log('nodes length:', nodes.length);
+  console.log('edges length:', edges.length);
+  console.log('readOnly:', readOnly);
+
+  if (nodes.length === 0) {
+    return (
+      <div className="w-full h-96 border-2 border-dashed border-gray-300 flex items-center justify-center">
+        <p className="text-gray-500">Brak danych do wyświetlenia mapy myśli</p>
       </div>
+    );
+  }
+
+  return (
+    <div className="w-full h-96 border border-gray-300">
+      <ReactFlow
+        nodes={nodes}
+        edges={edges}
+        onNodesChange={handleNodesChange}
+        onEdgesChange={handleEdgesChange}
+        onConnect={onConnect}
+        nodesDraggable={!readOnly}
+        nodesConnectable={!readOnly}
+        elementsSelectable={!readOnly}
+        fitView
+        style={{ width: '100%', height: '100%' }}
+      >
+        <Controls showInteractive={!readOnly} />
+        <Background variant={BackgroundVariant.Dots} gap={12} size={1} />
+      </ReactFlow>
     </div>
   );
 };
