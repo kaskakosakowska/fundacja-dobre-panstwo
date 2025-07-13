@@ -20,7 +20,7 @@ export const PostSidebar = ({ post }: PostSidebarProps) => {
               <span className="text-sm font-medium" style={{ color: '#333333' }}>Kliknij aby otworzyć PDF</span>
             </div>
             <div 
-              className="relative w-full h-20 border rounded-lg cursor-pointer hover:shadow-md transition-shadow bg-gray-50 overflow-hidden group"
+              className="relative w-full h-12 border rounded-lg cursor-pointer hover:shadow-md transition-shadow bg-gray-50 overflow-hidden group"
               onClick={() => window.open(post.pdf_url, '_blank', 'noopener,noreferrer')}
             >
               <img 
