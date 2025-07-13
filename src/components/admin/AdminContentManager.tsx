@@ -262,7 +262,7 @@ export const AdminContentManager = () => {
       setMindMapData(article.mind_map_data);
 
       setEditingArticleId(articleId);
-      setCurrentStep('basics');
+      setCurrentStep('content');
 
       toast({
         title: "Artykuł załadowany",
