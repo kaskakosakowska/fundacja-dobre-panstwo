@@ -264,7 +264,10 @@ export const AdminContentManager = () => {
     setIsPublishing(true);
     
     try {
-      const slug = generateSlug(data.title);
+      // Only generate new slug if title changed
+      const originalTitle = editingArticleData?.title || '';
+      const slug = data.title !== originalTitle ? generateSlug(data.title) : editingArticleData?.slug;
+      
       let pdfUrl = "";
       let audioUrl = "";
       let imageUrl = "";
@@ -285,7 +288,7 @@ export const AdminContentManager = () => {
       // Update article
       const updateData: any = {
         title: data.title,
-        slug,
+        ...(data.title !== originalTitle && { slug }), // Only update slug if title changed
         section: data.section,
         content: data.content,
         excerpt: data.excerpt,
