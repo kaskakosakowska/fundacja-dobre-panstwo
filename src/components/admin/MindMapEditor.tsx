@@ -234,9 +234,9 @@ export const MindMapEditor = ({
         {/* Mind Map */}
         <div className="space-y-4">
           <Label className="text-base font-medium">Mapa myśli</Label>
-          <div className="border rounded-lg bg-white" style={{ height: "400px" }}>
+          <div className="border rounded-lg bg-white" style={{ height: "400px", position: "relative" }}>
             {tags.length > 0 ? (
-              <div className="w-full h-full">
+              <div className="w-full h-full" style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0 }}>
                 <MindMap
                   key={`mindmap-${tags.join('-')}-${mindMapData ? 'data' : 'notags'}`}
                   data={mindMapData}
