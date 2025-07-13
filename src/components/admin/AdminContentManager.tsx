@@ -112,6 +112,11 @@ export const AdminContentManager = () => {
     }
   };
 
+  const updateImageSettings = (position: string, size: string) => {
+    form.setValue('image_position', position);
+    form.setValue('image_size', size);
+  };
+
   const handleMindMapSave = (data: any, tags: string[]) => {
     setMindMapData(data);
     form.setValue("tags", tags.join(", "));
@@ -545,6 +550,7 @@ export const AdminContentManager = () => {
                 <TabsContent value="files" className="space-y-4">
                   <FileUpload 
                     onFilesUploaded={handleFileUpload}
+                    onImageSettingsUpdate={updateImageSettings}
                     existingFiles={editingArticleData ? {
                       pdf_url: editingArticleData.pdf_url,
                       audio_url: editingArticleData.audio_url,

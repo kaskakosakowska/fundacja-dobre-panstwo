@@ -25,10 +25,11 @@ interface ExistingFiles {
 
 interface FileUploadProps {
   onFilesUploaded: (files: UploadedFiles) => void;
+  onImageSettingsUpdate?: (position: string, size: string) => void;
   existingFiles?: ExistingFiles;
 }
 
-export const FileUpload = ({ onFilesUploaded, existingFiles }: FileUploadProps) => {
+export const FileUpload = ({ onFilesUploaded, onImageSettingsUpdate, existingFiles }: FileUploadProps) => {
   const [files, setFiles] = useState<UploadedFiles>({});
   const [uploadProgress, setUploadProgress] = useState<{ [key: string]: number }>({});
   const [errors, setErrors] = useState<string[]>([]);
@@ -332,6 +333,10 @@ export const FileUpload = ({ onFilesUploaded, existingFiles }: FileUploadProps) 
                     };
                     setFiles(newFiles);
                     onFilesUploaded(newFiles);
+                    // Update main form as well
+                    if (onImageSettingsUpdate) {
+                      onImageSettingsUpdate(imagePosition, imageSize);
+                    }
                     setHasUnsavedChanges(false);
                   }}
                   className="w-full"
