@@ -34,7 +34,7 @@ export const PostSidebar = ({ post }: PostSidebarProps) => {
                 </div>
               </div>
             </div>
-            <p className="text-xs text-center" style={{ color: '#666666' }}>
+            <p className="text-xs text-center truncate px-2" style={{ color: '#666666' }}>
               {post.pdf_url.split('/').pop()?.split('%20').join(' ')}
             </p>
           </div>
