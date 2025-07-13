@@ -4,6 +4,8 @@ import { GlosyContent } from "./content/GlosyContent";
 import { DefaultContent } from "./content/DefaultContent";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
 import { Edit3, Upload, X } from "lucide-react";
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
@@ -19,6 +21,8 @@ export const PostContent = ({ post, section, postId }: PostContentProps) => {
   const [isEditingImage, setIsEditingImage] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const [currentImageUrl, setCurrentImageUrl] = useState(post.featured_image_url);
+  const [imagePosition, setImagePosition] = useState('center');
+  const [imageSize, setImageSize] = useState('medium');
   const { toast } = useToast();
 
   const getFullContent = () => {
@@ -122,6 +126,48 @@ export const PostContent = ({ post, section, postId }: PostContentProps) => {
     }
   };
 
+  const getImageClasses = () => {
+    let classes = "rounded-lg shadow-sm ";
+    
+    // Size classes
+    switch (imageSize) {
+      case 'small':
+        classes += "max-w-[200px] ";
+        break;
+      case 'medium':
+        classes += "max-w-[400px] ";
+        break;
+      case 'large':
+        classes += "max-w-[600px] ";
+        break;
+      case 'xlarge':
+        classes += "max-w-[800px] ";
+        break;
+      default:
+        classes += "max-w-[400px] ";
+    }
+    
+    // Position classes
+    switch (imagePosition) {
+      case 'left':
+        classes += "mr-auto";
+        break;
+      case 'right':
+        classes += "ml-auto";
+        break;
+      case 'center':
+        classes += "mx-auto";
+        break;
+      case 'full':
+        classes += "w-full max-w-full";
+        break;
+      default:
+        classes += "mx-auto";
+    }
+    
+    return classes;
+  };
+
   return (
     <div className="space-y-6">
       {/* Featured Image */}
@@ -131,7 +177,7 @@ export const PostContent = ({ post, section, postId }: PostContentProps) => {
             <img 
               src={currentImageUrl} 
               alt={post.title}
-              className="w-full max-w-md mx-auto rounded-lg shadow-sm"
+              className={getImageClasses()}
             />
             <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
               <Dialog open={isEditingImage} onOpenChange={setIsEditingImage}>
@@ -152,6 +198,40 @@ export const PostContent = ({ post, section, postId }: PostContentProps) => {
                         className="w-full max-w-sm mx-auto rounded-lg shadow-sm mb-4"
                       />
                     </div>
+                    
+                    {/* Image Layout Options */}
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="position">Położenie obrazka</Label>
+                        <Select value={imagePosition} onValueChange={setImagePosition}>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Wybierz położenie" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="left">Po lewej</SelectItem>
+                            <SelectItem value="center">Wyśrodkowany</SelectItem>
+                            <SelectItem value="right">Po prawej</SelectItem>
+                            <SelectItem value="full">Pełna szerokość</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <Label htmlFor="size">Wielkość obrazka</Label>
+                        <Select value={imageSize} onValueChange={setImageSize}>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Wybierz wielkość" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="small">Mały (200px)</SelectItem>
+                            <SelectItem value="medium">Średni (400px)</SelectItem>
+                            <SelectItem value="large">Duży (600px)</SelectItem>
+                            <SelectItem value="xlarge">Bardzo duży (800px)</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    </div>
+                    
                     <div className="flex gap-2">
                       <Button 
                         onClick={handleFileSelect}
