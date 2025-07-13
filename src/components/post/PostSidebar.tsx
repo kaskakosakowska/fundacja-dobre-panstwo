@@ -20,7 +20,7 @@ export const PostSidebar = ({ post }: PostSidebarProps) => {
               <span className="text-sm font-medium" style={{ color: '#333333' }}>Kliknij aby otworzyć PDF</span>
             </div>
             <div 
-              className="relative w-full h-32 border rounded-lg cursor-pointer hover:shadow-md transition-shadow bg-gray-50 overflow-hidden group"
+              className="relative w-full h-20 border rounded-lg cursor-pointer hover:shadow-md transition-shadow bg-gray-50 overflow-hidden group"
               onClick={() => window.open(post.pdf_url, '_blank', 'noopener,noreferrer')}
             >
               <img 
@@ -29,7 +29,7 @@ export const PostSidebar = ({ post }: PostSidebarProps) => {
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-200 flex items-center justify-center">
-                <div className="bg-red-600 text-white px-2 py-1 rounded text-xs font-medium opacity-80 group-hover:opacity-100 transition-opacity">
+                <div className="bg-red-600 text-white px-1.5 py-0.5 rounded text-xs font-medium opacity-80 group-hover:opacity-100 transition-opacity">
                   PDF
                 </div>
               </div>
