@@ -282,8 +282,8 @@ export const AdminContentManager = () => {
         summary: data.excerpt,
         tags: data.tags.split(",").map(tag => tag.trim()).filter(Boolean),
         mind_map_data: mindMapData || null,
-        image_position: uploadedFiles.image_position || 'inline-left',
-        image_size: uploadedFiles.image_size || 'medium',
+        image_position: data.image_position || 'inline-left',
+        image_size: data.image_size || 'medium',
         seo_title: data.seo_title || null,
         seo_description: data.seo_description || null,
         updated_at: new Date().toISOString(),
@@ -309,11 +309,7 @@ export const AdminContentManager = () => {
         description: "Artykuł został pomyślnie zaktualizowany.",
       });
 
-      // Reset form
-      form.reset();
-      setUploadedFiles({});
-      setMindMapData(null);
-      setEditingArticleId(null);
+      // Don't reset form completely to keep editing context
       setCurrentStep("basics");
 
     } catch (error: any) {

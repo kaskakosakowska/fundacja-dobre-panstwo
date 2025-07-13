@@ -118,7 +118,7 @@ export const ArticlePreview = ({ data, files }: ArticlePreviewProps) => {
                   {data.content ? (
                     <div className="prose prose-sm max-w-none">
                       {/* Render content with integrated image */}
-                      {files.image && data.image_position && (
+                      {files.image && data.image_position ? (
                         <div className="relative overflow-hidden">
                           {/* Inline images that float with content */}
                           {(data.image_position === 'inline-left' || data.image_position === 'inline-right') && (
@@ -138,7 +138,7 @@ export const ArticlePreview = ({ data, files }: ArticlePreviewProps) => {
                           )}
                           
                           {/* Non-inline images (above content) */}
-                          {!data.image_position.startsWith('inline') && (
+                          {data.image_position && !data.image_position.startsWith('inline') && (
                             <div className="mb-6">
                               <img 
                                 src={URL.createObjectURL(files.image)} 
@@ -169,13 +169,11 @@ export const ArticlePreview = ({ data, files }: ArticlePreviewProps) => {
                           {/* Clear floats after content */}
                           <div className="clear-both"></div>
                         </div>
-                      )}
-                      
-                      {/* Content without image */}
-                      {(!files.image || !data.image_position) && (
+                      ) : (
+                        /* Content without image */
                         <div 
                           dangerouslySetInnerHTML={{ 
-                            __html: data.content.substring(0, 500) + (data.content.length > 500 ? '...' : '')
+                            __html: data.content ? data.content.substring(0, 500) + (data.content.length > 500 ? '...' : '') : ''
                           }}
                         />
                       )}
