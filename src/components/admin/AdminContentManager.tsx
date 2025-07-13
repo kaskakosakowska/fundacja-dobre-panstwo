@@ -151,10 +151,47 @@ export const AdminContentManager = () => {
     form.setValue('image_size', size);
   };
 
-  const handleMindMapSave = (data: any, tags: string[]) => {
+  const handleMindMapSave = async (data: any, tags: string[]) => {
     console.log('AdminContentManager: handleMindMapSave called with data:', data, 'tags:', tags);
     setMindMapData(data);
     form.setValue("tags", tags.join(", "));
+    
+    // KRYTYCZNE: Zapisz natychmiast do bazy danych jeśli edytujemy istniejący artykuł
+    if (editingArticleId && data) {
+      try {
+        console.log('Zapisuję Mind Map do bazy danych dla artykułu:', editingArticleId);
+        const { error } = await supabase
+          .from('articles')
+          .update({
+            mind_map_data: data,
+            tags: tags,
+            updated_at: new Date().toISOString()
+          })
+          .eq('id', editingArticleId);
+
+        if (error) {
+          console.error('Błąd zapisywania Mind Map w CMS:', error);
+          toast({
+            title: "Błąd zapisywania",
+            description: "Nie udało się zapisać Mind Mapy: " + error.message,
+            variant: "destructive",
+          });
+        } else {
+          console.log('Mind Map zapisana pomyślnie w CMS');
+          toast({
+            title: "Zapisano",
+            description: "Mind Mapa została zapisana.",
+          });
+        }
+      } catch (error: any) {
+        console.error('Wyjątek podczas zapisywania Mind Map:', error);
+        toast({
+          title: "Błąd",
+          description: "Wystąpił błąd podczas zapisywania.",
+          variant: "destructive",
+        });
+      }
+    }
   };
 
   const handleTagsChange = (tags: string[]) => {
