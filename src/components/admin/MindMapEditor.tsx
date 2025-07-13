@@ -33,18 +33,7 @@ export const MindMapEditor = ({
   useEffect(() => {
     console.log('MindMapEditor: Updating with initialTags:', initialTags, 'initialMindMapData:', initialMindMapData);
     setTags(initialTags || []);
-    
-    // Only update mindMapData if we have valid data or if tags changed significantly
-    if (initialMindMapData) {
-      setMindMapData(initialMindMapData);
-    } else if ((initialTags || []).length > 0 && !mindMapData) {
-      // Create initial mind map only if we don't have one yet
-      const newMindMapData = { 
-        nodes: createTagNodes(initialTags || []), 
-        edges: createTagEdges(initialTags || []) 
-      };
-      setMindMapData(newMindMapData);
-    }
+    setMindMapData(initialMindMapData);
   }, [initialTags, initialMindMapData]);
 
   const addTag = () => {
@@ -53,13 +42,6 @@ export const MindMapEditor = ({
       console.log('MindMapEditor: Adding tag, new tags:', updatedTags);
       setTags(updatedTags);
       setNewTag('');
-      
-      // Create new mind map data immediately instead of resetting
-      const newMindMapData = { 
-        nodes: createTagNodes(updatedTags), 
-        edges: createTagEdges(updatedTags) 
-      };
-      setMindMapData(newMindMapData);
       
       // Notify parent about tag changes
       if (onTagsChange) {
@@ -77,13 +59,6 @@ export const MindMapEditor = ({
     const updatedTags = tags.filter(tag => tag !== tagToRemove);
     console.log('MindMapEditor: Removing tag, new tags:', updatedTags);
     setTags(updatedTags);
-    
-    // Create new mind map data immediately instead of resetting
-    const newMindMapData = updatedTags.length > 0 ? { 
-      nodes: createTagNodes(updatedTags), 
-      edges: createTagEdges(updatedTags) 
-    } : undefined;
-    setMindMapData(newMindMapData);
     
     // Notify parent about tag changes
     if (onTagsChange) {
@@ -188,7 +163,6 @@ export const MindMapEditor = ({
             {tags.length > 0 ? (
               <div className="w-full h-full" style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0 }}>
                 <MindMap
-                  key={`mindmap-stable-${articleId || 'new'}`}
                   data={mindMapData}
                   tags={tags}
                   readOnly={false}
