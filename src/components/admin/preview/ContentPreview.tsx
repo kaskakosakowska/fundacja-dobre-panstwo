@@ -60,7 +60,7 @@ export const ContentPreview = ({ data, files, existingFiles }: ContentPreviewPro
           <div className="prose prose-sm max-w-none">
             {/* Render content with integrated image */}
             {hasImage && imageSrc && imagePosition ? (
-              <div className="relative overflow-hidden">
+              <div className="relative">{/* usunięte overflow-hidden */}
                 {/* Inline images that float with content */}
                  {(imagePosition === 'inline-left' || imagePosition === 'inline-right') && (
                    <>
@@ -81,9 +81,9 @@ export const ContentPreview = ({ data, files, existingFiles }: ContentPreviewPro
                          float: imagePosition === 'inline-right' ? 'right' : imagePosition === 'inline-left' ? 'left' : 'none'
                        }}
                      />
-                     <div className="text-red-600 font-bold mb-4 clear-both">
-                       DEBUG: Position={imagePosition}, Size={imageSize}
-                     </div>
+                      <div className="text-red-600 font-bold mb-4">
+                        DEBUG: Position={imagePosition}, Size={imageSize}
+                      </div>
                    </>
                  )}
                  
