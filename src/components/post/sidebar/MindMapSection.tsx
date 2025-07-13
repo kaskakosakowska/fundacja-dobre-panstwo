@@ -123,13 +123,13 @@ export const MindMapSection = ({ post, onRefreshPost }: MindMapSectionProps) => 
           </div>
           
           <Dialog open={isMindMapOpen} onOpenChange={setIsMindMapOpen}>
-            <DialogContent className="max-w-4xl max-h-[80vh]">
+            <DialogContent className="max-w-6xl max-h-[90vh]">
               <DialogHeader>
                 <DialogTitle>
-                  <span>Mapa pojęć - {post.title}</span>
+                  <span>Mapa pojęć</span>
                 </DialogTitle>
               </DialogHeader>
-              <div className="h-[200px] w-full">
+              <div className="h-[500px] w-full">
                 {isLoading ? (
                   <div className="flex items-center justify-center h-full">
                     <div className="text-center">
