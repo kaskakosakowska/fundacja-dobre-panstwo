@@ -116,6 +116,7 @@ export const ArticlesList = ({ onEditArticle }: ArticlesListProps) => {
                   <Button
                     size="sm"
                     variant="outline"
+                    type="button"
                     onClick={() => onEditArticle(article.id)}
                   >
                     <Edit className="h-4 w-4 mr-1" />
