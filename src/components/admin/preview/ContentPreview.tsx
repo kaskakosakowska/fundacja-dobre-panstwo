@@ -62,20 +62,25 @@ export const ContentPreview = ({ data, files, existingFiles }: ContentPreviewPro
             {hasImage && imageSrc && imagePosition ? (
               <div className="relative overflow-hidden">
                 {/* Inline images that float with content */}
-                {(imagePosition === 'inline-left' || imagePosition === 'inline-right') && (
-                   <img 
-                     src={imageSrc} 
-                     alt="Preview"
-                     className={`
-                       rounded-lg shadow-sm
-                       ${imageSize === 'small' ? 'max-w-[200px]' : 
-                         imageSize === 'medium' ? 'max-w-[400px]' : 
-                         imageSize === 'large' ? 'max-w-[600px]' : 
-                         imageSize === 'xlarge' ? 'max-w-[800px]' : 'max-w-[400px]'}
-                       ${imagePosition === 'inline-left' ? 'float-left mr-4 mb-4' : 
-                         imagePosition === 'inline-right' ? 'float-right ml-4 mb-4' : ''}
-                     `}
-                   />
+                 {(imagePosition === 'inline-left' || imagePosition === 'inline-right') && (
+                   <>
+                     <img 
+                       src={imageSrc} 
+                       alt="Preview"
+                       className={`
+                         rounded-lg shadow-sm border-4 border-red-500
+                         ${imageSize === 'small' ? 'max-w-[200px]' : 
+                           imageSize === 'medium' ? 'max-w-[400px]' : 
+                           imageSize === 'large' ? 'max-w-[600px]' : 
+                           imageSize === 'xlarge' ? 'max-w-[800px]' : 'max-w-[400px]'}
+                         ${imagePosition === 'inline-left' ? 'float-left mr-4 mb-4' : 
+                           imagePosition === 'inline-right' ? 'float-right ml-4 mb-4' : ''}
+                       `}
+                     />
+                     <div className="text-red-600 font-bold mb-4 clear-both">
+                       DEBUG: Position={imagePosition}, Size={imageSize}
+                     </div>
+                   </>
                  )}
                  
                  {/* Non-inline images (above content) */}
