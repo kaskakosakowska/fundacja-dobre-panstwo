@@ -1,9 +1,13 @@
 import { SidebarCard } from "./SidebarCard";
 import { Post } from "@/hooks/usePostData";
-import { FileText, Music, Map } from "lucide-react";
+import { FileText, Music, Map, Edit } from "lucide-react";
 import { MindMap } from "@/components/mindmap/MindMap";
+import { MindMapEditor } from "@/components/admin/MindMapEditor";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 import pdfThumbnail from "@/assets/images/pdf-thumbnail.png";
 
 interface PostSidebarProps {
@@ -12,6 +16,64 @@ interface PostSidebarProps {
 
 export const PostSidebar = ({ post }: PostSidebarProps) => {
   const [isMindMapOpen, setIsMindMapOpen] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [canEdit, setCanEdit] = useState(false);
+  const [currentMindMapData, setCurrentMindMapData] = useState(post.mind_map_data);
+  const [currentTags, setCurrentTags] = useState(post.tags || []);
+  const { toast } = useToast();
+
+  useEffect(() => {
+    const checkPermissions = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session?.user?.id) {
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('role')
+          .eq('user_id', session.user.id)
+          .single();
+        
+        setCanEdit(profile?.role === 'super_admin' || profile?.role === 'editor');
+      }
+    };
+    
+    checkPermissions();
+  }, []);
+
+  const handleMindMapSave = async (mindMapData: any, tags: string[]) => {
+    try {
+      const { error } = await supabase
+        .from('articles')
+        .update({
+          mind_map_data: mindMapData,
+          tags: tags,
+          updated_at: new Date().toISOString()
+        })
+        .eq('id', post.id);
+
+      if (error) throw error;
+
+      setCurrentMindMapData(mindMapData);
+      setCurrentTags(tags);
+      setIsEditing(false);
+
+      toast({
+        title: "Mapa myśli zaktualizowana",
+        description: "Zmiany zostały pomyślnie zapisane.",
+      });
+
+      // Odśwież stronę po 1 sekundzie, żeby pokazać zaktualizowane tagi w artykule
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+
+    } catch (error: any) {
+      toast({
+        title: "Błąd zapisywania",
+        description: error.message || "Nie udało się zapisać zmian.",
+        variant: "destructive",
+      });
+    }
+  };
 
   return (
     <div className="space-y-6">
@@ -79,7 +141,7 @@ export const PostSidebar = ({ post }: PostSidebarProps) => {
 
       {/* Mind Map Container */}
       <SidebarCard title="Mapa pojęć">
-        {post.tags && post.tags.length > 0 ? (
+        {currentTags && currentTags.length > 0 ? (
           <div className="space-y-3">
             <div className="flex items-center gap-2 mb-2">
               <Map className="h-4 w-4" style={{ color: '#666666' }} />
@@ -101,14 +163,35 @@ export const PostSidebar = ({ post }: PostSidebarProps) => {
             <Dialog open={isMindMapOpen} onOpenChange={setIsMindMapOpen}>
               <DialogContent className="max-w-4xl max-h-[80vh]">
                 <DialogHeader>
-                  <DialogTitle>Mapa pojęć - {post.title}</DialogTitle>
+                  <DialogTitle className="flex items-center justify-between">
+                    <span>Mapa pojęć - {post.title}</span>
+                    {canEdit && (
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => setIsEditing(!isEditing)}
+                      >
+                        <Edit className="h-4 w-4 mr-1" />
+                        {isEditing ? 'Anuluj' : 'Edytuj'}
+                      </Button>
+                    )}
+                  </DialogTitle>
                 </DialogHeader>
                 <div className="h-[60vh] w-full">
-                  <MindMap
-                    data={post.mind_map_data}
-                    tags={post.tags}
-                    readOnly={true}
-                  />
+                  {isEditing ? (
+                    <MindMapEditor
+                      articleId={post.id}
+                      initialTags={currentTags}
+                      initialMindMapData={currentMindMapData}
+                      onSave={handleMindMapSave}
+                    />
+                  ) : (
+                    <MindMap
+                      data={currentMindMapData}
+                      tags={currentTags}
+                      readOnly={true}
+                    />
+                  )}
                 </div>
               </DialogContent>
             </Dialog>
