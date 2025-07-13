@@ -1,229 +1,66 @@
 import { useState, useEffect } from "react";
-import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/hooks/use-toast";
 import { Post } from "@/hooks/usePostData";
+import { useImageUpload } from "./useImageUpload";
+import { useImageSettings } from "./useImageSettings";
+import { useImageStyles } from "./useImageStyles";
 
 export const useImageManager = (post: Post) => {
   const [isEditingImage, setIsEditingImage] = useState(false);
-  const [isUploading, setIsUploading] = useState(false);
   const [currentImageUrl, setCurrentImageUrl] = useState<string | null>(null);
-  // Initialize position and size from post data or defaults
-  const [imagePosition, setImagePosition] = useState('inline-left');
-  const [imageSize, setImageSize] = useState('medium');
-  const [tempImagePosition, setTempImagePosition] = useState('inline-left');
-  const [tempImageSize, setTempImageSize] = useState('medium');
-  const { toast } = useToast();
 
-  // Update states when post changes
+  // Use specialized hooks
+  const imageUpload = useImageUpload(post);
+  const imageSettings = useImageSettings(post);
+  const imageStyles = useImageStyles();
+
+  // Update currentImageUrl when post changes
   useEffect(() => {
-    console.log('useImageManager useEffect - post:', post);
-    console.log('useImageManager useEffect - post.image_position:', (post as any).image_position);
-    console.log('useImageManager useEffect - post.image_size:', (post as any).image_size);
-    
+    console.log('useImageManager useEffect - post.featured_image_url:', post.featured_image_url);
     setCurrentImageUrl(post.featured_image_url || null);
-    
-    // Always update position and size from post data, with fallbacks
-    const newPosition = (post as any).image_position || 'inline-left';
-    const newSize = (post as any).image_size || 'medium';
-    
-    console.log('useImageManager useEffect - setting position to:', newPosition);
-    console.log('useImageManager useEffect - setting size to:', newSize);
-    
-    setImagePosition(newPosition);
-    setTempImagePosition(newPosition);
-    setImageSize(newSize);
-    setTempImageSize(newSize);
-  }, [post]);
+  }, [post.featured_image_url]);
 
-  const handleImageUpload = async (file: File) => {
-    if (!post.id) return;
-    
-    setIsUploading(true);
-    try {
-      const fileExt = file.name.split('.').pop();
-      const fileName = `${post.slug || post.id}/featured-image.${fileExt}`;
-      
-      // Upload to storage
-      const { data, error: uploadError } = await supabase.storage
-        .from('articles-images')
-        .upload(fileName, file, { upsert: true });
-
-      if (uploadError) throw uploadError;
-
-      // Get public URL
-      const { data: { publicUrl } } = supabase.storage
-        .from('articles-images')
-        .getPublicUrl(data.path);
-
-      // Update article record
-      const { error: updateError } = await supabase
-        .from('articles')
-        .update({ featured_image_url: publicUrl })
-        .eq('id', post.id);
-
-      if (updateError) throw updateError;
-
-      setCurrentImageUrl(publicUrl);
-      setIsEditingImage(false);
-      
-      toast({
-        title: "Obrazek zaktualizowany",
-        description: "Nowy obrazek został pomyślnie zapisany.",
-      });
-    } catch (error: any) {
-      toast({
-        title: "Błąd uploadu",
-        description: error.message || "Nie udało się zaktualizować obrazka.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsUploading(false);
-    }
-  };
-
+  // Wrapper functions to maintain the same API
   const handleFileSelect = () => {
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = 'image/*';
-    input.onchange = (e) => {
-      const file = (e.target as HTMLInputElement).files?.[0];
-      if (file) {
-        handleImageUpload(file);
-      }
-    };
-    input.click();
+    imageUpload.handleFileSelect((url: string) => {
+      setCurrentImageUrl(url);
+      setIsEditingImage(false);
+    });
   };
 
   const removeImage = async () => {
-    if (!post.id) return;
-    
-    setIsUploading(true);
-    try {
-      const { error } = await supabase
-        .from('articles')
-        .update({ featured_image_url: null })
-        .eq('id', post.id);
-
-      if (error) throw error;
-
+    await imageUpload.removeImage(() => {
       setCurrentImageUrl(null);
       setIsEditingImage(false);
-      
-      toast({
-        title: "Obrazek usunięty",
-        description: "Obrazek został usunięty z wpisu.",
-      });
-    } catch (error: any) {
-      toast({
-        title: "Błąd",
-        description: error.message || "Nie udało się usunąć obrazka.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsUploading(false);
-    }
-  };
-
-  const getImageClasses = () => {
-    let classes = "rounded-lg shadow-sm ";
-    
-    // Size classes
-    switch (imageSize) {
-      case 'small':
-        classes += "max-w-[200px] ";
-        break;
-      case 'medium':
-        classes += "max-w-[400px] ";
-        break;
-      case 'large':
-        classes += "max-w-[600px] ";
-        break;
-      case 'xlarge':
-        classes += "max-w-[800px] ";
-        break;
-      default:
-        classes += "max-w-[400px] ";
-    }
-    
-    // Position classes
-    console.log('Image position:', imagePosition, 'Image size:', imageSize);
-    switch (imagePosition) {
-      case 'inline-left':
-        classes += "float-left mr-4 mb-4";
-        break;
-      case 'inline-right':
-        classes += "float-right ml-4 mb-4";
-        break;
-      case 'left':
-        classes += "mr-auto block";
-        break;
-      case 'right':
-        classes += "ml-auto block";
-        break;
-      case 'center':
-        classes += "mx-auto block";
-        break;
-      case 'full':
-        classes += "w-full max-w-full block";
-        break;
-      default:
-        classes += "mx-auto block";
-    }
-    
-    console.log('Generated image classes:', classes);
-    return classes;
+    });
   };
 
   const saveImageSettings = async () => {
-    if (!post.id) return;
-    
-    try {
-      // Save to database
-      const { error } = await supabase
-        .from('articles')
-        .update({ 
-          image_position: tempImagePosition,
-          image_size: tempImageSize
-        })
-        .eq('id', post.id);
-
-      if (error) throw error;
-
-      // Update local state
-      setImagePosition(tempImagePosition);
-      setImageSize(tempImageSize);
+    await imageSettings.saveImageSettings(() => {
       setIsEditingImage(false);
-      
-      toast({
-        title: "Ustawienia zapisane",
-        description: "Zmiany w układzie obrazka zostały zastosowane.",
-      });
-    } catch (error: any) {
-      toast({
-        title: "Błąd zapisu",
-        description: error.message || "Nie udało się zapisać ustawień obrazka.",
-        variant: "destructive",
-      });
-    }
+    });
   };
 
   const openEditDialog = () => {
-    setTempImagePosition(imagePosition);
-    setTempImageSize(imageSize);
-    setIsEditingImage(true);
+    imageSettings.openEditDialog(() => {
+      setIsEditingImage(true);
+    });
+  };
+
+  const getImageClasses = () => {
+    return imageStyles.getImageClasses(imageSettings.imagePosition, imageSettings.imageSize);
   };
 
   return {
     isEditingImage,
     setIsEditingImage,
-    isUploading,
+    isUploading: imageUpload.isUploading,
     currentImageUrl,
-    imagePosition,
-    imageSize,
-    tempImagePosition,
-    setTempImagePosition,
-    tempImageSize,
-    setTempImageSize,
+    imagePosition: imageSettings.imagePosition,
+    imageSize: imageSettings.imageSize,
+    tempImagePosition: imageSettings.tempImagePosition,
+    setTempImagePosition: imageSettings.setTempImagePosition,
+    tempImageSize: imageSettings.tempImageSize,
+    setTempImageSize: imageSettings.setTempImageSize,
     handleFileSelect,
     removeImage,
     getImageClasses,
