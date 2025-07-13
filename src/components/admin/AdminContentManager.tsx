@@ -578,8 +578,8 @@ export const AdminContentManager = () => {
                       pdf_url: editingArticleData.pdf_url,
                       audio_url: editingArticleData.audio_url,
                       featured_image_url: editingArticleData.featured_image_url,
-                      image_position: editingArticleData.image_position,
-                      image_size: editingArticleData.image_size
+                      image_position: form.getValues('image_position'),
+                      image_size: form.getValues('image_size')
                     } : undefined}
                   />
                   
