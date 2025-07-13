@@ -48,8 +48,8 @@ export const PostContent = ({ post, section, postId }: PostContentProps) => {
       {/* Content with potential inline image */}
       <div className="text-base leading-relaxed" style={{ color: '#333333' }}>
         <Dialog open={imageManager.isEditingImage} onOpenChange={imageManager.setIsEditingImage}>
-          {/* Featured Image for non-inline positions or placeholder */}
-          {!imageManager.currentImageUrl || !imageManager.imagePosition.startsWith('inline') ? (
+          {/* Non-inline images (above content) */}
+          {imageManager.currentImageUrl && !imageManager.imagePosition.startsWith('inline') && (
             <FeaturedImage
               currentImageUrl={imageManager.currentImageUrl}
               postTitle={post.title}
@@ -59,11 +59,24 @@ export const PostContent = ({ post, section, postId }: PostContentProps) => {
               handleFileSelect={imageManager.handleFileSelect}
               isUploading={imageManager.isUploading}
             />
-          ) : null}
+          )}
 
-          {/* Content with inline image */}
-          <div className="relative">
-            {/* Inline image */}
+          {/* Placeholder for image upload when no image */}
+          {!imageManager.currentImageUrl && (
+            <FeaturedImage
+              currentImageUrl={null}
+              postTitle={post.title}
+              imagePosition={imageManager.imagePosition}
+              getImageClasses={imageManager.getImageClasses}
+              openEditDialog={imageManager.openEditDialog}
+              handleFileSelect={imageManager.handleFileSelect}
+              isUploading={imageManager.isUploading}
+            />
+          )}
+
+          {/* Content with inline image flow */}
+          <div className="relative overflow-hidden">
+            {/* Inline image that floats with content */}
             {imageManager.currentImageUrl && imageManager.imagePosition.startsWith('inline') && (
               <FeaturedImage
                 currentImageUrl={imageManager.currentImageUrl}
@@ -77,10 +90,13 @@ export const PostContent = ({ post, section, postId }: PostContentProps) => {
               />
             )}
             
-            {/* Content with clearfix for floated images */}
-            <div className="clearfix">
+            {/* Content flows around floated image */}
+            <div className="text-justify">
               {getFullContent()}
             </div>
+            
+            {/* Clear floats after content */}
+            <div className="clear-both"></div>
           </div>
 
           <ImageEditDialog

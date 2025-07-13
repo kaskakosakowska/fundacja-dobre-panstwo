@@ -7,10 +7,19 @@ export const useImageManager = (post: Post) => {
   const [isEditingImage, setIsEditingImage] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const [currentImageUrl, setCurrentImageUrl] = useState(post.featured_image_url);
-  const [imagePosition, setImagePosition] = useState('center');
-  const [imageSize, setImageSize] = useState('medium');
-  const [tempImagePosition, setTempImagePosition] = useState('center');
-  const [tempImageSize, setTempImageSize] = useState('medium');
+  // Initialize position and size from post metadata or defaults
+  const [imagePosition, setImagePosition] = useState(
+    (post as any).image_position || 'inline-left'
+  );
+  const [imageSize, setImageSize] = useState(
+    (post as any).image_size || 'medium'
+  );
+  const [tempImagePosition, setTempImagePosition] = useState(
+    (post as any).image_position || 'inline-left'
+  );
+  const [tempImageSize, setTempImageSize] = useState(
+    (post as any).image_size || 'medium'
+  );
   const { toast } = useToast();
 
   const handleImageUpload = async (file: File) => {
