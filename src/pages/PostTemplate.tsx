@@ -34,7 +34,7 @@ const PostTemplate = () => {
             </div>
 
             {/* Right Side Containers */}
-            <PostSidebar post={post} />
+            <PostSidebar post={post} onRefreshPost={refreshPost} />
           </div>
         </div>
       </main>

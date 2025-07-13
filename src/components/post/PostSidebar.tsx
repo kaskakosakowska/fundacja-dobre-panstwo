@@ -12,9 +12,10 @@ import pdfThumbnail from "@/assets/images/pdf-thumbnail.png";
 
 interface PostSidebarProps {
   post: Post;
+  onRefreshPost?: () => void;
 }
 
-export const PostSidebar = ({ post }: PostSidebarProps) => {
+export const PostSidebar = ({ post, onRefreshPost }: PostSidebarProps) => {
   const [isMindMapOpen, setIsMindMapOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [canEdit, setCanEdit] = useState(false);
@@ -39,6 +40,12 @@ export const PostSidebar = ({ post }: PostSidebarProps) => {
     checkPermissions();
   }, []);
 
+  // Update local state when post changes
+  useEffect(() => {
+    setCurrentMindMapData(post.mind_map_data);
+    setCurrentTags(post.tags || []);
+  }, [post.mind_map_data, post.tags]);
+
   const handleMindMapSave = async (mindMapData: any, tags: string[]) => {
     try {
       const { error } = await supabase
@@ -61,10 +68,12 @@ export const PostSidebar = ({ post }: PostSidebarProps) => {
         description: "Zmiany zostały pomyślnie zapisane.",
       });
 
-      // Odśwież stronę po 1 sekundzie, żeby pokazać zaktualizowane tagi w artykule
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000);
+      // Użyj funkcji odświeżania z hooka
+      if (onRefreshPost) {
+        onRefreshPost();
+      }
+
+      setIsEditing(false);
 
     } catch (error: any) {
       toast({
