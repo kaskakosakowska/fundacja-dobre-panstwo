@@ -572,7 +572,7 @@ export const AdminContentManager = () => {
 
                 <TabsContent value="preview" className="space-y-4">
                   <ArticlePreview 
-                    data={form.getValues()} 
+                    data={form.watch()}
                     files={uploadedFiles}
                     existingFiles={editingArticleData ? {
                       pdf_url: editingArticleData.pdf_url,
