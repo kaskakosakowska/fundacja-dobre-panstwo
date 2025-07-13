@@ -16,6 +16,8 @@ export interface Post {
   tags?: string[];
   author?: string;
   mind_map_data?: any;
+  image_position?: string;
+  image_size?: string;
 }
 
 export const usePostData = () => {

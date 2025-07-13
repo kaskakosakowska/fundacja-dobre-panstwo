@@ -7,21 +7,16 @@ import { useImageManager } from "@/hooks/useImageManager";
 import { ImageEditDialog } from "./ImageEditDialog";
 import { FeaturedImage } from "./FeaturedImage";
 
+
 interface PostContentProps {
   post: Post;
   section: string;
   postId: string | undefined;
+  refreshPost?: () => Promise<void>;
 }
 
-export const PostContent = ({ post, section, postId }: PostContentProps) => {
-  // Get refreshPost from parent if available
-  const refreshPost = (window as any).refreshPost;
+export const PostContent = ({ post, section, postId, refreshPost }: PostContentProps) => {
   const imageManager = useImageManager(post, refreshPost);
-  
-  console.log('PostContent - post data:', post);
-  console.log('PostContent - featured_image_url:', post.featured_image_url);
-  console.log('PostContent - imageManager.currentImageUrl:', imageManager.currentImageUrl);
-  console.log('PostContent - imageManager.imagePosition:', imageManager.imagePosition);
 
   const getFullContent = () => {
     if (section === 'szkatulka') {

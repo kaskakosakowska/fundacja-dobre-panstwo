@@ -9,9 +9,6 @@ import { PostFooter } from "@/components/post/PostFooter";
 const PostTemplate = () => {
   const { post, section, postId, getBackPath, refreshPost } = usePostData();
 
-  // Make refreshPost available globally for child components
-  (window as any).refreshPost = refreshPost;
-
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#F6F4EF' }}>
       <PostHeader post={post} getBackPath={getBackPath} />
@@ -30,7 +27,7 @@ const PostTemplate = () => {
                 </CardHeader>
                 <CardContent className="h-full">
                   <ScrollArea className="h-full max-h-[550px] pr-4">
-                    <PostContent post={post} section={section} postId={postId} />
+                    <PostContent post={post} section={section} postId={postId} refreshPost={refreshPost} />
                   </ScrollArea>
                 </CardContent>
               </Card>
