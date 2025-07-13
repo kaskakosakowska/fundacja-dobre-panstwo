@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 
 export interface Post {
+  id?: string;
+  slug?: string;
   title: string;
   date: string;
   summary: string;
@@ -38,7 +40,7 @@ export const usePostData = () => {
       try {
         const { data, error } = await supabase
           .from('articles')
-          .select('title, slug, summary, content, published_date, author, pdf_url, audio_url, featured_image_url, tags, mind_map_data')
+          .select('id, title, slug, summary, content, published_date, author, pdf_url, audio_url, featured_image_url, tags, mind_map_data')
           .eq('slug', postId)
           .eq('is_published', true)
           .single();
@@ -48,6 +50,8 @@ export const usePostData = () => {
           setPost(getFallbackPostData());
         } else if (data) {
           setPost({
+            id: data.id,
+            slug: data.slug,
             title: data.title,
             date: new Date(data.published_date).toLocaleDateString('pl-PL', { 
               year: 'numeric', 
