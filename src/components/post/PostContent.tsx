@@ -14,7 +14,9 @@ interface PostContentProps {
 }
 
 export const PostContent = ({ post, section, postId }: PostContentProps) => {
-  const imageManager = useImageManager(post);
+  // Get refreshPost from parent if available
+  const refreshPost = (window as any).refreshPost;
+  const imageManager = useImageManager(post, refreshPost);
   
   console.log('PostContent - post data:', post);
   console.log('PostContent - featured_image_url:', post.featured_image_url);

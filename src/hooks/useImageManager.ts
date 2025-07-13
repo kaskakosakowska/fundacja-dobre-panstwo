@@ -4,7 +4,7 @@ import { useImageUpload } from "./useImageUpload";
 import { useImageSettings } from "./useImageSettings";
 import { useImageStyles } from "./useImageStyles";
 
-export const useImageManager = (post: Post) => {
+export const useImageManager = (post: Post, refreshPost?: () => Promise<void>) => {
   const [isEditingImage, setIsEditingImage] = useState(false);
   const [currentImageUrl, setCurrentImageUrl] = useState<string | null>(null);
 
@@ -37,7 +37,7 @@ export const useImageManager = (post: Post) => {
   const saveImageSettings = async () => {
     await imageSettings.saveImageSettings(() => {
       setIsEditingImage(false);
-    });
+    }, refreshPost);
   };
 
   const openEditDialog = () => {

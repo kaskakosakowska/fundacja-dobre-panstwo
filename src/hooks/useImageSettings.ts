@@ -10,31 +10,27 @@ export const useImageSettings = (post: Post) => {
   const [tempImageSize, setTempImageSize] = useState('medium');
   const { toast } = useToast();
 
-  // Update states when post changes - watch specific properties
+  // Initialize and update from post data
   useEffect(() => {
-    const postImagePosition = (post as any).image_position;
-    const postImageSize = (post as any).image_size;
-    
-    console.log('useImageSettings useEffect triggered');
-    console.log('Current post:', post);
-    console.log('Post image_position:', postImagePosition);
-    console.log('Post image_size:', postImageSize);
-    console.log('Current imagePosition state:', imagePosition);
-    
-    // Always update position and size from post data, with fallbacks
-    const newPosition = postImagePosition || 'inline-left';
-    const newSize = postImageSize || 'medium';
-    
-    console.log('Setting new position:', newPosition);
-    console.log('Setting new size:', newSize);
-    
-    setImagePosition(newPosition);
-    setTempImagePosition(newPosition);
-    setImageSize(newSize);
-    setTempImageSize(newSize);
-  }, [post.id, (post as any).image_position, (post as any).image_size]); // Watch specific properties
+    if (post && post.id) {
+      const postPosition = (post as any).image_position || 'inline-left';
+      const postSize = (post as any).image_size || 'medium';
+      
+      console.log('useImageSettings: Updating from post data', {
+        postId: post.id,
+        postPosition,
+        postSize,
+        currentPosition: imagePosition
+      });
+      
+      setImagePosition(postPosition);
+      setTempImagePosition(postPosition);
+      setImageSize(postSize);
+      setTempImageSize(postSize);
+    }
+  }, [post.id, (post as any).image_position, (post as any).image_size]);
 
-  const saveImageSettings = async (onSuccess: () => void) => {
+  const saveImageSettings = async (onSuccess: () => void, refreshPost?: () => Promise<void>) => {
     if (!post.id) return;
     
     try {
@@ -61,8 +57,10 @@ export const useImageSettings = (post: Post) => {
       setImagePosition(tempImagePosition);
       setImageSize(tempImageSize);
       
-      // Force refresh by updating the post data in the parent component
-      window.location.reload(); // Temporary solution to force refresh
+      // Refresh post data if function provided
+      if (refreshPost) {
+        await refreshPost();
+      }
       
       onSuccess();
       

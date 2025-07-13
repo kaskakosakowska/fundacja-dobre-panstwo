@@ -7,7 +7,10 @@ import { PostSidebar } from "@/components/post/PostSidebar";
 import { PostFooter } from "@/components/post/PostFooter";
 
 const PostTemplate = () => {
-  const { post, section, postId, getBackPath } = usePostData();
+  const { post, section, postId, getBackPath, refreshPost } = usePostData();
+
+  // Make refreshPost available globally for child components
+  (window as any).refreshPost = refreshPost;
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#F6F4EF' }}>

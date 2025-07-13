@@ -33,6 +33,55 @@ export const usePostData = () => {
 
   const section = getSection();
 
+  // Add refresh functionality
+  const refreshPost = async () => {
+    if (!postId) return;
+    
+    try {
+      const { data, error } = await supabase
+        .from('articles')
+        .select('id, title, slug, summary, content, published_date, author, pdf_url, audio_url, featured_image_url, tags, mind_map_data, image_position, image_size')
+        .eq('slug', postId)
+        .eq('is_published', true)
+        .single();
+
+      if (error) {
+        console.error('Error fetching post:', error);
+        setPost(getFallbackPostData());
+      } else if (data) {
+        const updatedPost = {
+          id: data.id,
+          slug: data.slug,
+          title: data.title,
+          date: new Date(data.published_date).toLocaleDateString('pl-PL', { 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric' 
+          }),
+          summary: data.summary || '',
+          content: data.content || '',
+          link: `#`,
+          pdf_url: data.pdf_url || undefined,
+          audio_url: data.audio_url || undefined,
+          featured_image_url: data.featured_image_url || undefined,
+          tags: data.tags || [],
+          author: data.author || '',
+          mind_map_data: data.mind_map_data || undefined,
+          image_position: data.image_position || 'inline-left',
+          image_size: data.image_size || 'medium'
+        } as any;
+        
+        console.log('Refreshed post data:', updatedPost);
+        setPost(updatedPost);
+      } else {
+        setPost(getFallbackPostData());
+      }
+    } catch (err) {
+      console.error('Error:', err);
+      setPost(getFallbackPostData());
+    }
+  };
+
   useEffect(() => {
     const fetchPost = async () => {
       if (!postId) return;
@@ -49,7 +98,7 @@ export const usePostData = () => {
           console.error('Error fetching post:', error);
           setPost(getFallbackPostData());
         } else if (data) {
-          setPost({
+          const newPost = {
             id: data.id,
             slug: data.slug,
             title: data.title,
@@ -67,9 +116,12 @@ export const usePostData = () => {
             tags: data.tags || [],
             author: data.author || '',
             mind_map_data: data.mind_map_data || undefined,
-            ...(data.image_position && { image_position: data.image_position }),
-            ...(data.image_size && { image_size: data.image_size })
-          } as any);
+            image_position: data.image_position || 'inline-left',
+            image_size: data.image_size || 'medium'
+          } as any;
+          
+          console.log('Initial post data loaded:', newPost);
+          setPost(newPost);
         } else {
           setPost(getFallbackPostData());
         }
@@ -249,6 +301,7 @@ export const usePostData = () => {
     section,
     postId,
     getBackPath,
-    loading
+    loading,
+    refreshPost
   };
 };
