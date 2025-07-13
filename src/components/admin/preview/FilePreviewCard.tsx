@@ -4,6 +4,7 @@ import { FileText, Music, Image } from "lucide-react";
 interface FilePreviewCardProps {
   type: 'pdf' | 'audio' | 'image';
   file?: File;
+  existingUrl?: string;
   imagePosition?: string;
   imageSize?: string;
 }
@@ -68,11 +69,14 @@ const getPlaceholderHeight = (type: string) => {
   }
 };
 
-export const FilePreviewCard = ({ type, file, imagePosition, imageSize }: FilePreviewCardProps) => {
+export const FilePreviewCard = ({ type, file, existingUrl, imagePosition, imageSize }: FilePreviewCardProps) => {
   const Icon = getIcon(type);
   const label = getLabel(type);
   const emptyMessage = getEmptyMessage(type);
   const placeholderHeight = getPlaceholderHeight(type);
+
+  const hasFile = file || existingUrl;
+  const fileName = file ? file.name : (existingUrl ? existingUrl.split('/').pop() || 'Istniejący plik' : '');
 
   return (
     <Card className="p-4">
@@ -81,11 +85,11 @@ export const FilePreviewCard = ({ type, file, imagePosition, imageSize }: FilePr
         <span className="font-medium text-sm">{label}</span>
       </div>
       
-      {file ? (
+      {hasFile ? (
         <div className="space-y-2">
-          <p className="text-sm font-medium">{file.name}</p>
+          <p className="text-sm font-medium">{fileName}</p>
           <p className="text-xs text-muted-foreground">
-            {formatFileSize(file.size)}
+            {file ? formatFileSize(file.size) : 'Istniejący plik'}
           </p>
           
           {type === 'image' && imagePosition && imageSize && (

@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -15,16 +15,53 @@ interface UploadedFiles {
   image_size?: string;
 }
 
-interface FileUploadProps {
-  onFilesUploaded: (files: UploadedFiles) => void;
+interface ExistingFiles {
+  pdf_url?: string;
+  audio_url?: string;
+  featured_image_url?: string;
+  image_position?: string;
+  image_size?: string;
 }
 
-export const FileUpload = ({ onFilesUploaded }: FileUploadProps) => {
+interface FileUploadProps {
+  onFilesUploaded: (files: UploadedFiles) => void;
+  existingFiles?: ExistingFiles;
+}
+
+export const FileUpload = ({ onFilesUploaded, existingFiles }: FileUploadProps) => {
   const [files, setFiles] = useState<UploadedFiles>({});
   const [uploadProgress, setUploadProgress] = useState<{ [key: string]: number }>({});
   const [errors, setErrors] = useState<string[]>([]);
-  const [imagePosition, setImagePosition] = useState("inline-left");
-  const [imageSize, setImageSize] = useState("medium");
+  const [imagePosition, setImagePosition] = useState(existingFiles?.image_position || "inline-left");
+  const [imageSize, setImageSize] = useState(existingFiles?.image_size || "medium");
+
+  // Initialize with existing files
+  useEffect(() => {
+    if (existingFiles) {
+      const newFiles: UploadedFiles = {
+        image_position: existingFiles.image_position || "inline-left",
+        image_size: existingFiles.image_size || "medium"
+      };
+      setFiles(newFiles);
+      onFilesUploaded(newFiles);
+    }
+  }, [existingFiles, onFilesUploaded]);
+
+  // Helper function to get existing file URL
+  const getExistingFileUrl = (type: 'pdf' | 'audio' | 'image') => {
+    if (!existingFiles) return null;
+    switch (type) {
+      case 'pdf': return existingFiles.pdf_url;
+      case 'audio': return existingFiles.audio_url;
+      case 'image': return existingFiles.featured_image_url;
+      default: return null;
+    }
+  };
+
+  // Helper function to get file name from URL
+  const getFileNameFromUrl = (url: string) => {
+    return url.split('/').pop() || 'Istniejący plik';
+  };
 
   const validateFile = (file: File, type: 'pdf' | 'audio' | 'image') => {
     const validTypes = {
@@ -141,26 +178,50 @@ export const FileUpload = ({ onFilesUploaded }: FileUploadProps) => {
       </CardHeader>
       
       <CardContent>
-        {files[type] ? (
+        {files[type] || getExistingFileUrl(type) ? (
           <div className="space-y-3">
             <div className="flex items-center justify-between p-3 bg-muted rounded-md">
               <div className="flex items-center gap-2">
                 <Icon className="h-4 w-4 text-green-600" />
                 <div>
-                  <p className="text-sm font-medium">{files[type]!.name}</p>
+                  <p className="text-sm font-medium">
+                    {files[type] ? files[type]!.name : getFileNameFromUrl(getExistingFileUrl(type)!)}
+                  </p>
                   <p className="text-xs text-muted-foreground">
-                    {formatFileSize(files[type]!.size)}
+                    {files[type] ? formatFileSize(files[type]!.size) : 'Istniejący plik'}
                   </p>
                 </div>
               </div>
-              <Button
-                type="button"
-                variant="ghost"
-                size="sm"
-                onClick={() => removeFile(type)}
-              >
-                <X className="h-4 w-4" />
-              </Button>
+              <div className="flex gap-2">
+                {getExistingFileUrl(type) && !files[type] && (
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => window.open(getExistingFileUrl(type)!, '_blank')}
+                    title="Zobacz plik"
+                  >
+                    <CheckCircle className="h-4 w-4" />
+                  </Button>
+                )}
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => handleFileSelect(type)}
+                  title={files[type] ? "Zmień plik" : "Zastąp plik"}
+                >
+                  <Upload className="h-4 w-4" />
+                </Button>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => removeFile(type)}
+                >
+                  <X className="h-4 w-4" />
+                </Button>
+              </div>
             </div>
             
             {uploadProgress[type] !== undefined && uploadProgress[type] < 100 && (
@@ -215,7 +276,7 @@ export const FileUpload = ({ onFilesUploaded }: FileUploadProps) => {
       </div>
 
       {/* Image configuration section */}
-      {files.image && (
+      {(files.image || getExistingFileUrl('image')) && (
         <Card>
           <CardHeader>
             <CardTitle className="text-sm">Konfiguracja obrazka</CardTitle>

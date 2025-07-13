@@ -43,6 +43,7 @@ export const AdminContentManager = () => {
   const [isUploading, setIsUploading] = useState(false);
   const [isPublishing, setIsPublishing] = useState(false);
   const [editingArticleId, setEditingArticleId] = useState<string | null>(null);
+  const [editingArticleData, setEditingArticleData] = useState<any>(null);
   const { toast } = useToast();
   
   const form = useForm<ArticleFormData>({
@@ -235,7 +236,10 @@ export const AdminContentManager = () => {
         image_position: article.image_position || 'inline-left',
         image_size: article.image_size || 'medium',
       });
-      
+
+      // Store article data for existing files
+      setEditingArticleData(article);
+
       setMindMapData(article.mind_map_data);
 
       setEditingArticleId(articleId);
@@ -526,7 +530,16 @@ export const AdminContentManager = () => {
                 </TabsContent>
 
                 <TabsContent value="files" className="space-y-4">
-                  <FileUpload onFilesUploaded={handleFileUpload} />
+                  <FileUpload 
+                    onFilesUploaded={handleFileUpload}
+                    existingFiles={editingArticleData ? {
+                      pdf_url: editingArticleData.pdf_url,
+                      audio_url: editingArticleData.audio_url,
+                      featured_image_url: editingArticleData.featured_image_url,
+                      image_position: editingArticleData.image_position,
+                      image_size: editingArticleData.image_size
+                    } : undefined}
+                  />
                   
                   <div className="flex justify-between">
                     <Button type="button" variant="outline" onClick={() => setCurrentStep("mindmap")}>
@@ -546,6 +559,13 @@ export const AdminContentManager = () => {
                       image_size: uploadedFiles.image_size
                     }} 
                     files={uploadedFiles}
+                    existingFiles={editingArticleData ? {
+                      pdf_url: editingArticleData.pdf_url,
+                      audio_url: editingArticleData.audio_url,
+                      featured_image_url: editingArticleData.featured_image_url,
+                      image_position: editingArticleData.image_position,
+                      image_size: editingArticleData.image_size
+                    } : undefined}
                   />
                   
                   <div className="flex justify-between">
