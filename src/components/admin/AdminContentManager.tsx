@@ -102,6 +102,14 @@ export const AdminContentManager = () => {
 
   const handleFileUpload = (files: UploadedFiles) => {
     setUploadedFiles(files);
+    
+    // Synchronizuj pozycję i rozmiar obrazka z formularzem
+    if (files.image_position) {
+      form.setValue("image_position", files.image_position);
+    }
+    if (files.image_size) {
+      form.setValue("image_size", files.image_size);
+    }
   };
 
   const handleMindMapSave = (data: any, tags: string[]) => {
