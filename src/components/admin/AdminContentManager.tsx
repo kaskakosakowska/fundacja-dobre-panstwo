@@ -340,7 +340,8 @@ export const AdminContentManager = () => {
         description: "Artykuł został pomyślnie zaktualizowany.",
       });
 
-      // Reload article data to refresh the form with current database values
+      // Add small delay to ensure database consistency before reloading
+      await new Promise(resolve => setTimeout(resolve, 500));
       await handleEditArticle(editingArticleId);
 
     } catch (error: any) {
