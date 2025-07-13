@@ -7,25 +7,25 @@ export const useImageManager = (post: Post) => {
   const [isEditingImage, setIsEditingImage] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const [currentImageUrl, setCurrentImageUrl] = useState<string | null>(null);
-  // Initialize position and size from post metadata or defaults
-  const [imagePosition, setImagePosition] = useState(
-    (post as any).image_position || 'inline-left'
-  );
-  const [imageSize, setImageSize] = useState(
-    (post as any).image_size || 'medium'
-  );
-  const [tempImagePosition, setTempImagePosition] = useState(
-    (post as any).image_position || 'inline-left'
-  );
-  const [tempImageSize, setTempImageSize] = useState(
-    (post as any).image_size || 'medium'
-  );
+  // Initialize position and size from post data or defaults
+  const [imagePosition, setImagePosition] = useState('inline-left');
+  const [imageSize, setImageSize] = useState('medium');
+  const [tempImagePosition, setTempImagePosition] = useState('inline-left');
+  const [tempImageSize, setTempImageSize] = useState('medium');
   const { toast } = useToast();
 
-  // Update currentImageUrl when post changes
+  // Update states when post changes
   useEffect(() => {
     setCurrentImageUrl(post.featured_image_url || null);
-  }, [post.featured_image_url]);
+    if ((post as any).image_position) {
+      setImagePosition((post as any).image_position);
+      setTempImagePosition((post as any).image_position);
+    }
+    if ((post as any).image_size) {
+      setImageSize((post as any).image_size);
+      setTempImageSize((post as any).image_size);
+    }
+  }, [post]);
 
   const handleImageUpload = async (file: File) => {
     if (!post.id) return;

@@ -24,6 +24,8 @@ export type Database = {
           excerpt: string | null
           featured_image_url: string | null
           id: string
+          image_position: string | null
+          image_size: string | null
           is_published: boolean | null
           meta_description: string | null
           mind_map_data: Json | null
@@ -50,6 +52,8 @@ export type Database = {
           excerpt?: string | null
           featured_image_url?: string | null
           id?: string
+          image_position?: string | null
+          image_size?: string | null
           is_published?: boolean | null
           meta_description?: string | null
           mind_map_data?: Json | null
@@ -76,6 +80,8 @@ export type Database = {
           excerpt?: string | null
           featured_image_url?: string | null
           id?: string
+          image_position?: string | null
+          image_size?: string | null
           is_published?: boolean | null
           meta_description?: string | null
           mind_map_data?: Json | null
