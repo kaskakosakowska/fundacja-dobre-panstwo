@@ -230,6 +230,12 @@ export const AdminContentManager = () => {
       form.setValue('seo_title', article.seo_title || '');
       form.setValue('seo_description', article.seo_description || '');
       
+      // Set uploaded files data to preserve image settings
+      setUploadedFiles({
+        image_position: article.image_position || 'inline-left',
+        image_size: article.image_size || 'medium',
+      });
+      
       setMindMapData(article.mind_map_data);
 
       setEditingArticleId(articleId);
