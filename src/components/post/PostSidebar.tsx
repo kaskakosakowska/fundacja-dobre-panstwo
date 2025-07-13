@@ -2,6 +2,8 @@ import { SidebarCard } from "./SidebarCard";
 import { Post } from "@/hooks/usePostData";
 import { FileText, Music, Map } from "lucide-react";
 import { MindMap } from "@/components/mindmap/MindMap";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { useState } from "react";
 import pdfThumbnail from "@/assets/images/pdf-thumbnail.png";
 
 interface PostSidebarProps {
@@ -9,6 +11,8 @@ interface PostSidebarProps {
 }
 
 export const PostSidebar = ({ post }: PostSidebarProps) => {
+  const [isMindMapOpen, setIsMindMapOpen] = useState(false);
+
   return (
     <div className="space-y-6">
       {/* PDF Embedder Container */}
@@ -83,20 +87,7 @@ export const PostSidebar = ({ post }: PostSidebarProps) => {
             </div>
             <div 
               className="relative w-full h-12 border rounded-lg cursor-pointer hover:shadow-md transition-shadow bg-gray-50 overflow-hidden group"
-              onClick={() => {
-                const mindMapWindow = window.open('', '_blank', 'width=800,height=600,scrollbars=yes,resizable=yes');
-                if (mindMapWindow) {
-                  mindMapWindow.document.write(`
-                    <html>
-                      <head><title>Mapa pojęć - ${post.title}</title></head>
-                      <body style="margin: 20px; font-family: Arial, sans-serif;">
-                        <h2>${post.title}</h2>
-                        <div id="mindmap-container" style="width: 100%; height: 500px; border: 1px solid #ccc;"></div>
-                      </body>
-                    </html>
-                  `);
-                }
-              }}
+              onClick={() => setIsMindMapOpen(true)}
             >
               <div className="w-full h-full bg-gradient-to-br from-blue-50 to-purple-50 flex items-center justify-center">
                 <div className="text-center">
@@ -106,6 +97,21 @@ export const PostSidebar = ({ post }: PostSidebarProps) => {
               </div>
               <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-200"></div>
             </div>
+            
+            <Dialog open={isMindMapOpen} onOpenChange={setIsMindMapOpen}>
+              <DialogContent className="max-w-4xl max-h-[80vh]">
+                <DialogHeader>
+                  <DialogTitle>Mapa pojęć - {post.title}</DialogTitle>
+                </DialogHeader>
+                <div className="h-[60vh] w-full">
+                  <MindMap
+                    data={post.mind_map_data}
+                    tags={post.tags}
+                    readOnly={true}
+                  />
+                </div>
+              </DialogContent>
+            </Dialog>
             <p className="text-xs text-center truncate px-2" style={{ color: '#666666' }}>
               Mapa pojęć artykułu
             </p>
