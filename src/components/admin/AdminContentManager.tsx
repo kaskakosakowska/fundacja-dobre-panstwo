@@ -122,17 +122,30 @@ export const AdminContentManager = () => {
   };
 
   const uploadFile = async (file: File, bucket: string, path: string) => {
-    const { data, error } = await supabase.storage
-      .from(bucket)
-      .upload(path, file);
+    console.log('uploadFile: Starting upload', { bucket, path, fileName: file.name });
     
-    if (error) throw error;
-    
-    const { data: { publicUrl } } = supabase.storage
-      .from(bucket)
-      .getPublicUrl(data.path);
-    
-    return publicUrl;
+    try {
+      const { data, error } = await supabase.storage
+        .from(bucket)
+        .upload(path, file, { upsert: true });
+      
+      if (error) {
+        console.error('uploadFile: Storage upload error', error);
+        throw error;
+      }
+      
+      console.log('uploadFile: Upload successful', data);
+      
+      const { data: { publicUrl } } = supabase.storage
+        .from(bucket)
+        .getPublicUrl(data.path);
+      
+      console.log('uploadFile: Public URL generated', publicUrl);
+      return publicUrl;
+    } catch (error) {
+      console.error('uploadFile: Full error details', error);
+      throw error;
+    }
   };
 
   const handleFileUpload = (files: UploadedFiles) => {
