@@ -54,16 +54,24 @@ export const MindMapSection = ({ post, onRefreshPost }: MindMapSectionProps) => 
   const handleMindMapSave = async (mindMapData: any, tags: string[]) => {
     setIsLoading(true);
     try {
-      const { error } = await supabase
+      console.log('Zapisuję Mind Map dla artykułu:', post.id, 'dane:', mindMapData, 'tagi:', tags);
+      
+      const { data, error } = await supabase
         .from('articles')
         .update({
           mind_map_data: mindMapData,
           tags: tags,
           updated_at: new Date().toISOString()
         })
-        .eq('id', post.id);
+        .eq('id', post.id)
+        .select();
 
-      if (error) throw error;
+      if (error) {
+        console.error('Błąd zapisywania Mind Map:', error);
+        throw error;
+      }
+      
+      console.log('Mind Map zapisana pomyślnie:', data);
 
       // Update local state immediately
       setCurrentMindMapData(mindMapData);
