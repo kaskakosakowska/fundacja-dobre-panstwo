@@ -181,26 +181,25 @@ export const MindMap = ({ data, tags = [], readOnly = true, onDataChange }: Mind
   console.log('readOnly:', readOnly);
 
   return (
-    <div className="w-full h-full border rounded-lg overflow-hidden bg-white">
-      <div style={{ width: '100%', height: '100%' }}>
-        <ReactFlow
-          nodes={nodes}
-          edges={edges}
-          onNodesChange={handleNodesChange}
-          onEdgesChange={handleEdgesChange}
-          onConnect={onConnect}
-          nodesDraggable={!readOnly}
-          nodesConnectable={!readOnly}
-          elementsSelectable={!readOnly}
-          minZoom={0.5}
-          maxZoom={2}
-          defaultViewport={{ x: 0, y: 0, zoom: 0.8 }}
-          fitView={true}
-        >
-          <Controls showInteractive={!readOnly} />
-          <Background variant={BackgroundVariant.Dots} gap={12} size={1} />
-        </ReactFlow>
-      </div>
+    <div className="w-full h-full bg-white" style={{ width: '100%', height: '400px' }}>
+      <ReactFlow
+        nodes={nodes}
+        edges={edges}
+        onNodesChange={handleNodesChange}
+        onEdgesChange={handleEdgesChange}
+        onConnect={onConnect}
+        nodesDraggable={!readOnly}
+        nodesConnectable={!readOnly}
+        elementsSelectable={!readOnly}
+        minZoom={0.3}
+        maxZoom={1.5}
+        defaultViewport={{ x: 50, y: 50, zoom: 0.6 }}
+        fitView={true}
+        style={{ width: '100%', height: '100%', backgroundColor: '#fafafa' }}
+      >
+        <Controls showInteractive={!readOnly} />
+        <Background variant={BackgroundVariant.Dots} gap={12} size={1} />
+      </ReactFlow>
     </div>
   );
 };
