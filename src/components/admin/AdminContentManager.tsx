@@ -39,6 +39,7 @@ interface UploadedFiles {
 export const AdminContentManager = () => {
   const [currentStep, setCurrentStep] = useState("basics");
   const [uploadedFiles, setUploadedFiles] = useState<UploadedFiles>({});
+  const [imageSettings, setImageSettings] = useState({ position: 'inline-left', size: 'medium' });
   const [mindMapData, setMindMapData] = useState<any>(null);
   const [isUploading, setIsUploading] = useState(false);
   const [isPublishing, setIsPublishing] = useState(false);
@@ -114,12 +115,9 @@ export const AdminContentManager = () => {
 
   const updateImageSettings = (position: string, size: string) => {
     console.log("updateImageSettings CALLED:", { position, size });
+    setImageSettings({ position, size });
     form.setValue('image_position', position);
     form.setValue('image_size', size);
-    console.log("updateImageSettings AFTER setValue:", {
-      form_position: form.getValues('image_position'),
-      form_size: form.getValues('image_size')
-    });
   };
 
   const handleMindMapSave = (data: any, tags: string[]) => {
@@ -579,16 +577,16 @@ export const AdminContentManager = () => {
                   <ArticlePreview 
                     data={{
                       ...form.getValues(),
-                      image_position: form.watch('image_position'),
-                      image_size: form.watch('image_size')
+                      image_position: imageSettings.position,
+                      image_size: imageSettings.size
                     }}
                     files={uploadedFiles}
                     existingFiles={editingArticleData ? {
                       pdf_url: editingArticleData.pdf_url,
                       audio_url: editingArticleData.audio_url,
                       featured_image_url: editingArticleData.featured_image_url,
-                      image_position: form.watch('image_position'),
-                      image_size: form.watch('image_size')
+                      image_position: imageSettings.position,
+                      image_size: imageSettings.size
                     } : undefined}
                   />
                   
