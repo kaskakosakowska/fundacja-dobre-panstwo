@@ -166,15 +166,37 @@ export const useImageManager = (post: Post) => {
     return classes;
   };
 
-  const saveImageSettings = () => {
-    setImagePosition(tempImagePosition);
-    setImageSize(tempImageSize);
-    setIsEditingImage(false);
+  const saveImageSettings = async () => {
+    if (!post.id) return;
     
-    toast({
-      title: "Ustawienia zapisane",
-      description: "Zmiany w układzie obrazka zostały zastosowane.",
-    });
+    try {
+      // Save to database
+      const { error } = await supabase
+        .from('articles')
+        .update({ 
+          image_position: tempImagePosition,
+          image_size: tempImageSize
+        })
+        .eq('id', post.id);
+
+      if (error) throw error;
+
+      // Update local state
+      setImagePosition(tempImagePosition);
+      setImageSize(tempImageSize);
+      setIsEditingImage(false);
+      
+      toast({
+        title: "Ustawienia zapisane",
+        description: "Zmiany w układzie obrazka zostały zastosowane.",
+      });
+    } catch (error: any) {
+      toast({
+        title: "Błąd zapisu",
+        description: error.message || "Nie udało się zapisać ustawień obrazka.",
+        variant: "destructive",
+      });
+    }
   };
 
   const openEditDialog = () => {
