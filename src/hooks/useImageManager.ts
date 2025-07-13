@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { Post } from "@/hooks/usePostData";
@@ -6,7 +6,7 @@ import { Post } from "@/hooks/usePostData";
 export const useImageManager = (post: Post) => {
   const [isEditingImage, setIsEditingImage] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
-  const [currentImageUrl, setCurrentImageUrl] = useState(post.featured_image_url);
+  const [currentImageUrl, setCurrentImageUrl] = useState<string | null>(null);
   // Initialize position and size from post metadata or defaults
   const [imagePosition, setImagePosition] = useState(
     (post as any).image_position || 'inline-left'
@@ -21,6 +21,11 @@ export const useImageManager = (post: Post) => {
     (post as any).image_size || 'medium'
   );
   const { toast } = useToast();
+
+  // Update currentImageUrl when post changes
+  useEffect(() => {
+    setCurrentImageUrl(post.featured_image_url || null);
+  }, [post.featured_image_url]);
 
   const handleImageUpload = async (file: File) => {
     if (!post.id) return;
