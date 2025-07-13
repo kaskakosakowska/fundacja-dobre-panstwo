@@ -340,8 +340,8 @@ export const AdminContentManager = () => {
         description: "Artykuł został pomyślnie zaktualizowany.",
       });
 
-      // Don't reset form completely to keep editing context
-      setCurrentStep("basics");
+      // Reload article data to refresh the form with current database values
+      await handleEditArticle(editingArticleId);
 
     } catch (error: any) {
       toast({
