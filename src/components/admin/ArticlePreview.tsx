@@ -10,6 +10,8 @@ interface ArticleFormData {
   tags: string;
   seo_title?: string;
   seo_description?: string;
+  image_position?: string;
+  image_size?: string;
 }
 
 interface UploadedFiles {
@@ -106,7 +108,7 @@ export const ArticlePreview = ({ data, files }: ArticlePreviewProps) => {
 
           {/* Main Content */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Left Column - Main Content */}
+            {/* Left Column - Main Content with integrated image */}
             <div className="lg:col-span-2">
               <Card>
                 <CardHeader>
@@ -114,12 +116,70 @@ export const ArticlePreview = ({ data, files }: ArticlePreviewProps) => {
                 </CardHeader>
                 <CardContent>
                   {data.content ? (
-                    <div 
-                      className="prose prose-sm max-w-none"
-                      dangerouslySetInnerHTML={{ 
-                        __html: data.content.substring(0, 500) + (data.content.length > 500 ? '...' : '')
-                      }}
-                    />
+                    <div className="prose prose-sm max-w-none">
+                      {/* Render content with integrated image */}
+                      {files.image && data.image_position && (
+                        <div className="relative overflow-hidden">
+                          {/* Inline images that float with content */}
+                          {(data.image_position === 'inline-left' || data.image_position === 'inline-right') && (
+                            <img 
+                              src={URL.createObjectURL(files.image)} 
+                              alt="Preview"
+                              className={`
+                                rounded-lg shadow-sm
+                                ${data.image_size === 'small' ? 'max-w-[200px]' : 
+                                  data.image_size === 'medium' ? 'max-w-[400px]' : 
+                                  data.image_size === 'large' ? 'max-w-[600px]' : 
+                                  data.image_size === 'xlarge' ? 'max-w-[800px]' : 'max-w-[400px]'}
+                                ${data.image_position === 'inline-left' ? 'float-left mr-4 mb-4' : 
+                                  data.image_position === 'inline-right' ? 'float-right ml-4 mb-4' : ''}
+                              `}
+                            />
+                          )}
+                          
+                          {/* Non-inline images (above content) */}
+                          {!data.image_position.startsWith('inline') && (
+                            <div className="mb-6">
+                              <img 
+                                src={URL.createObjectURL(files.image)} 
+                                alt="Preview"
+                                className={`
+                                  rounded-lg shadow-sm
+                                  ${data.image_size === 'small' ? 'max-w-[200px]' : 
+                                    data.image_size === 'medium' ? 'max-w-[400px]' : 
+                                    data.image_size === 'large' ? 'max-w-[600px]' : 
+                                    data.image_size === 'xlarge' ? 'max-w-[800px]' : 'max-w-[400px]'}
+                                  ${data.image_position === 'left' ? 'mr-auto block' : 
+                                    data.image_position === 'right' ? 'ml-auto block' : 
+                                    data.image_position === 'center' ? 'mx-auto block' : 
+                                    data.image_position === 'full' ? 'w-full max-w-full block' : 'mx-auto block'}
+                                `}
+                              />
+                            </div>
+                          )}
+                          
+                          {/* Content flows around floated image */}
+                          <div 
+                            className="text-justify"
+                            dangerouslySetInnerHTML={{ 
+                              __html: data.content.substring(0, 500) + (data.content.length > 500 ? '...' : '')
+                            }}
+                          />
+                          
+                          {/* Clear floats after content */}
+                          <div className="clear-both"></div>
+                        </div>
+                      )}
+                      
+                      {/* Content without image */}
+                      {(!files.image || !data.image_position) && (
+                        <div 
+                          dangerouslySetInnerHTML={{ 
+                            __html: data.content.substring(0, 500) + (data.content.length > 500 ? '...' : '')
+                          }}
+                        />
+                      )}
+                    </div>
                   ) : (
                     <p className="text-muted-foreground italic">
                       Treść wpisu zostanie tutaj wyświetlona...
@@ -177,24 +237,43 @@ export const ArticlePreview = ({ data, files }: ArticlePreviewProps) => {
                 )}
               </Card>
 
-              {/* Image Preview */}
+              {/* Image Preview - Shows position and size settings */}
               <Card className="p-4">
                 <div className="flex items-center gap-2 mb-3">
                   <Image className="h-4 w-4" />
                   <span className="font-medium text-sm">Obrazek</span>
                 </div>
                 {files.image ? (
-                  <div className="space-y-2">
+                  <div className="space-y-3">
                     <p className="text-sm font-medium">{files.image.name}</p>
                     <p className="text-xs text-muted-foreground">
                       {formatFileSize(files.image.size)}
                     </p>
-                    <div className="aspect-video bg-muted rounded border overflow-hidden">
-                      <img 
-                        src={URL.createObjectURL(files.image)} 
-                        alt="Preview"
-                        className="w-full h-full object-cover"
-                      />
+                    
+                    {/* Show image settings */}
+                    <div className="space-y-2 p-3 bg-muted/50 rounded">
+                      <div className="text-xs">
+                        <span className="font-medium">Pozycja:</span> {
+                          data.image_position === 'inline-left' ? 'W tekście po lewej' :
+                          data.image_position === 'inline-right' ? 'W tekście po prawej' :
+                          data.image_position === 'left' ? 'Po lewej' :
+                          data.image_position === 'right' ? 'Po prawej' :
+                          data.image_position === 'center' ? 'Na środku' :
+                          data.image_position === 'full' ? 'Pełna szerokość' : 'Nie ustawiono'
+                        }
+                      </div>
+                      <div className="text-xs">
+                        <span className="font-medium">Wielkość:</span> {
+                          data.image_size === 'small' ? 'Mała' :
+                          data.image_size === 'medium' ? 'Średnia' :
+                          data.image_size === 'large' ? 'Duża' :
+                          data.image_size === 'xlarge' ? 'Bardzo duża' : 'Nie ustawiono'
+                        }
+                      </div>
+                    </div>
+                    
+                    <div className="text-xs text-muted-foreground italic">
+                      Obrazek jest zintegrowany z treścią artykułu po lewej stronie
                     </div>
                   </div>
                 ) : (
