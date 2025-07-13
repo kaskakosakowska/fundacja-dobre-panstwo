@@ -94,22 +94,27 @@ export const MindMap = ({ data, tags = [], readOnly = true, onDataChange }: Mind
 
   // Force update when tags change
   useEffect(() => {
-    console.log('MindMap: Updating with data:', data, 'tags:', tags);
+    console.log('=== MindMap DEBUG ===');
+    console.log('data:', data);
+    console.log('tags:', tags);
+    console.log('readOnly:', readOnly);
     
     if (data && data.nodes && data.nodes.length > 0) {
-      console.log('MindMap: Using provided data');
+      console.log('MindMap: Using provided data, nodes count:', data.nodes.length);
       setNodes(data.nodes);
       setEdges(data.edges || []);
     } else if (tags && tags.length > 0) {
-      console.log('MindMap: Creating nodes from tags');
+      console.log('MindMap: Creating nodes from tags, tag count:', tags.length);
       const tagNodes = createTagNodes(tags);
       const tagEdges = createTagEdges(tags);
+      console.log('Created nodes:', tagNodes);
+      console.log('Created edges:', tagEdges);
       setNodes(tagNodes);
       setEdges(tagEdges);
       
       // Immediately notify parent of the new structure
       if (onDataChange && !readOnly) {
-        console.log('MindMap: Notifying parent of new structure:', { nodes: tagNodes, edges: tagEdges });
+        console.log('MindMap: Notifying parent of new structure');
         onDataChange({ nodes: tagNodes, edges: tagEdges });
       }
     } else {
@@ -117,6 +122,7 @@ export const MindMap = ({ data, tags = [], readOnly = true, onDataChange }: Mind
       setNodes([]);
       setEdges([]);
     }
+    console.log('=== END MindMap DEBUG ===');
   }, [data, tags, setNodes, setEdges, onDataChange, readOnly]);
 
   const onConnect = useCallback(
@@ -169,24 +175,32 @@ export const MindMap = ({ data, tags = [], readOnly = true, onDataChange }: Mind
     [readOnly, onEdgesChange, onDataChange, setNodes, setEdges]
   );
 
+  console.log('=== RENDERING MindMap ===');
+  console.log('Current nodes count:', nodes.length);
+  console.log('Current edges count:', edges.length);
+  console.log('readOnly:', readOnly);
+
   return (
-    <div className="w-full h-full border rounded-lg overflow-hidden">
-      <ReactFlow
-        nodes={nodes}
-        edges={edges}
-        onNodesChange={handleNodesChange}
-        onEdgesChange={handleEdgesChange}
-        onConnect={onConnect}
-        nodesDraggable={!readOnly}
-        nodesConnectable={!readOnly}
-        elementsSelectable={!readOnly}
-        minZoom={0.5}
-        maxZoom={2}
-        defaultViewport={{ x: 0, y: 0, zoom: 0.8 }}
-      >
-        <Controls showInteractive={!readOnly} />
-        <Background variant={BackgroundVariant.Dots} gap={12} size={1} />
-      </ReactFlow>
+    <div className="w-full h-full border rounded-lg overflow-hidden bg-white">
+      <div style={{ width: '100%', height: '100%' }}>
+        <ReactFlow
+          nodes={nodes}
+          edges={edges}
+          onNodesChange={handleNodesChange}
+          onEdgesChange={handleEdgesChange}
+          onConnect={onConnect}
+          nodesDraggable={!readOnly}
+          nodesConnectable={!readOnly}
+          elementsSelectable={!readOnly}
+          minZoom={0.5}
+          maxZoom={2}
+          defaultViewport={{ x: 0, y: 0, zoom: 0.8 }}
+          fitView={true}
+        >
+          <Controls showInteractive={!readOnly} />
+          <Background variant={BackgroundVariant.Dots} gap={12} size={1} />
+        </ReactFlow>
+      </div>
     </div>
   );
 };
