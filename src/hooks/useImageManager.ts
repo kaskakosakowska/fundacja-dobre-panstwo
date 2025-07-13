@@ -124,6 +124,7 @@ export const useImageManager = (post: Post) => {
     }
     
     // Position classes
+    console.log('Image position:', imagePosition, 'Image size:', imageSize);
     switch (imagePosition) {
       case 'inline-left':
         classes += "float-left mr-4 mb-4";
@@ -147,6 +148,7 @@ export const useImageManager = (post: Post) => {
         classes += "mx-auto block";
     }
     
+    console.log('Generated image classes:', classes);
     return classes;
   };
 

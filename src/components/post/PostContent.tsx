@@ -78,7 +78,7 @@ export const PostContent = ({ post, section, postId }: PostContentProps) => {
             )}
             
             {/* Content with clearfix for floated images */}
-            <div className="overflow-hidden">
+            <div className="clearfix">
               {getFullContent()}
             </div>
           </div>

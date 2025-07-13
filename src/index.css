@@ -106,3 +106,19 @@ All colors MUST be HSL.
     @apply bg-background text-foreground font-sans;
   }
 }
+
+/* Float image styles for inline images */
+.float-left {
+  float: left !important;
+}
+
+.float-right {
+  float: right !important;
+}
+
+/* Clearfix for containers with floating images */
+.clearfix::after {
+  content: "";
+  display: table;
+  clear: both;
+}
