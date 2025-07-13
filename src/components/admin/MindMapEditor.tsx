@@ -88,8 +88,11 @@ export const MindMapEditor = ({
   };
 
   const handleMindMapChange = (data: MindMapData) => {
-    console.log('MindMapEditor: Mind map data changed:', data);
+    console.log('=== MindMapEditor: handleMindMapChange CALLED ===');
+    console.log('New data:', data);
+    console.log('Current mindMapData:', mindMapData);
     setMindMapData(data);
+    console.log('=== MindMapEditor: handleMindMapChange COMPLETE ===');
   };
 
   const handleSave = () => {
