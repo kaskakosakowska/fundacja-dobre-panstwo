@@ -116,11 +116,21 @@ export const FileUpload = ({ onFilesUploaded, onImageSettingsUpdate, existingFil
       setUploadProgress(prev => ({ ...prev, [type]: 0 }));
 
       try {
+        // Determine bucket and path
+        const bucketMap = {
+          pdf: 'articles-pdfs',
+          audio: 'articles-audio', 
+          image: 'articles-images'
+        };
+        const bucket = bucketMap[type];
+        const timestamp = Date.now();
+        const path = `${timestamp}-${file.name}`;
+
         // Real upload progress simulation
         const progressInterval = setInterval(() => {
           setUploadProgress(prev => {
             const currentProgress = prev[type] || 0;
-            if (currentProgress >= 90) {
+            if (currentProgress >= 80) {
               clearInterval(progressInterval);
               return prev;
             }
@@ -128,27 +138,44 @@ export const FileUpload = ({ onFilesUploaded, onImageSettingsUpdate, existingFil
           });
         }, 200);
 
-        // Actually just store the file for later upload during article creation
+        // Actually upload the file to Supabase
+        const { data, error } = await supabase.storage
+          .from(bucket)
+          .upload(path, file, { 
+            cacheControl: '3600',
+            upsert: true 
+          });
+
+        if (error) {
+          clearInterval(progressInterval);
+          throw new Error(`Upload failed: ${error.message}`);
+        }
+
+        // Get public URL
+        const { data: { publicUrl } } = supabase.storage
+          .from(bucket)
+          .getPublicUrl(path);
+
+        // Store file with its URL
         const newFiles = { 
           ...files, 
           [type]: file,
+          [`${type}_url`]: publicUrl,
           image_position: imagePosition,
           image_size: imageSize
         };
         
         // Complete the progress
-        setTimeout(() => {
-          clearInterval(progressInterval);
-          setUploadProgress(prev => ({ ...prev, [type]: 100 }));
-          setFiles(newFiles);
-          onFilesUploaded(newFiles);
-          setIsUploading(false);
-          
-          toast({
-            title: "Plik dodany",
-            description: `Plik ${type.toUpperCase()} zostanie przesłany wraz z publikacją wpisu.`,
-          });
-        }, 1000);
+        clearInterval(progressInterval);
+        setUploadProgress(prev => ({ ...prev, [type]: 100 }));
+        setFiles(newFiles);
+        onFilesUploaded(newFiles);
+        setIsUploading(false);
+        
+        toast({
+          title: "Plik przesłany",
+          description: `Plik ${type.toUpperCase()} został pomyślnie przesłany.`,
+        });
 
       } catch (error: any) {
         setIsUploading(false);

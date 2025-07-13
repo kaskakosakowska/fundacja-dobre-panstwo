@@ -33,7 +33,18 @@ export const MindMapEditor = ({
   useEffect(() => {
     console.log('MindMapEditor: Updating with initialTags:', initialTags, 'initialMindMapData:', initialMindMapData);
     setTags(initialTags || []);
-    setMindMapData(initialMindMapData);
+    
+    // Only update mindMapData if we have valid data or if tags changed significantly
+    if (initialMindMapData) {
+      setMindMapData(initialMindMapData);
+    } else if ((initialTags || []).length > 0 && !mindMapData) {
+      // Create initial mind map only if we don't have one yet
+      const newMindMapData = { 
+        nodes: createTagNodes(initialTags || []), 
+        edges: createTagEdges(initialTags || []) 
+      };
+      setMindMapData(newMindMapData);
+    }
   }, [initialTags, initialMindMapData]);
 
   const addTag = () => {
@@ -177,7 +188,7 @@ export const MindMapEditor = ({
             {tags.length > 0 ? (
               <div className="w-full h-full" style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0 }}>
                 <MindMap
-                  key={`mindmap-${tags.join('-')}-${mindMapData ? 'data' : 'notags'}`}
+                  key={`mindmap-stable-${articleId || 'new'}`}
                   data={mindMapData}
                   tags={tags}
                   readOnly={false}
