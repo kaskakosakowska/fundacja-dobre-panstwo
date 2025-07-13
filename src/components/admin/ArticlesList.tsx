@@ -12,7 +12,7 @@ interface ArticlesListProps {
 }
 
 export const ArticlesList = ({ onEditArticle }: ArticlesListProps) => {
-  const { articles, loading, error } = useArticles();
+  const { articles, loading, error, refetch } = useArticles();
   const { toast } = useToast();
 
   const formatDate = (dateString: string) => {
@@ -50,8 +50,8 @@ export const ArticlesList = ({ onEditArticle }: ArticlesListProps) => {
         description: "Artykuł został pomyślnie usunięty.",
       });
 
-      // Refresh page to update list
-      window.location.reload();
+      // Refresh list without reloading page
+      refetch();
     } catch (error: any) {
       toast({
         title: "Błąd",
