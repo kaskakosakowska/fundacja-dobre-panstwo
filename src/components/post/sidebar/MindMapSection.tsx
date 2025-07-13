@@ -129,7 +129,7 @@ export const MindMapSection = ({ post, onRefreshPost }: MindMapSectionProps) => 
                   <span>Mapa pojęć</span>
                 </DialogTitle>
               </DialogHeader>
-              <div className="h-[500px] w-full">
+              <div className="h-[400px] w-full">
                 {isLoading ? (
                   <div className="flex items-center justify-center h-full">
                     <div className="text-center">
