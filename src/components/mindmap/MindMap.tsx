@@ -12,8 +12,8 @@ import {
   BackgroundVariant,
   NodeChange,
   EdgeChange,
-} from 'reactflow';
-import 'reactflow/dist/style.css';
+} from '@xyflow/react';
+import '@xyflow/react/dist/style.css';
 
 interface MindMapData {
   nodes: Node[];
