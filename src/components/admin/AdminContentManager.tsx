@@ -279,6 +279,9 @@ export const AdminContentManager = () => {
   const updateArticle = async (data: ArticleFormData) => {
     if (!editingArticleId) return;
 
+    console.log("updateArticle: Starting update for article:", editingArticleId);
+    console.log("updateArticle: Form data received:", data);
+    
     setIsPublishing(true);
     
     try {
