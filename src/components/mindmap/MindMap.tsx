@@ -137,20 +137,32 @@ export const MindMap = ({ data, tags = [], readOnly = false, onDataChange }: Min
 
   const handleNodesChange = useCallback(
     (changes: NodeChange[]) => {
+      console.log('=== handleNodesChange CALLED ===');
+      console.log('changes:', changes);
+      console.log('readOnly:', readOnly);
+      
       if (!readOnly) {
         onNodesChange(changes);
-        // Use current state directly
+        console.log('onNodesChange called');
+        
+        // Notify parent immediately
         if (onDataChange) {
+          console.log('Calling onDataChange from handleNodesChange');
+          // Use setTimeout to get updated state
           setTimeout(() => {
             setNodes((currentNodes) => {
               setEdges((currentEdges) => {
-                onDataChange({ nodes: currentNodes, edges: currentEdges });
+                const newData = { nodes: currentNodes, edges: currentEdges };
+                console.log('Sending data to parent:', newData);
+                onDataChange(newData);
                 return currentEdges;
               });
               return currentNodes;
             });
-          }, 50);
+          }, 0);
         }
+      } else {
+        console.log('ReadOnly mode - changes ignored');
       }
     },
     [readOnly, onNodesChange, onDataChange, setNodes, setEdges]
