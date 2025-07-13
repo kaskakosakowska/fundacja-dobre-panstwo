@@ -37,13 +37,19 @@ export const ArticlesList = ({ onEditArticle }: ArticlesListProps) => {
       return;
     }
 
+    console.log('ArticlesList: Starting delete for article:', articleId);
+
     try {
       const { error } = await supabase
         .from('articles')
         .delete()
         .eq('id', articleId);
 
+      console.log('ArticlesList: Delete query result:', { error });
+
       if (error) throw error;
+
+      console.log('ArticlesList: Delete successful, calling refetch...');
 
       toast({
         title: "Artykuł usunięty",
@@ -52,7 +58,10 @@ export const ArticlesList = ({ onEditArticle }: ArticlesListProps) => {
 
       // Refresh list without reloading page
       refetch();
+      
+      console.log('ArticlesList: Refetch called');
     } catch (error: any) {
+      console.error('ArticlesList: Delete error:', error);
       toast({
         title: "Błąd",
         description: error.message || "Nie udało się usunąć artykułu.",
