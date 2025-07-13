@@ -15,6 +15,11 @@ interface PostContentProps {
 
 export const PostContent = ({ post, section, postId }: PostContentProps) => {
   const imageManager = useImageManager(post);
+  
+  console.log('PostContent - post data:', post);
+  console.log('PostContent - featured_image_url:', post.featured_image_url);
+  console.log('PostContent - imageManager.currentImageUrl:', imageManager.currentImageUrl);
+  console.log('PostContent - imageManager.imagePosition:', imageManager.imagePosition);
 
   const getFullContent = () => {
     if (section === 'szkatulka') {
