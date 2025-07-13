@@ -334,12 +334,6 @@ export const FileUpload = ({ onFilesUploaded, onImageSettingsUpdate, existingFil
               </div>
             </div>
             
-            {/* Debug info */}
-            <div className="text-red-600 text-sm">
-              DEBUG: hasUnsavedChanges={hasUnsavedChanges ? 'TRUE' : 'FALSE'}, 
-              position={imagePosition}, size={imageSize}
-            </div>
-            
             {/* Przycisk zachowaj zmiany */}
             {hasUnsavedChanges && (
               <div className="pt-4 border-t">

@@ -68,22 +68,19 @@ export const ContentPreview = ({ data, files, existingFiles }: ContentPreviewPro
                        src={imageSrc} 
                        alt="Preview"
                        className={`
-                         rounded-lg shadow-sm border-4 border-red-500 bg-yellow-300
-                         ${imageSize === 'small' ? 'max-w-[200px] border-blue-500' : 
-                           imageSize === 'medium' ? 'max-w-[400px] border-green-500' : 
-                           imageSize === 'large' ? 'max-w-[600px] border-purple-500' : 
-                           imageSize === 'xlarge' ? 'max-w-[800px] border-orange-500' : 'max-w-[400px] border-gray-500'}
-                         ${imagePosition === 'inline-left' ? 'float-left mr-4 mb-4 bg-pink-300' : 
-                           imagePosition === 'inline-right' ? 'float-right ml-4 mb-4 bg-cyan-300' : 'bg-lime-300'}
+                         rounded-lg shadow-sm
+                         ${imageSize === 'small' ? 'max-w-[200px]' : 
+                           imageSize === 'medium' ? 'max-w-[400px]' : 
+                           imageSize === 'large' ? 'max-w-[600px]' : 
+                           imageSize === 'xlarge' ? 'max-w-[800px]' : 'max-w-[400px]'}
+                         ${imagePosition === 'inline-left' ? 'float-left mr-4 mb-4' : 
+                           imagePosition === 'inline-right' ? 'float-right ml-4 mb-4' : 'bg-lime-300'}
                        `}
                        style={{
                          width: imageSize === 'small' ? '200px' : imageSize === 'medium' ? '400px' : '600px',
                          float: imagePosition === 'inline-right' ? 'right' : imagePosition === 'inline-left' ? 'left' : 'none'
                        }}
                      />
-                      <div className="text-red-600 font-bold mb-4">
-                        DEBUG: Position={imagePosition}, Size={imageSize}
-                      </div>
                    </>
                  )}
                  
