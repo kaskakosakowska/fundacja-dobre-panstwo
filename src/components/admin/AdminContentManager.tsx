@@ -356,9 +356,12 @@ export const AdminContentManager = () => {
   };
 
   const onSubmit = (data: ArticleFormData) => {
+    console.log("onSubmit called. editingArticleId:", editingArticleId);
     if (editingArticleId) {
+      console.log("Calling updateArticle");
       updateArticle(data);
     } else {
+      console.log("Calling publishArticle");
       publishArticle(data);
     }
   };
