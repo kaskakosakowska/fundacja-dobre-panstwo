@@ -23,6 +23,7 @@ export const LatestArticles = () => {
           .select('id, title, slug, summary, published_date, section')
           .eq('is_published', true)
           .order('published_date', { ascending: false })
+          .order('created_at', { ascending: false })
           .limit(4);
 
         if (error) {

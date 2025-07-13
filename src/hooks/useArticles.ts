@@ -27,7 +27,8 @@ export const useArticles = (section?: 'szkatulka' | 'szczypta' | 'glosy') => {
           .from('articles')
           .select('*')
           .eq('is_published', true)
-          .order('published_date', { ascending: false });
+          .order('published_date', { ascending: false })
+          .order('created_at', { ascending: false });
 
         if (section) {
           query = query.eq('section', section);
