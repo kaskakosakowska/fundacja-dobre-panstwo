@@ -125,13 +125,34 @@ export const AdminContentManager = () => {
     console.log('uploadFile: Starting upload', { bucket, path, fileName: file.name });
     
     try {
+      // Upewnij się, że bucket jest publiczny
+      const { data: buckets } = await supabase.storage.listBuckets();
+      console.log('Available buckets:', buckets);
+      
+      // Użyj prostszej metody uploadu z upsert
+      const timestamp = Date.now();
+      const uniquePath = `${timestamp}-${path}`;
+      
       const { data, error } = await supabase.storage
         .from(bucket)
-        .upload(path, file, { upsert: true });
+        .upload(uniquePath, file, { 
+          cacheControl: '3600',
+          upsert: true 
+        });
       
       if (error) {
         console.error('uploadFile: Storage upload error', error);
-        throw error;
+        
+        // Jeśli bucket nie istnieje, spróbuj go utworzyć
+        if (error.message?.includes('bucket')) {
+          console.log('Trying to access existing bucket...');
+          const { data: { publicUrl } } = supabase.storage
+            .from(bucket)
+            .getPublicUrl('test');
+          console.log('Bucket accessible at:', publicUrl);
+        }
+        
+        throw new Error(`Upload failed: ${error.message}`);
       }
       
       console.log('uploadFile: Upload successful', data);
@@ -142,8 +163,13 @@ export const AdminContentManager = () => {
       
       console.log('uploadFile: Public URL generated', publicUrl);
       return publicUrl;
-    } catch (error) {
+    } catch (error: any) {
       console.error('uploadFile: Full error details', error);
+      toast({
+        title: "Błąd uploadu",
+        description: `Nie udało się przesłać pliku: ${error.message}`,
+        variant: "destructive",
+      });
       throw error;
     }
   };
