@@ -15,39 +15,28 @@ export const useMindMapData = ({ data, tags, readOnly, onDataChange }: UseMindMa
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
 
-  // Force update when tags change
+  // Initialize once and stop recreation
   useEffect(() => {
-    console.log('=== MindMap DEBUG ===');
+    console.log('=== MindMap INIT ===');
     console.log('data:', data);
     console.log('tags:', tags);
-    console.log('readOnly:', readOnly);
     
-    // ALWAYS prioritize current tags over old data from database
-    if (tags && tags.length > 0) {
-      console.log('MindMap: Creating nodes from tags, tag count:', tags.length);
-      const tagNodes = createTagNodes(tags);
-      const tagEdges = createTagEdges(tags);
-      console.log('Created nodes:', tagNodes);
-      console.log('Created edges:', tagEdges);
-      setNodes(tagNodes);
-      setEdges(tagEdges);
-      
-      // Immediately notify parent of the new structure
-      if (onDataChange && !readOnly) {
-        console.log('MindMap: Notifying parent of new structure');
-        onDataChange({ nodes: tagNodes, edges: tagEdges });
-      }
-    } else if (data && data.nodes && data.nodes.length > 0) {
-      console.log('MindMap: Using provided data as fallback, nodes count:', data.nodes.length);
+    // If we have saved data, use it
+    if (data && data.nodes && data.nodes.length > 0) {
+      console.log('MindMap: Using saved data, nodes count:', data.nodes.length);
       setNodes(data.nodes);
       setEdges(data.edges || []);
-    } else {
-      console.log('MindMap: No data or tags, clearing');
-      setNodes([]);
-      setEdges([]);
+    } 
+    // Otherwise create from tags
+    else if (tags && tags.length > 0) {
+      console.log('MindMap: Creating from tags, count:', tags.length);
+      const tagNodes = createTagNodes(tags);
+      const tagEdges = createTagEdges(tags);
+      setNodes(tagNodes);
+      setEdges(tagEdges);
     }
-    console.log('=== END MindMap DEBUG ===');
-  }, [data, tags, setNodes, setEdges, onDataChange, readOnly]);
+    console.log('=== END MindMap INIT ===');
+  }, []);
 
   const onConnect = useCallback(
     (params: Connection) => {

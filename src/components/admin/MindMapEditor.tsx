@@ -32,8 +32,12 @@ export const MindMapEditor = ({
 
   useEffect(() => {
     console.log('MindMapEditor: Updating with initialTags:', initialTags, 'initialMindMapData:', initialMindMapData);
-    setTags(initialTags || []);
-    setMindMapData(initialMindMapData);
+    if (initialTags) {
+      setTags(initialTags);
+    }
+    if (initialMindMapData) {
+      setMindMapData(initialMindMapData);
+    }
   }, [initialTags, initialMindMapData]);
 
   const addTag = () => {

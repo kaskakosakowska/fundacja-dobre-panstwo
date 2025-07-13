@@ -139,12 +139,14 @@ export const FileUpload = ({ onFilesUploaded, onImageSettingsUpdate, existingFil
         }, 200);
 
         // Actually upload the file to Supabase
+        console.log('Uploading to bucket:', bucket, 'path:', path);
         const { data, error } = await supabase.storage
           .from(bucket)
           .upload(path, file, { 
             cacheControl: '3600',
-            upsert: true 
+            upsert: false 
           });
+        console.log('Upload result:', { data, error });
 
         if (error) {
           clearInterval(progressInterval);
