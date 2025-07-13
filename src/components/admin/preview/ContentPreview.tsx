@@ -38,8 +38,11 @@ export const ContentPreview = ({ data, files, existingFiles }: ContentPreviewPro
     return null;
   };
 
+  // UŻYWAJ data.image_position i data.image_size ZAWSZE - bez względu na to czy to nowy czy istniejący plik
   const hasImage = files.image || existingFiles?.featured_image_url;
   const imageSrc = getImageSrc();
+  const imagePosition = data.image_position || 'inline-left';
+  const imageSize = data.image_size || 'medium';
 
   return (
     <Card>
@@ -50,41 +53,41 @@ export const ContentPreview = ({ data, files, existingFiles }: ContentPreviewPro
         {data.content ? (
           <div className="prose prose-sm max-w-none">
             {/* Render content with integrated image */}
-            {hasImage && imageSrc && data.image_position ? (
+            {hasImage && imageSrc && imagePosition ? (
               <div className="relative overflow-hidden">
                 {/* Inline images that float with content */}
-                {(data.image_position === 'inline-left' || data.image_position === 'inline-right') && (
+                {(imagePosition === 'inline-left' || imagePosition === 'inline-right') && (
                    <img 
                      src={imageSrc} 
                      alt="Preview"
                      className={`
                        rounded-lg shadow-sm
-                       ${data.image_size === 'small' ? 'max-w-[200px]' : 
-                         data.image_size === 'medium' ? 'max-w-[400px]' : 
-                         data.image_size === 'large' ? 'max-w-[600px]' : 
-                         data.image_size === 'xlarge' ? 'max-w-[800px]' : 'max-w-[400px]'}
-                       ${data.image_position === 'inline-left' ? 'float-left mr-4 mb-4' : 
-                         data.image_position === 'inline-right' ? 'float-right ml-4 mb-4' : ''}
+                       ${imageSize === 'small' ? 'max-w-[200px]' : 
+                         imageSize === 'medium' ? 'max-w-[400px]' : 
+                         imageSize === 'large' ? 'max-w-[600px]' : 
+                         imageSize === 'xlarge' ? 'max-w-[800px]' : 'max-w-[400px]'}
+                       ${imagePosition === 'inline-left' ? 'float-left mr-4 mb-4' : 
+                         imagePosition === 'inline-right' ? 'float-right ml-4 mb-4' : ''}
                      `}
                    />
                  )}
                  
                  {/* Non-inline images (above content) */}
-                 {data.image_position && !data.image_position.startsWith('inline') && (
+                 {imagePosition && !imagePosition.startsWith('inline') && (
                    <div className="mb-6">
                      <img 
                        src={imageSrc}
                        alt="Preview"
                        className={`
                          rounded-lg shadow-sm
-                         ${data.image_size === 'small' ? 'max-w-[200px]' : 
-                           data.image_size === 'medium' ? 'max-w-[400px]' : 
-                           data.image_size === 'large' ? 'max-w-[600px]' : 
-                           data.image_size === 'xlarge' ? 'max-w-[800px]' : 'max-w-[400px]'}
-                         ${data.image_position === 'left' ? 'mr-auto block' : 
-                           data.image_position === 'right' ? 'ml-auto block' : 
-                           data.image_position === 'center' ? 'mx-auto block' : 
-                           data.image_position === 'full' ? 'w-full max-w-full block' : 'mx-auto block'}
+                         ${imageSize === 'small' ? 'max-w-[200px]' : 
+                           imageSize === 'medium' ? 'max-w-[400px]' : 
+                           imageSize === 'large' ? 'max-w-[600px]' : 
+                           imageSize === 'xlarge' ? 'max-w-[800px]' : 'max-w-[400px]'}
+                         ${imagePosition === 'left' ? 'mr-auto block' : 
+                           imagePosition === 'right' ? 'ml-auto block' : 
+                           imagePosition === 'center' ? 'mx-auto block' : 
+                           imagePosition === 'full' ? 'w-full max-w-full block' : 'mx-auto block'}
                        `}
                      />
                    </div>
