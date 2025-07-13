@@ -45,7 +45,38 @@ export const AdminContentManager = () => {
   const [isPublishing, setIsPublishing] = useState(false);
   const [editingArticleId, setEditingArticleId] = useState<string | null>(null);
   const [editingArticleData, setEditingArticleData] = useState<any>(null);
+  const [userSession, setUserSession] = useState<any>(null);
+  const [userRole, setUserRole] = useState<string | null>(null);
   const { toast } = useToast();
+
+  // Debug authentication on component mount
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+        console.log('AdminContentManager: Auth session check:', { session, sessionError });
+        setUserSession(session);
+        
+        if (session?.user?.id) {
+          const { data: profile, error: profileError } = await supabase
+            .from('profiles')
+            .select('role')
+            .eq('user_id', session.user.id)
+            .single();
+          
+          console.log('AdminContentManager: User profile check:', { profile, profileError });
+          setUserRole(profile?.role || null);
+        } else {
+          console.log('AdminContentManager: No authenticated user');
+          setUserRole(null);
+        }
+      } catch (error) {
+        console.error('AdminContentManager: Auth check failed:', error);
+      }
+    };
+    
+    checkAuth();
+  }, []);
   
   const form = useForm<ArticleFormData>({
     defaultValues: {
