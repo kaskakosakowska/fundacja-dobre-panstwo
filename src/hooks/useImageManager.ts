@@ -16,15 +16,23 @@ export const useImageManager = (post: Post) => {
 
   // Update states when post changes
   useEffect(() => {
+    console.log('useImageManager useEffect - post:', post);
+    console.log('useImageManager useEffect - post.image_position:', (post as any).image_position);
+    console.log('useImageManager useEffect - post.image_size:', (post as any).image_size);
+    
     setCurrentImageUrl(post.featured_image_url || null);
-    if ((post as any).image_position) {
-      setImagePosition((post as any).image_position);
-      setTempImagePosition((post as any).image_position);
-    }
-    if ((post as any).image_size) {
-      setImageSize((post as any).image_size);
-      setTempImageSize((post as any).image_size);
-    }
+    
+    // Always update position and size from post data, with fallbacks
+    const newPosition = (post as any).image_position || 'inline-left';
+    const newSize = (post as any).image_size || 'medium';
+    
+    console.log('useImageManager useEffect - setting position to:', newPosition);
+    console.log('useImageManager useEffect - setting size to:', newSize);
+    
+    setImagePosition(newPosition);
+    setTempImagePosition(newPosition);
+    setImageSize(newSize);
+    setTempImageSize(newSize);
   }, [post]);
 
   const handleImageUpload = async (file: File) => {
