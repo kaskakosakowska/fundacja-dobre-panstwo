@@ -6,6 +6,8 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 import { FileText, Music, Image, Upload, X, CheckCircle } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 interface UploadedFiles {
   pdf?: File;
@@ -36,6 +38,8 @@ export const FileUpload = ({ onFilesUploaded, onImageSettingsUpdate, existingFil
   const [imagePosition, setImagePosition] = useState(existingFiles?.image_position || "inline-left");
   const [imageSize, setImageSize] = useState(existingFiles?.image_size || "medium");
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
+  const { toast } = useToast();
 
   // Initialize with existing files
   useEffect(() => {
@@ -89,14 +93,14 @@ export const FileUpload = ({ onFilesUploaded, onImageSettingsUpdate, existingFil
     return null;
   };
 
-  const handleFileSelect = useCallback((type: 'pdf' | 'audio' | 'image') => {
+  const handleFileSelect = useCallback(async (type: 'pdf' | 'audio' | 'image') => {
     const input = document.createElement('input');
     input.type = 'file';
     input.accept = type === 'pdf' ? '.pdf' : 
                    type === 'audio' ? '.mp3,.wav,.ogg' : 
                    '.jpg,.jpeg,.png,.webp,.gif';
     
-    input.onchange = (e) => {
+    input.onchange = async (e) => {
       const file = (e.target as HTMLInputElement).files?.[0];
       if (!file) return;
 
@@ -108,36 +112,57 @@ export const FileUpload = ({ onFilesUploaded, onImageSettingsUpdate, existingFil
 
       // Clear previous errors for this file type
       setErrors(prev => prev.filter(err => !err.includes(type.toUpperCase())));
-
-      // Simulate upload progress
+      setIsUploading(true);
       setUploadProgress(prev => ({ ...prev, [type]: 0 }));
-      
-      const progressInterval = setInterval(() => {
-        setUploadProgress(prev => {
-          const currentProgress = prev[type] || 0;
-          if (currentProgress >= 100) {
-            clearInterval(progressInterval);
-            return prev;
-          }
-          return { ...prev, [type]: currentProgress + 10 };
-        });
-      }, 100);
 
-      setTimeout(() => {
+      try {
+        // Real upload progress simulation
+        const progressInterval = setInterval(() => {
+          setUploadProgress(prev => {
+            const currentProgress = prev[type] || 0;
+            if (currentProgress >= 90) {
+              clearInterval(progressInterval);
+              return prev;
+            }
+            return { ...prev, [type]: currentProgress + 10 };
+          });
+        }, 200);
+
+        // Actually just store the file for later upload during article creation
         const newFiles = { 
           ...files, 
           [type]: file,
           image_position: imagePosition,
           image_size: imageSize
         };
-        setFiles(newFiles);
-        onFilesUploaded(newFiles);
-        setUploadProgress(prev => ({ ...prev, [type]: 100 }));
-      }, 1200);
+        
+        // Complete the progress
+        setTimeout(() => {
+          clearInterval(progressInterval);
+          setUploadProgress(prev => ({ ...prev, [type]: 100 }));
+          setFiles(newFiles);
+          onFilesUploaded(newFiles);
+          setIsUploading(false);
+          
+          toast({
+            title: "Plik dodany",
+            description: `Plik ${type.toUpperCase()} zostanie przesłany wraz z publikacją wpisu.`,
+          });
+        }, 1000);
+
+      } catch (error: any) {
+        setIsUploading(false);
+        setErrors(prev => [...prev, `Błąd dodawania pliku ${type.toUpperCase()}: ${error.message}`]);
+        toast({
+          title: "Błąd",
+          description: `Nie udało się dodać pliku ${type.toUpperCase()}.`,
+          variant: "destructive",
+        });
+      }
     };
 
     input.click();
-  }, [files, onFilesUploaded, imagePosition, imageSize]);
+  }, [files, onFilesUploaded, imagePosition, imageSize, toast]);
 
   const removeFile = (type: 'pdf' | 'audio' | 'image') => {
     const newFiles = { ...files };
@@ -243,9 +268,10 @@ export const FileUpload = ({ onFilesUploaded, onImageSettingsUpdate, existingFil
             variant="outline"
             className="w-full"
             onClick={() => handleFileSelect(type)}
+            disabled={isUploading}
           >
             <Upload className="h-4 w-4 mr-2" />
-            Wybierz plik
+            {isUploading ? 'Dodawanie...' : 'Wybierz plik'}
           </Button>
         )}
       </CardContent>
