@@ -89,7 +89,7 @@ const createTagEdges = (tags: string[]): Edge[] => {
   }));
 };
 
-export const MindMap = ({ data, tags = [], readOnly = true, onDataChange }: MindMapProps) => {
+export const MindMap = ({ data, tags = [], readOnly = false, onDataChange }: MindMapProps) => {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
 
