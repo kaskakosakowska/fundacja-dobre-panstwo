@@ -324,21 +324,24 @@ export const FileUpload = ({ onFilesUploaded, onImageSettingsUpdate, existingFil
             {/* Przycisk zachowaj zmiany */}
             {hasUnsavedChanges && (
               <div className="pt-4 border-t">
-                <Button 
-                  onClick={() => {
-                    const newFiles = { 
-                      ...files, 
-                      image_position: imagePosition,
-                      image_size: imageSize
-                    };
-                    setFiles(newFiles);
-                    onFilesUploaded(newFiles);
-                    // Update main form as well
-                    if (onImageSettingsUpdate) {
-                      onImageSettingsUpdate(imagePosition, imageSize);
-                    }
-                    setHasUnsavedChanges(false);
-                  }}
+                 <Button 
+                   onClick={() => {
+                     console.log("ZACHOWAJ ZMIANY CLICKED:", { imagePosition, imageSize });
+                     const newFiles = { 
+                       ...files, 
+                       image_position: imagePosition,
+                       image_size: imageSize
+                     };
+                     setFiles(newFiles);
+                     onFilesUploaded(newFiles);
+                     // Update main form as well
+                     console.log("onImageSettingsUpdate exists:", !!onImageSettingsUpdate);
+                     if (onImageSettingsUpdate) {
+                       console.log("CALLING onImageSettingsUpdate:", imagePosition, imageSize);
+                       onImageSettingsUpdate(imagePosition, imageSize);
+                     }
+                     setHasUnsavedChanges(false);
+                   }}
                   className="w-full"
                   variant="default"
                 >
