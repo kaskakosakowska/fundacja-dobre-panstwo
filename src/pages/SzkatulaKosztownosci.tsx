@@ -66,7 +66,7 @@ const SzkatulaKosztownosci = () => {
                   Brak artykułów w tej sekcji.
                 </p>
               ) : (
-                <ScrollArea className="h-[70vh]">
+                <ScrollArea className="h-[600px]">
                   <div className="space-y-6 pr-4">
                     {articles.map((article) => (
                       <div key={article.id} className="border-b pb-6 last:border-b-0">
