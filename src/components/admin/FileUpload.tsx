@@ -289,8 +289,10 @@ export const FileUpload = ({ onFilesUploaded, onImageSettingsUpdate, existingFil
               <div className="space-y-2">
                 <Label htmlFor="image-position" className="text-sm">Pozycja</Label>
                 <Select value={imagePosition} onValueChange={(value) => {
+                  console.log("Position changed from", imagePosition, "to", value);
                   setImagePosition(value);
                   setHasUnsavedChanges(true);
+                  console.log("setHasUnsavedChanges(true) called");
                 }}>
                   <SelectTrigger id="image-position">
                     <SelectValue />
@@ -306,8 +308,10 @@ export const FileUpload = ({ onFilesUploaded, onImageSettingsUpdate, existingFil
               <div className="space-y-2">
                 <Label htmlFor="image-size" className="text-sm">Wielkość</Label>
                 <Select value={imageSize} onValueChange={(value) => {
+                  console.log("Size changed from", imageSize, "to", value);
                   setImageSize(value);
                   setHasUnsavedChanges(true);
+                  console.log("setHasUnsavedChanges(true) called for size");
                 }}>
                   <SelectTrigger id="image-size">
                     <SelectValue />
