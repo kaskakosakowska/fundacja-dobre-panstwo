@@ -25,6 +25,10 @@ export const MindMapSection = ({ post, onRefreshPost }: MindMapSectionProps) => 
 
   useEffect(() => {
     const checkPermissions = async () => {
+      // TYMCZASOWO: pozwolić wszystkim na edycję Mind Map
+      setCanEdit(true);
+      
+      /* ORYGINALNY KOD - wymaga uwierzytelnienia:
       const { data: { session } } = await supabase.auth.getSession();
       if (session?.user?.id) {
         const { data: profile } = await supabase
@@ -35,6 +39,7 @@ export const MindMapSection = ({ post, onRefreshPost }: MindMapSectionProps) => 
         
         setCanEdit(profile?.role === 'super_admin' || profile?.role === 'editor');
       }
+      */
     };
     
     checkPermissions();
