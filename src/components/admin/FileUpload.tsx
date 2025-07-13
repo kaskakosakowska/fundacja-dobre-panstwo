@@ -144,9 +144,14 @@ export const FileUpload = ({ onFilesUploaded, onImageSettingsUpdate, existingFil
           .from(bucket)
           .upload(path, file, { 
             cacheControl: '3600',
-            upsert: false 
+            upsert: true 
           });
         console.log('Upload result:', { data, error });
+
+        if (error) {
+          console.error('Upload error details:', error);
+          throw new Error(`Upload failed: ${error.message}`);
+        }
 
         if (error) {
           clearInterval(progressInterval);
