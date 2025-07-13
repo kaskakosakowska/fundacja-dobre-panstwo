@@ -2,6 +2,7 @@ import { SidebarCard } from "./SidebarCard";
 import { Post } from "@/hooks/usePostData";
 import { FileText, Music, Map } from "lucide-react";
 import { MindMap } from "@/components/mindmap/MindMap";
+import pdfThumbnail from "@/assets/images/pdf-thumbnail.png";
 
 interface PostSidebarProps {
   post: Post;
@@ -16,22 +17,26 @@ export const PostSidebar = ({ post }: PostSidebarProps) => {
           <div className="space-y-3">
             <div className="flex items-center gap-2 mb-2">
               <FileText className="h-4 w-4" style={{ color: '#666666' }} />
-              <span className="text-sm font-medium" style={{ color: '#333333' }}>Pobierz PDF</span>
+              <span className="text-sm font-medium" style={{ color: '#333333' }}>Kliknij aby otworzyć PDF</span>
             </div>
-            <iframe
-              src={post.pdf_url}
-              className="w-full h-48 border rounded-lg"
-              title="PDF Preview"
-            />
-            <a
-              href={post.pdf_url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block w-full text-center py-2 px-4 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm transition-colors"
-              style={{ color: '#333333' }}
+            <div 
+              className="relative w-full h-32 border rounded-lg cursor-pointer hover:shadow-md transition-shadow bg-gray-50 overflow-hidden group"
+              onClick={() => window.open(post.pdf_url, '_blank', 'noopener,noreferrer')}
             >
-              Otwórz w nowej karcie
-            </a>
+              <img 
+                src={pdfThumbnail} 
+                alt="PDF Preview" 
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-200 flex items-center justify-center">
+                <div className="bg-red-600 text-white px-2 py-1 rounded text-xs font-medium opacity-80 group-hover:opacity-100 transition-opacity">
+                  PDF
+                </div>
+              </div>
+            </div>
+            <p className="text-xs text-center" style={{ color: '#666666' }}>
+              {post.pdf_url.split('/').pop()?.split('%20').join(' ')}
+            </p>
           </div>
         ) : (
           <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center" style={{ color: '#666666' }}>
