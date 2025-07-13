@@ -361,6 +361,8 @@ export const AdminContentManager = () => {
       if (imageUrl) updateData.featured_image_url = imageUrl;
 
       console.log("updateArticle: About to update database with:", updateData);
+      console.log("updateArticle: User session:", userSession);
+      console.log("updateArticle: User role:", userRole);
 
       const { error } = await supabase
         .from("articles")
@@ -368,10 +370,17 @@ export const AdminContentManager = () => {
         .eq('id', editingArticleId);
 
       if (error) {
-        console.error('Update error:', error);
+        console.error('updateArticle: Database error:', error);
+        console.error('updateArticle: Error details:', {
+          code: error.code,
+          message: error.message,
+          details: error.details,
+          hint: error.hint
+        });
         throw error;
       }
 
+      console.log("updateArticle: Database update successful!");
       toast({
         title: "Artykuł zaktualizowany!",
         description: "Artykuł został pomyślnie zaktualizowany.",
