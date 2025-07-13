@@ -16,6 +16,13 @@ interface ContentPreviewProps {
 }
 
 export const ContentPreview = ({ data, files }: ContentPreviewProps) => {
+  // Debug logs
+  console.log('ContentPreview - data:', data);
+  console.log('ContentPreview - files:', files);
+  console.log('ContentPreview - image_position:', data.image_position);
+  console.log('ContentPreview - image_size:', data.image_size);
+  console.log('ContentPreview - has image file:', !!files.image);
+
   return (
     <Card>
       <CardHeader>
