@@ -1,7 +1,7 @@
 import { SidebarCard } from "../SidebarCard";
 import { Post } from "@/hooks/usePostData";
 import { Map, Edit } from "lucide-react";
-import { MindMap } from "@/components/mindmap/MindMap";
+import { MindMap } from "@/components/mindmap";
 import { MindMapEditor } from "@/components/admin/MindMapEditor";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";

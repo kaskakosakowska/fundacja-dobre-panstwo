@@ -3,14 +3,12 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { MindMap } from "@/components/mindmap/MindMap";
+import { MindMap, MindMapData } from "@/components/mindmap";
+import { createTagNodes } from "@/components/mindmap/node-factory";
+import { createTagEdges } from "@/components/mindmap/edge-factory";
 import { Plus, Trash2, Save } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
-interface MindMapData {
-  nodes: any[];
-  edges: any[];
-}
 
 interface MindMapEditorProps {
   articleId?: string;
@@ -111,68 +109,6 @@ export const MindMapEditor = ({
     }
   };
 
-  // Helper functions from MindMap component
-  const createTagNodes = (tagList: string[]) => {
-    const centerX = 250;
-    const centerY = 200;
-    const radius = 150;
-    
-    const nodes: any[] = [
-      {
-        id: 'center',
-        type: 'default',
-        position: { x: centerX, y: centerY },
-        data: { label: 'Główny temat' },
-        style: {
-          backgroundColor: '#f6f4ef',
-          border: '2px solid #333333',
-          borderRadius: '50%',
-          width: 120,
-          height: 120,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          fontSize: '12px',
-          fontWeight: 'bold',
-          color: '#333333'
-        }
-      }
-    ];
-
-    tagList.forEach((tag, index) => {
-      const angle = (index * 2 * Math.PI) / tagList.length;
-      const x = centerX + radius * Math.cos(angle);
-      const y = centerY + radius * Math.sin(angle);
-      
-      nodes.push({
-        id: `tag-${index}`,
-        type: 'default',
-        position: { x, y },
-        data: { label: tag },
-        style: {
-          backgroundColor: '#ffffff',
-          border: '1px solid #666666',
-          borderRadius: '20px',
-          padding: '8px 12px',
-          fontSize: '11px',
-          color: '#333333'
-        }
-      });
-    });
-
-    return nodes;
-  };
-
-  const createTagEdges = (tagList: string[]) => {
-    return tagList.map((_, index) => ({
-      id: `edge-${index}`,
-      source: 'center',
-      target: `tag-${index}`,
-      type: 'straight',
-      style: { stroke: '#666666', strokeWidth: 1 },
-      animated: false
-    }));
-  };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
