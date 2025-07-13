@@ -110,11 +110,8 @@ export const MindMap = ({ data, tags = [], readOnly = false, onDataChange }: Min
     console.log('tags:', tags);
     console.log('readOnly:', readOnly);
     
-    if (data && data.nodes && data.nodes.length > 0) {
-      console.log('MindMap: Using provided data, nodes count:', data.nodes.length);
-      setNodes(data.nodes);
-      setEdges(data.edges || []);
-    } else if (tags && tags.length > 0) {
+    // ALWAYS prioritize current tags over old data from database
+    if (tags && tags.length > 0) {
       console.log('MindMap: Creating nodes from tags, tag count:', tags.length);
       const tagNodes = createTagNodes(tags);
       const tagEdges = createTagEdges(tags);
@@ -128,6 +125,10 @@ export const MindMap = ({ data, tags = [], readOnly = false, onDataChange }: Min
         console.log('MindMap: Notifying parent of new structure');
         onDataChange({ nodes: tagNodes, edges: tagEdges });
       }
+    } else if (data && data.nodes && data.nodes.length > 0) {
+      console.log('MindMap: Using provided data as fallback, nodes count:', data.nodes.length);
+      setNodes(data.nodes);
+      setEdges(data.edges || []);
     } else {
       console.log('MindMap: No data or tags, clearing');
       setNodes([]);
