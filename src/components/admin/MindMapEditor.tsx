@@ -17,13 +17,15 @@ interface MindMapEditorProps {
   initialTags?: string[];
   initialMindMapData?: MindMapData;
   onSave?: (mindMapData: MindMapData, tags: string[]) => void;
+  onTagsChange?: (tags: string[]) => void;
 }
 
 export const MindMapEditor = ({ 
   articleId, 
   initialTags = [], 
   initialMindMapData,
-  onSave 
+  onSave,
+  onTagsChange 
 }: MindMapEditorProps) => {
   const [tags, setTags] = useState<string[]>(initialTags);
   const [newTag, setNewTag] = useState('');
@@ -42,8 +44,19 @@ export const MindMapEditor = ({
       console.log('MindMapEditor: Adding tag, new tags:', updatedTags);
       setTags(updatedTags);
       setNewTag('');
-      // Reset mind map data when tags change to force regeneration
-      setMindMapData(undefined);
+      
+      // Create new mind map data immediately instead of resetting
+      const newMindMapData = { 
+        nodes: createTagNodes(updatedTags), 
+        edges: createTagEdges(updatedTags) 
+      };
+      setMindMapData(newMindMapData);
+      
+      // Notify parent about tag changes
+      if (onTagsChange) {
+        onTagsChange(updatedTags);
+      }
+      
       toast({
         title: "Tag dodany",
         description: `Dodano tag: ${newTag.trim()}`,
@@ -55,8 +68,19 @@ export const MindMapEditor = ({
     const updatedTags = tags.filter(tag => tag !== tagToRemove);
     console.log('MindMapEditor: Removing tag, new tags:', updatedTags);
     setTags(updatedTags);
-    // Reset mind map data when tags change to force regeneration
-    setMindMapData(undefined);
+    
+    // Create new mind map data immediately instead of resetting
+    const newMindMapData = updatedTags.length > 0 ? { 
+      nodes: createTagNodes(updatedTags), 
+      edges: createTagEdges(updatedTags) 
+    } : undefined;
+    setMindMapData(newMindMapData);
+    
+    // Notify parent about tag changes
+    if (onTagsChange) {
+      onTagsChange(updatedTags);
+    }
+    
     toast({
       title: "Tag usunięty",
       description: `Usunięto tag: ${tagToRemove}`,
@@ -213,7 +237,7 @@ export const MindMapEditor = ({
           <div className="border rounded-lg p-4 bg-gray-50">
             {tags.length > 0 ? (
               <MindMap
-                key={`mindmap-${tags.join('-')}`} // Force re-render when tags change
+                key={`mindmap-${tags.join('-')}-${mindMapData ? 'data' : 'notags'}`} // More precise key
                 data={mindMapData}
                 tags={tags}
                 readOnly={false}

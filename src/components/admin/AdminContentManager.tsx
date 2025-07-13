@@ -152,7 +152,13 @@ export const AdminContentManager = () => {
   };
 
   const handleMindMapSave = (data: any, tags: string[]) => {
+    console.log('AdminContentManager: handleMindMapSave called with data:', data, 'tags:', tags);
     setMindMapData(data);
+    form.setValue("tags", tags.join(", "));
+  };
+
+  const handleTagsChange = (tags: string[]) => {
+    console.log('AdminContentManager: handleTagsChange called with tags:', tags);
     form.setValue("tags", tags.join(", "));
   };
 
@@ -595,6 +601,7 @@ export const AdminContentManager = () => {
                     initialTags={form.getValues("tags").split(",").map(t => t.trim()).filter(Boolean)}
                     initialMindMapData={mindMapData}
                     onSave={handleMindMapSave}
+                    onTagsChange={handleTagsChange}
                   />
                   
                   <div className="flex justify-between">

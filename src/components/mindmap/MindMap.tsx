@@ -109,6 +109,7 @@ export const MindMap = ({ data, tags = [], readOnly = true, onDataChange }: Mind
       
       // Immediately notify parent of the new structure
       if (onDataChange && !readOnly) {
+        console.log('MindMap: Notifying parent of new structure:', { nodes: tagNodes, edges: tagEdges });
         onDataChange({ nodes: tagNodes, edges: tagEdges });
       }
     } else {
