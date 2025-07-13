@@ -27,7 +27,7 @@ const PostTemplate = () => {
                 </CardHeader>
                 <CardContent className="h-full">
                   <ScrollArea className="h-full max-h-[550px] pr-4">
-                    <PostContent post={post} section={section} postId={postId} refreshPost={refreshPost} />
+                    <PostContent post={post} section={section} postId={postId} />
                   </ScrollArea>
                 </CardContent>
               </Card>

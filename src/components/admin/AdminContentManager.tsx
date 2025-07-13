@@ -24,12 +24,16 @@ interface ArticleFormData {
   tags: string;
   seo_title?: string;
   seo_description?: string;
+  image_position?: string;
+  image_size?: string;
 }
 
 interface UploadedFiles {
   pdf?: File;
   audio?: File;
   image?: File;
+  image_position?: string;
+  image_size?: string;
 }
 
 export const AdminContentManager = () => {
@@ -169,6 +173,8 @@ export const AdminContentManager = () => {
           audio_url: audioUrl || null,
           featured_image_url: imageUrl || null,
           mind_map_data: mindMapData || null,
+          image_position: uploadedFiles.image_position || 'inline-left',
+          image_size: uploadedFiles.image_size || 'medium',
           seo_title: data.seo_title || null,
           seo_description: data.seo_description || null,
           published_date: new Date().toISOString().split('T')[0],
@@ -276,6 +282,8 @@ export const AdminContentManager = () => {
         summary: data.excerpt,
         tags: data.tags.split(",").map(tag => tag.trim()).filter(Boolean),
         mind_map_data: mindMapData || null,
+        image_position: uploadedFiles.image_position || 'inline-left',
+        image_size: uploadedFiles.image_size || 'medium',
         seo_title: data.seo_title || null,
         seo_description: data.seo_description || null,
         updated_at: new Date().toISOString(),

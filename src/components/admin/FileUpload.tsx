@@ -3,12 +3,16 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
 import { FileText, Music, Image, Upload, X, CheckCircle } from "lucide-react";
 
 interface UploadedFiles {
   pdf?: File;
   audio?: File;
   image?: File;
+  image_position?: string;
+  image_size?: string;
 }
 
 interface FileUploadProps {
@@ -19,6 +23,8 @@ export const FileUpload = ({ onFilesUploaded }: FileUploadProps) => {
   const [files, setFiles] = useState<UploadedFiles>({});
   const [uploadProgress, setUploadProgress] = useState<{ [key: string]: number }>({});
   const [errors, setErrors] = useState<string[]>([]);
+  const [imagePosition, setImagePosition] = useState("inline-left");
+  const [imageSize, setImageSize] = useState("medium");
 
   const validateFile = (file: File, type: 'pdf' | 'audio' | 'image') => {
     const validTypes = {
@@ -79,7 +85,12 @@ export const FileUpload = ({ onFilesUploaded }: FileUploadProps) => {
       }, 100);
 
       setTimeout(() => {
-        const newFiles = { ...files, [type]: file };
+        const newFiles = { 
+          ...files, 
+          [type]: file,
+          image_position: imagePosition,
+          image_size: imageSize
+        };
         setFiles(newFiles);
         onFilesUploaded(newFiles);
         setUploadProgress(prev => ({ ...prev, [type]: 100 }));
@@ -87,7 +98,7 @@ export const FileUpload = ({ onFilesUploaded }: FileUploadProps) => {
     };
 
     input.click();
-  }, [files, onFilesUploaded]);
+  }, [files, onFilesUploaded, imagePosition, imageSize]);
 
   const removeFile = (type: 'pdf' | 'audio' | 'image') => {
     const newFiles = { ...files };
@@ -202,6 +213,65 @@ export const FileUpload = ({ onFilesUploaded }: FileUploadProps) => {
           description="Grafika do wpisu (max 5MB)"
         />
       </div>
+
+      {/* Image configuration section */}
+      {files.image && (
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-sm">Konfiguracja obrazka</CardTitle>
+            <CardDescription className="text-xs">Ustaw pozycję i wielkość obrazka w artykule</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="image-position" className="text-sm">Pozycja</Label>
+                <Select value={imagePosition} onValueChange={(value) => {
+                  setImagePosition(value);
+                  const newFiles = { 
+                    ...files, 
+                    image_position: value,
+                    image_size: imageSize
+                  };
+                  setFiles(newFiles);
+                  onFilesUploaded(newFiles);
+                }}>
+                  <SelectTrigger id="image-position">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="inline-left">W tekście po lewej</SelectItem>
+                    <SelectItem value="inline-right">W tekście po prawej</SelectItem>
+                    <SelectItem value="above">Nad tekstem</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              
+              <div className="space-y-2">
+                <Label htmlFor="image-size" className="text-sm">Wielkość</Label>
+                <Select value={imageSize} onValueChange={(value) => {
+                  setImageSize(value);
+                  const newFiles = { 
+                    ...files, 
+                    image_position: imagePosition,
+                    image_size: value
+                  };
+                  setFiles(newFiles);
+                  onFilesUploaded(newFiles);
+                }}>
+                  <SelectTrigger id="image-size">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="small">Mały</SelectItem>
+                    <SelectItem value="medium">Średni</SelectItem>
+                    <SelectItem value="large">Duży</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       {errors.length > 0 && (
         <Alert variant="destructive">

@@ -2,9 +2,7 @@ import { Post } from "@/hooks/usePostData";
 import { SzkatulaContent } from "./content/SzkatulaContent";
 import { GlosyContent } from "./content/GlosyContent";
 import { DefaultContent } from "./content/DefaultContent";
-import { Dialog } from "@/components/ui/dialog";
-import { useImageManager } from "@/hooks/useImageManager";
-import { ImageEditDialog } from "./ImageEditDialog";
+import { useImageStyles } from "@/hooks/useImageStyles";
 import { FeaturedImage } from "./FeaturedImage";
 
 
@@ -12,11 +10,26 @@ interface PostContentProps {
   post: Post;
   section: string;
   postId: string | undefined;
-  refreshPost?: () => Promise<void>;
 }
 
-export const PostContent = ({ post, section, postId, refreshPost }: PostContentProps) => {
-  const imageManager = useImageManager(post, refreshPost);
+export const PostContent = ({ post, section, postId }: PostContentProps) => {
+  const imagePosition = post.image_position || 'inline-left';
+  const imageSize = post.image_size || 'medium';
+  const isInline = imagePosition.startsWith('inline');
+  
+  const getImageClasses = () => {
+    const sizeClass = imageSize === 'small' ? 'w-48' : imageSize === 'large' ? 'w-96' : 'w-64';
+    
+    if (imagePosition === 'inline-left') {
+      return `${sizeClass} float-left mr-4 mb-4 rounded-lg shadow-sm`;
+    }
+    
+    if (imagePosition === 'inline-right') {
+      return `${sizeClass} float-right ml-4 mb-4 rounded-lg shadow-sm`;
+    }
+    
+    return `w-full max-w-2xl mx-auto rounded-lg shadow-sm`;
+  };
 
   const getFullContent = () => {
     if (section === 'szkatulka') {
@@ -49,73 +62,41 @@ export const PostContent = ({ post, section, postId, refreshPost }: PostContentP
       
       {/* Content with potential inline image */}
       <div className="text-base leading-relaxed" style={{ color: '#333333' }}>
-        <Dialog open={imageManager.isEditingImage} onOpenChange={imageManager.setIsEditingImage}>
-          {/* Non-inline images (above content) */}
-          {imageManager.currentImageUrl && !imageManager.imagePosition.startsWith('inline') && (
-            <FeaturedImage
-              currentImageUrl={imageManager.currentImageUrl}
-              postTitle={post.title}
-              imagePosition={imageManager.imagePosition}
-              getImageClasses={imageManager.getImageClasses}
-              openEditDialog={imageManager.openEditDialog}
-              handleFileSelect={imageManager.handleFileSelect}
-              isUploading={imageManager.isUploading}
-            />
-          )}
-
-          {/* Placeholder for image upload when no image */}
-          {!imageManager.currentImageUrl && (
-            <FeaturedImage
-              currentImageUrl={null}
-              postTitle={post.title}
-              imagePosition={imageManager.imagePosition}
-              getImageClasses={imageManager.getImageClasses}
-              openEditDialog={imageManager.openEditDialog}
-              handleFileSelect={imageManager.handleFileSelect}
-              isUploading={imageManager.isUploading}
-            />
-          )}
-
-          {/* Content with inline image flow */}
-          <div className="relative overflow-hidden">
-            {/* Inline image that floats with content */}
-            {imageManager.currentImageUrl && imageManager.imagePosition.startsWith('inline') && (
-              <FeaturedImage
-                currentImageUrl={imageManager.currentImageUrl}
-                postTitle={post.title}
-                imagePosition={imageManager.imagePosition}
-                getImageClasses={imageManager.getImageClasses}
-                openEditDialog={imageManager.openEditDialog}
-                handleFileSelect={imageManager.handleFileSelect}
-                isUploading={imageManager.isUploading}
-                isInline={true}
-              />
-            )}
-            
-            {/* Content flows around floated image */}
-            <div className="text-justify">
-              {getFullContent()}
-            </div>
-            
-            {/* Clear floats after content */}
-            <div className="clear-both"></div>
-          </div>
-
-          <ImageEditDialog
-            isOpen={imageManager.isEditingImage}
-            onOpenChange={imageManager.setIsEditingImage}
-            currentImageUrl={imageManager.currentImageUrl}
+        {/* Non-inline images (above content) */}
+        {post.featured_image_url && !isInline && (
+          <FeaturedImage
+            currentImageUrl={post.featured_image_url}
             postTitle={post.title}
-            tempImagePosition={imageManager.tempImagePosition}
-            setTempImagePosition={imageManager.setTempImagePosition}
-            tempImageSize={imageManager.tempImageSize}
-            setTempImageSize={imageManager.setTempImageSize}
-            saveImageSettings={imageManager.saveImageSettings}
-            handleFileSelect={imageManager.handleFileSelect}
-            removeImage={imageManager.removeImage}
-            isUploading={imageManager.isUploading}
+            imagePosition={post.image_position || 'inline-left'}
+            getImageClasses={getImageClasses}
+            handleFileSelect={() => {}}
+            isUploading={false}
           />
-        </Dialog>
+        )}
+
+        {/* Content with inline image flow */}
+        <div className="relative overflow-hidden">
+          {/* Inline image that floats with content */}
+          {post.featured_image_url && isInline && (
+            <FeaturedImage
+              currentImageUrl={post.featured_image_url}
+              postTitle={post.title}
+              imagePosition={post.image_position || 'inline-left'}
+              getImageClasses={getImageClasses}
+              handleFileSelect={() => {}}
+              isUploading={false}
+              isInline={true}
+            />
+          )}
+          
+          {/* Content flows around floated image */}
+          <div className="text-justify">
+            {getFullContent()}
+          </div>
+          
+          {/* Clear floats after content */}
+          <div className="clear-both"></div>
+        </div>
       </div>
     </div>
   );

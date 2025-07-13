@@ -1,13 +1,11 @@
 import { Button } from "@/components/ui/button";
-import { DialogTrigger } from "@/components/ui/dialog";
-import { Edit3, Upload } from "lucide-react";
+import { Upload } from "lucide-react";
 
 interface FeaturedImageProps {
   currentImageUrl: string | null;
   postTitle: string;
   imagePosition: string;
   getImageClasses: () => string;
-  openEditDialog: () => void;
   handleFileSelect: () => void;
   isUploading: boolean;
   isInline?: boolean;
@@ -18,7 +16,6 @@ export const FeaturedImage = ({
   postTitle,
   imagePosition,
   getImageClasses,
-  openEditDialog,
   handleFileSelect,
   isUploading,
   isInline = false,
@@ -41,22 +38,15 @@ export const FeaturedImage = ({
     return null;
   }
 
-  // Render image with edit button
+  // Render image without edit buttons (read-only)
   return (
-    <div className={`relative group ${isInline ? '' : 'mb-6'}`}>
+    <div className={`${isInline ? '' : 'mb-6'}`}>
       <img 
         src={currentImageUrl} 
         alt={postTitle}
         className={getImageClasses()}
         style={isInline ? { display: 'block' } : undefined}
       />
-      <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
-        <DialogTrigger asChild>
-          <Button size="sm" variant="secondary" className="h-8 w-8 p-0" onClick={openEditDialog}>
-            <Edit3 className="h-4 w-4" />
-          </Button>
-        </DialogTrigger>
-      </div>
     </div>
   );
 };
