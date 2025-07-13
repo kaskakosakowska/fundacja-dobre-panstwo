@@ -91,6 +91,9 @@ export const AdminContentManager = () => {
   });
 
   const generateSlug = (title: string) => {
+    if (!title || title.trim() === "") {
+      return "";
+    }
     return title
       .toLowerCase()
       .replace(/[ąćęłńóśźż]/g, (match) => {
@@ -231,7 +234,16 @@ export const AdminContentManager = () => {
     setIsPublishing(true);
     
     try {
+      // Validate required fields
+      if (!data.title || data.title.trim() === "") {
+        throw new Error("Tytuł artykułu jest wymagany");
+      }
+      
       const slug = generateSlug(data.title);
+      if (!slug) {
+        throw new Error("Nie można wygenerować slug z podanego tytułu");
+      }
+      
       let pdfUrl = "";
       let audioUrl = "";
       let imageUrl = "";
@@ -360,6 +372,11 @@ export const AdminContentManager = () => {
     setIsPublishing(true);
     
     try {
+      // Validate required fields
+      if (!data.title || data.title.trim() === "") {
+        throw new Error("Tytuł artykułu jest wymagany");
+      }
+      
       // Only generate new slug if title changed
       const originalTitle = editingArticleData?.title || '';
       const slug = data.title !== originalTitle ? generateSlug(data.title) : editingArticleData?.slug;
