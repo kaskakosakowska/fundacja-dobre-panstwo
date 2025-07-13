@@ -170,7 +170,7 @@ export const MindMap = ({ data, tags = [], readOnly = true, onDataChange }: Mind
   );
 
   return (
-    <div className="w-full h-64 border rounded-lg overflow-hidden">
+    <div className="w-full h-full border rounded-lg overflow-hidden">
       <ReactFlow
         nodes={nodes}
         edges={edges}

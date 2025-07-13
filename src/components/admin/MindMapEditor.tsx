@@ -234,17 +234,19 @@ export const MindMapEditor = ({
         {/* Mind Map */}
         <div className="space-y-4">
           <Label className="text-base font-medium">Mapa myśli</Label>
-          <div className="border rounded-lg p-4 bg-gray-50">
+          <div className="border rounded-lg bg-white" style={{ height: "400px" }}>
             {tags.length > 0 ? (
-              <MindMap
-                key={`mindmap-${tags.join('-')}-${mindMapData ? 'data' : 'notags'}`} // More precise key
-                data={mindMapData}
-                tags={tags}
-                readOnly={false}
-                onDataChange={handleMindMapChange}
-              />
+              <div className="w-full h-full">
+                <MindMap
+                  key={`mindmap-${tags.join('-')}-${mindMapData ? 'data' : 'notags'}`}
+                  data={mindMapData}
+                  tags={tags}
+                  readOnly={false}
+                  onDataChange={handleMindMapChange}
+                />
+              </div>
             ) : (
-              <div className="h-64 flex items-center justify-center text-muted-foreground">
+              <div className="h-full flex items-center justify-center text-muted-foreground">
                 <p>Dodaj tagi, aby zobaczyć mapę myśli</p>
               </div>
             )}
