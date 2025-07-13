@@ -43,11 +43,12 @@ export const FeaturedImage = ({
 
   // Render image with edit button
   return (
-    <div className={`relative group ${isInline ? 'inline-block' : 'mb-6'}`}>
+    <div className={`relative group ${isInline ? '' : 'mb-6'}`}>
       <img 
         src={currentImageUrl} 
         alt={postTitle}
         className={getImageClasses()}
+        style={isInline ? { display: 'block' } : undefined}
       />
       <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
         <DialogTrigger asChild>
