@@ -229,6 +229,7 @@ export const AdminContentManager = () => {
   };
 
   const handleEditArticle = async (articleId: string) => {
+    console.log("handleEditArticle called with articleId:", articleId);
     try {
       const { data: article, error } = await supabase
         .from('articles')
