@@ -633,13 +633,24 @@ export const AdminContentManager = () => {
                 </TabsContent>
 
                 <TabsContent value="mindmap" className="space-y-4">
-                  <MindMapEditor
-                    articleId={editingArticleId || undefined}
-                    initialTags={form.getValues("tags").split(",").map(t => t.trim()).filter(Boolean)}
-                    initialMindMapData={mindMapData}
-                    onSave={handleMindMapSave}
-                    onTagsChange={handleTagsChange}
-                  />
+                  {(() => {
+                    const currentTags = form.getValues("tags").split(",").map(t => t.trim()).filter(Boolean);
+                    console.log('=== ADMIN DEBUG - Renderowanie MindMapEditor ===');
+                    console.log('editingArticleId:', editingArticleId);
+                    console.log('currentTags:', currentTags);
+                    console.log('mindMapData:', mindMapData);
+                    console.log('=== END ADMIN DEBUG ===');
+                    
+                    return (
+                      <MindMapEditor
+                        articleId={editingArticleId || undefined}
+                        initialTags={currentTags}
+                        initialMindMapData={mindMapData}
+                        onSave={handleMindMapSave}
+                        onTagsChange={handleTagsChange}
+                      />
+                    );
+                  })()}
                   
                   <div className="flex justify-between">
                     <Button type="button" variant="outline" onClick={() => setCurrentStep("content")}>
