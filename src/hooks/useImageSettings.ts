@@ -10,29 +10,40 @@ export const useImageSettings = (post: Post) => {
   const [tempImageSize, setTempImageSize] = useState('medium');
   const { toast } = useToast();
 
-  // Update states when post changes
+  // Update states when post changes - watch specific properties
   useEffect(() => {
-    console.log('useImageSettings useEffect - post:', post);
-    console.log('useImageSettings useEffect - post.image_position:', (post as any).image_position);
-    console.log('useImageSettings useEffect - post.image_size:', (post as any).image_size);
+    const postImagePosition = (post as any).image_position;
+    const postImageSize = (post as any).image_size;
+    
+    console.log('useImageSettings useEffect triggered');
+    console.log('Current post:', post);
+    console.log('Post image_position:', postImagePosition);
+    console.log('Post image_size:', postImageSize);
+    console.log('Current imagePosition state:', imagePosition);
     
     // Always update position and size from post data, with fallbacks
-    const newPosition = (post as any).image_position || 'inline-left';
-    const newSize = (post as any).image_size || 'medium';
+    const newPosition = postImagePosition || 'inline-left';
+    const newSize = postImageSize || 'medium';
     
-    console.log('useImageSettings useEffect - setting position to:', newPosition);
-    console.log('useImageSettings useEffect - setting size to:', newSize);
+    console.log('Setting new position:', newPosition);
+    console.log('Setting new size:', newSize);
     
     setImagePosition(newPosition);
     setTempImagePosition(newPosition);
     setImageSize(newSize);
     setTempImageSize(newSize);
-  }, [post]);
+  }, [post.id, (post as any).image_position, (post as any).image_size]); // Watch specific properties
 
   const saveImageSettings = async (onSuccess: () => void) => {
     if (!post.id) return;
     
     try {
+      console.log('Saving image settings:', { 
+        position: tempImagePosition, 
+        size: tempImageSize,
+        postId: post.id 
+      });
+      
       // Save to database
       const { error } = await supabase
         .from('articles')
@@ -44,9 +55,15 @@ export const useImageSettings = (post: Post) => {
 
       if (error) throw error;
 
-      // Update local state
+      console.log('Image settings saved successfully');
+      
+      // Update local state immediately
       setImagePosition(tempImagePosition);
       setImageSize(tempImageSize);
+      
+      // Force refresh by updating the post data in the parent component
+      window.location.reload(); // Temporary solution to force refresh
+      
       onSuccess();
       
       toast({
@@ -54,6 +71,7 @@ export const useImageSettings = (post: Post) => {
         description: "Zmiany w układzie obrazka zostały zastosowane.",
       });
     } catch (error: any) {
+      console.error('Error saving image settings:', error);
       toast({
         title: "Błąd zapisu",
         description: error.message || "Nie udało się zapisać ustawień obrazka.",
