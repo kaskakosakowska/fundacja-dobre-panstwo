@@ -127,19 +127,28 @@ export const MindMapSection = ({ post, onRefreshPost }: MindMapSectionProps) => 
               <DialogHeader>
                 <DialogTitle className="flex items-center justify-between">
                   <span>Mapa pojęć - {post.title}</span>
-                  {canEdit && (
+                  {canEdit && !isEditing && (
                     <Button
                       variant="outline"
                       size="sm"
-                      onClick={() => setIsEditing(!isEditing)}
+                      onClick={() => setIsEditing(true)}
                     >
                       <Edit className="h-4 w-4 mr-1" />
-                      {isEditing ? 'Anuluj' : 'Edytuj'}
+                      Edytuj
+                    </Button>
+                  )}
+                  {canEdit && isEditing && (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setIsEditing(false)}
+                    >
+                      Anuluj
                     </Button>
                   )}
                 </DialogTitle>
               </DialogHeader>
-              <div className="h-[60vh] w-full">
+              <div className="h-[500px] w-full">
                 {isLoading ? (
                   <div className="flex items-center justify-center h-full">
                     <div className="text-center">

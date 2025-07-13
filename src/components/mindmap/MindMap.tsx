@@ -43,19 +43,32 @@ const createTagNodes = (tags: string[]): Node[] => {
       position: { x: centerX, y: centerY },
       data: { label: 'Główny temat' },
       style: {
-        backgroundColor: '#f6f4ef',
-        border: '2px solid #333333',
+        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        border: '3px solid #ffffff',
         borderRadius: '50%',
-        width: 120,
-        height: 120,
+        width: 140,
+        height: 140,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        fontSize: '12px',
+        fontSize: '13px',
         fontWeight: 'bold',
-        color: '#333333'
+        color: '#ffffff',
+        boxShadow: '0 8px 32px rgba(102, 126, 234, 0.3)',
+        textAlign: 'center'
       }
     }
+  ];
+
+  const colors = [
+    'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+    'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)', 
+    'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+    'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
+    'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
+    'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)',
+    'linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%)',
+    'linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%)'
   ];
 
   tags.forEach((tag, index) => {
@@ -70,12 +83,16 @@ const createTagNodes = (tags: string[]): Node[] => {
       position: { x, y },
       data: { label: tag },
       style: {
-        backgroundColor: '#ffffff',
-        border: '1px solid #666666',
-        borderRadius: '20px',
-        padding: '8px 12px',
-        fontSize: '11px',
-        color: '#333333'
+        background: colors[index % colors.length],
+        border: '2px solid #ffffff',
+        borderRadius: '25px',
+        padding: '10px 16px',
+        fontSize: '12px',
+        fontWeight: '600',
+        color: '#ffffff',
+        boxShadow: '0 4px 20px rgba(0, 0, 0, 0.15)',
+        textAlign: 'center' as const,
+        minWidth: '80px'
       }
     };
     
@@ -93,9 +110,13 @@ const createTagEdges = (tags: string[]): Edge[] => {
     id: `edge-${index}`,
     source: 'center',
     target: `tag-${index}`,
-    type: 'straight',
-    style: { stroke: '#666666', strokeWidth: 1 },
-    animated: false
+    type: 'smoothstep',
+    style: { 
+      stroke: '#667eea', 
+      strokeWidth: 3,
+      strokeDasharray: '5,5'
+    },
+    animated: true
   }));
 };
 
@@ -219,7 +240,7 @@ export const MindMap = ({ data, tags = [], readOnly = false, onDataChange }: Min
   }
 
   return (
-    <div className="w-full h-96 border border-gray-300">
+    <div className="w-full h-full border-2 border-gray-200 rounded-lg overflow-hidden bg-gradient-to-br from-slate-50 to-blue-50">
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -230,10 +251,16 @@ export const MindMap = ({ data, tags = [], readOnly = false, onDataChange }: Min
         nodesConnectable={!readOnly}
         elementsSelectable={!readOnly}
         fitView
+        fitViewOptions={{ padding: 0.2 }}
         style={{ width: '100%', height: '100%' }}
       >
         <Controls showInteractive={!readOnly} />
-        <Background variant={BackgroundVariant.Dots} gap={12} size={1} />
+        <Background 
+          variant={BackgroundVariant.Dots} 
+          gap={20} 
+          size={2} 
+          color="#e2e8f0"
+        />
       </ReactFlow>
     </div>
   );
