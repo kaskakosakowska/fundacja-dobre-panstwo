@@ -113,8 +113,13 @@ export const AdminContentManager = () => {
   };
 
   const updateImageSettings = (position: string, size: string) => {
+    console.log("updateImageSettings CALLED:", { position, size });
     form.setValue('image_position', position);
     form.setValue('image_size', size);
+    console.log("updateImageSettings AFTER setValue:", {
+      form_position: form.getValues('image_position'),
+      form_size: form.getValues('image_size')
+    });
   };
 
   const handleMindMapSave = (data: any, tags: string[]) => {
