@@ -262,7 +262,7 @@ export const AdminContentManager = () => {
       setMindMapData(article.mind_map_data);
 
       setEditingArticleId(articleId);
-      setCurrentStep('content');
+      setCurrentStep('basics');
 
       toast({
         title: "Artykuł załadowany",
@@ -402,7 +402,10 @@ export const AdminContentManager = () => {
         <CardContent>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-              <Tabs value={currentStep} onValueChange={setCurrentStep}>
+              <Tabs value={currentStep} onValueChange={(newStep) => {
+                console.log("Tab changed to:", newStep, "editingArticleId:", editingArticleId);
+                setCurrentStep(newStep);
+              }}>
                 <TabsList className="grid w-full grid-cols-6">
                   <TabsTrigger value="list">Lista</TabsTrigger>
                   <TabsTrigger value="basics">Podstawy</TabsTrigger>
