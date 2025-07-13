@@ -235,6 +235,10 @@ export type Database = {
         }
         Returns: boolean
       }
+      storage_upload_allowed: {
+        Args: { bucket_name: string }
+        Returns: boolean
+      }
     }
     Enums: {
       article_section: "szkatulka" | "szczypta" | "glosy"
